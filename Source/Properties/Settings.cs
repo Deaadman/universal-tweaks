@@ -509,6 +509,11 @@ internal class Settings : JsonModSettings
     [Slider(0f, 500f, 501, NumberFormat = "{0:0.##} KG")]
     public float ContainerCarTrunkCapacity = 40;
 
+    [Name("Trunk (Rustic Storage)")]
+    [Description("Adjust how much weight the Rustic Storage Trunk can hold. Default is 35 KG.")]
+    [Slider(0f, 500f, 501, NumberFormat = "{0:0.##} KG")]
+    public float ContainerRusticStorageTrunkCapacity = 35;
+
     [Name("Trunk (Wooden Box)")]
     [Description("Adjust how much weight Trunk (Wooden Box) can hold. Default is 40 KG.")]
     [Slider(0f, 500f, 501, NumberFormat = "{0:0.##} KG")]

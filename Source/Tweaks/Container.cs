@@ -123,6 +123,12 @@ internal static class Container
                     __instance.m_Capacity = ItemWeight.FromKilograms(Settings.Instance.ContainerTrunkCapacity);
                 }
 
+                // Trunk (Rustic Storage)
+                else if (__instance.name.Contains("CONTAINER_Rustic_Storage_Trunk"))
+                {
+                    __instance.m_Capacity = ItemWeight.FromKilograms(Settings.Instance.ContainerRusticStorageTrunkCapacity);
+                }
+
                 // Lock Box
                 else if (__instance.name.Contains("CONTAINER_LockBoxB"))
                 {
