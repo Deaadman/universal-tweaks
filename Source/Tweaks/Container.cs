@@ -14,7 +14,7 @@ internal static class Container
     {
         private static void Postfix(Il2Cpp.Container __instance)
         {
-            if (Settings.Instance.InfiniteContainerWeight)
+            if (ContainerSettings.Instance.InfiniteContainerWeight)
             {
                 __instance.m_Capacity = ItemWeight.FromKilograms(10000);
             }
@@ -23,312 +23,312 @@ internal static class Container
                 // Glove Box 1
                 if (__instance.name.Contains("CarSedanGloveBox_Prefab"))
                 {
-                    __instance.m_Capacity = ItemWeight.FromKilograms(Settings.Instance.ContainerGloveBoxCapacity);
+                    __instance.m_Capacity = ItemWeight.FromKilograms(ContainerSettings.Instance.ContainerGloveBoxCapacity);
                 }
 
                 // Trunk (Car)
                 else if (__instance.name.Contains("CarSedanTrunkDoor_Prefab"))
                 {
-                    __instance.m_Capacity = ItemWeight.FromKilograms(Settings.Instance.ContainerCarTrunkCapacity);
+                    __instance.m_Capacity = ItemWeight.FromKilograms(ContainerSettings.Instance.ContainerCarTrunkCapacity);
                 }
 
                 // Glove Box 2
                 else if (__instance.name.Contains("CarTruckGloveBox_Prefab"))
                 {
-                    __instance.m_Capacity = ItemWeight.FromKilograms(Settings.Instance.ContainerGloveBoxCapacity);
+                    __instance.m_Capacity = ItemWeight.FromKilograms(ContainerSettings.Instance.ContainerGloveBoxCapacity);
                 }
 
                 // Backpack
                 if (__instance.name.Contains("CONTAINER_BackPack"))
                 {
-                    __instance.m_Capacity = ItemWeight.FromKilograms(Settings.Instance.ContainerBackpackCapacity);
+                    __instance.m_Capacity = ItemWeight.FromKilograms(ContainerSettings.Instance.ContainerBackpackCapacity);
                 }
 
                 // Large Cabinet 1
                 else if (__instance.name.Contains("CONTAINER_BathroomCabinet"))
                 {
-                    __instance.m_Capacity = ItemWeight.FromKilograms(Settings.Instance.ContainerCabinetLgeCapacity);
+                    __instance.m_Capacity = ItemWeight.FromKilograms(ContainerSettings.Instance.ContainerCabinetLgeCapacity);
                 }
 
                 // Briefcase
                 else if (__instance.name.Contains("CONTAINER_Briefcase"))
                 {
-                    __instance.m_Capacity = ItemWeight.FromKilograms(Settings.Instance.ContainerBriefcaseCapacity);
+                    __instance.m_Capacity = ItemWeight.FromKilograms(ContainerSettings.Instance.ContainerBriefcaseCapacity);
                 }
 
                 // Hidden Cache
                 else if (__instance.name.Contains("CONTAINER_CacheStoreCommon"))
                 {
-                    __instance.m_Capacity = ItemWeight.FromKilograms(Settings.Instance.ContainerHiddenCacheCapacity);
+                    __instance.m_Capacity = ItemWeight.FromKilograms(ContainerSettings.Instance.ContainerHiddenCacheCapacity);
                 }
 
                 // Plastic Container 1
                 else if (__instance.name.Contains("CONTAINER_CacheStoreRare"))
                 {
                     __instance.m_Capacity =
-                        ItemWeight.FromKilograms(Settings.Instance.ContainerPlasticContainerCapacity);
+                        ItemWeight.FromKilograms(ContainerSettings.Instance.ContainerPlasticContainerCapacity);
                 }
 
                 // Coal Bin
                 else if (__instance.name.Contains("CONTAINER_CoalBin"))
                 {
-                    __instance.m_Capacity = ItemWeight.FromKilograms(Settings.Instance.ContainerCoalBinCapacity);
+                    __instance.m_Capacity = ItemWeight.FromKilograms(ContainerSettings.Instance.ContainerCoalBinCapacity);
                 }
 
                 // Cooler
                 else if (__instance.name.Contains("CONTAINER_Cooler"))
                 {
-                    __instance.m_Capacity = ItemWeight.FromKilograms(Settings.Instance.ContainerCoolerCapacity);
+                    __instance.m_Capacity = ItemWeight.FromKilograms(ContainerSettings.Instance.ContainerCoolerCapacity);
                 }
 
                 // Dryer
                 else if (__instance.name.Contains("CONTAINER_Dryer"))
                 {
-                    __instance.m_Capacity = ItemWeight.FromKilograms(Settings.Instance.ContainerDryerCapacity);
+                    __instance.m_Capacity = ItemWeight.FromKilograms(ContainerSettings.Instance.ContainerDryerCapacity);
                 }
 
                 // Firewood Bin
                 else if (__instance.name.Contains("CONTAINER_FirewoodBin"))
                 {
-                    __instance.m_Capacity = ItemWeight.FromKilograms(Settings.Instance.ContainerFirewoodBinCapacity);
+                    __instance.m_Capacity = ItemWeight.FromKilograms(ContainerSettings.Instance.ContainerFirewoodBinCapacity);
                 }
 
                 // First Aid Kit
                 else if (__instance.name.Contains("CONTAINER_FirstAidKit"))
                 {
-                    __instance.m_Capacity = ItemWeight.FromKilograms(Settings.Instance.ContainerFirstAidCapacity);
+                    __instance.m_Capacity = ItemWeight.FromKilograms(ContainerSettings.Instance.ContainerFirstAidCapacity);
                 }
 
                 // Gun Locker
                 else if (__instance.name.Contains("CONTAINER_StorageGunLocker"))
                 {
-                    __instance.m_Capacity = ItemWeight.FromKilograms(Settings.Instance.ContainerGunLockerCapacity);
+                    __instance.m_Capacity = ItemWeight.FromKilograms(ContainerSettings.Instance.ContainerGunLockerCapacity);
                 }
 
                 // Supply Bin
                 else if (__instance.name.Contains("CONTAINER_ForestryCrate"))
                 {
-                    __instance.m_Capacity = ItemWeight.FromKilograms(Settings.Instance.ContainerSupplyBinCapacity);
+                    __instance.m_Capacity = ItemWeight.FromKilograms(ContainerSettings.Instance.ContainerSupplyBinCapacity);
                 }
 
                 // Large Cabinet
                 else if (__instance.name.Contains("CONTAINER_LargeCabinet"))
                 {
-                    __instance.m_Capacity = ItemWeight.FromKilograms(Settings.Instance.ContainerCabinetLgeCapacity);
+                    __instance.m_Capacity = ItemWeight.FromKilograms(ContainerSettings.Instance.ContainerCabinetLgeCapacity);
                 }
 
                 // Trunk (Box) 1
                 else if (__instance.name.Contains("CONTAINER_LilysChest"))
                 {
-                    __instance.m_Capacity = ItemWeight.FromKilograms(Settings.Instance.ContainerTrunkCapacity);
+                    __instance.m_Capacity = ItemWeight.FromKilograms(ContainerSettings.Instance.ContainerTrunkCapacity);
                 }
 
                 // Trunk (Rustic Storage)
                 else if (__instance.name.Contains("CONTAINER_Rustic_Storage_Trunk"))
                 {
-                    __instance.m_Capacity = ItemWeight.FromKilograms(Settings.Instance.ContainerRusticStorageTrunkCapacity);
+                    __instance.m_Capacity = ItemWeight.FromKilograms(ContainerSettings.Instance.ContainerRusticStorageTrunkCapacity);
                 }
 
                 // Lock Box
                 else if (__instance.name.Contains("CONTAINER_LockBoxB"))
                 {
-                    __instance.m_Capacity = ItemWeight.FromKilograms(Settings.Instance.ContainerLockBoxCapacity);
+                    __instance.m_Capacity = ItemWeight.FromKilograms(ContainerSettings.Instance.ContainerLockBoxCapacity);
                 }
 
                 // Locker 1
                 else if (__instance.name.Contains("CONTAINER_LockerA"))
                 {
-                    __instance.m_Capacity = ItemWeight.FromKilograms(Settings.Instance.ContainerLockerCapacity);
+                    __instance.m_Capacity = ItemWeight.FromKilograms(ContainerSettings.Instance.ContainerLockerCapacity);
                 }
 
                 //Medicine Shelf
                 else if (__instance.name.Contains("CONTAINER_MedicineShelf"))
                 {
-                    __instance.m_Capacity = ItemWeight.FromKilograms(Settings.Instance.ContainerMedicineShelfCapacity);
+                    __instance.m_Capacity = ItemWeight.FromKilograms(ContainerSettings.Instance.ContainerMedicineShelfCapacity);
                 }
 
                 // Metal Box
                 else if (__instance.name.Contains("CONTAINER_MetalBox"))
                 {
-                    __instance.m_Capacity = ItemWeight.FromKilograms(Settings.Instance.ContainerMetalContainerCapacity);
+                    __instance.m_Capacity = ItemWeight.FromKilograms(ContainerSettings.Instance.ContainerMetalContainerCapacity);
                 }
 
                 // Locker 2
                 else if (__instance.name.Contains("CONTAINER_MetalLocker"))
                 {
-                    __instance.m_Capacity = ItemWeight.FromKilograms(Settings.Instance.ContainerLockerCapacity);
+                    __instance.m_Capacity = ItemWeight.FromKilograms(ContainerSettings.Instance.ContainerLockerCapacity);
                 }
 
                 //Plastic Container
                 else if (__instance.name.Contains("CONTAINER_PlasticBox"))
                 {
                     __instance.m_Capacity =
-                        ItemWeight.FromKilograms(Settings.Instance.ContainerPlasticContainerCapacity);
+                        ItemWeight.FromKilograms(ContainerSettings.Instance.ContainerPlasticContainerCapacity);
                 }
 
                 // Safe
                 else if (__instance.name.Contains("CONTAINER_Safe"))
                 {
-                    __instance.m_Capacity = ItemWeight.FromKilograms(Settings.Instance.ContainerSafeCapacity);
+                    __instance.m_Capacity = ItemWeight.FromKilograms(ContainerSettings.Instance.ContainerSafeCapacity);
                 }
 
                 // Small Cabinet 1
                 else if (__instance.name.Contains("CONTAINER_SmallCabinet"))
                 {
-                    __instance.m_Capacity = ItemWeight.FromKilograms(Settings.Instance.ContainerCabinetSmlCapacity);
+                    __instance.m_Capacity = ItemWeight.FromKilograms(ContainerSettings.Instance.ContainerCabinetSmlCapacity);
                 }
 
                 // Trunk (Box)
                 else if (__instance.name.Contains("CONTAINER_SteamerTrunk"))
                 {
-                    __instance.m_Capacity = ItemWeight.FromKilograms(Settings.Instance.ContainerTrunkCapacity);
+                    __instance.m_Capacity = ItemWeight.FromKilograms(ContainerSettings.Instance.ContainerTrunkCapacity);
                 }
 
                 // Hatch
                 else if (__instance.name.Contains("CONTAINER_StoneCabinATrapDoor"))
                 {
-                    __instance.m_Capacity = ItemWeight.FromKilograms(Settings.Instance.ContainerHatchCapacity);
+                    __instance.m_Capacity = ItemWeight.FromKilograms(ContainerSettings.Instance.ContainerHatchCapacity);
                 }
 
                 // Trash Can
                 else if (__instance.name.Contains("CONTAINER_TrashCanister"))
                 {
-                    __instance.m_Capacity = ItemWeight.FromKilograms(Settings.Instance.ContainerTrashCanCapacity);
+                    __instance.m_Capacity = ItemWeight.FromKilograms(ContainerSettings.Instance.ContainerTrashCanCapacity);
                 }
 
                 // Washer
                 else if (__instance.name.Contains("CONTAINER_Washer"))
                 {
-                    __instance.m_Capacity = ItemWeight.FromKilograms(Settings.Instance.ContainerWasherCapacity);
+                    __instance.m_Capacity = ItemWeight.FromKilograms(ContainerSettings.Instance.ContainerWasherCapacity);
                 }
 
                 // Rock Cache
                 else if (__instance.name.Contains("GEAR_RockCache_Prefab"))
                 {
-                    __instance.m_Capacity = ItemWeight.FromKilograms(Settings.Instance.ContainerRockCacheCapacity);
+                    __instance.m_Capacity = ItemWeight.FromKilograms(ContainerSettings.Instance.ContainerRockCacheCapacity);
                 }
 
                 // Cargo Container
                 else if (__instance.name.Contains("OBJ_CargoCrateBottomDoor") || __instance.name.Contains("OBJ_CargoCrateTopDoor"))
                 {
-                    __instance.m_Capacity = ItemWeight.FromKilograms(Settings.Instance.ContainerCargoContainerCapacity);
+                    __instance.m_Capacity = ItemWeight.FromKilograms(ContainerSettings.Instance.ContainerCargoContainerCapacity);
                 }
 
                 // Cash Register
                 else if (__instance.name.Contains("OBJ_CashRegisterDrawer"))
                 {
-                    __instance.m_Capacity = ItemWeight.FromKilograms(Settings.Instance.ContainerCashRegisterCapacity);
+                    __instance.m_Capacity = ItemWeight.FromKilograms(ContainerSettings.Instance.ContainerCashRegisterCapacity);
                 }
 
                 // Dresser Drawer
                 else if (__instance.name.Contains("OBJ_DresserDrawer") || __instance.name.Contains("OBJ_DresserTallDrawer"))
                 {
-                    __instance.m_Capacity = ItemWeight.FromKilograms(Settings.Instance.ContainerDresserDrawerCapacity);
+                    __instance.m_Capacity = ItemWeight.FromKilograms(ContainerSettings.Instance.ContainerDresserDrawerCapacity);
                 }
 
                 // Side Table Drawer
                 else if (__instance.name.Contains("OBJ_EndTableDrawer"))
                 {
-                    __instance.m_Capacity = ItemWeight.FromKilograms(Settings.Instance.ContainerEndTableDrawerCapacity);
+                    __instance.m_Capacity = ItemWeight.FromKilograms(ContainerSettings.Instance.ContainerEndTableDrawerCapacity);
                 }
 
                 // Cupboard
                 else if (__instance.name.Contains("OBJ_CupboardDoor"))
                 {
-                    __instance.m_Capacity = ItemWeight.FromKilograms(Settings.Instance.ContainerCupboardCapacity);
+                    __instance.m_Capacity = ItemWeight.FromKilograms(ContainerSettings.Instance.ContainerCupboardCapacity);
                 }
 
                 // Fishing Hut Cupboard
                 else if (__instance.name.Contains("OBJ_FishingCabinCupboardDoor"))
                 {
-                    __instance.m_Capacity = ItemWeight.FromKilograms(Settings.Instance.ContainerCupboardCapacity);
+                    __instance.m_Capacity = ItemWeight.FromKilograms(ContainerSettings.Instance.ContainerCupboardCapacity);
                 }
 
                 // Fishing Hut Drawers
                 else if (__instance.name.Contains("OBJ_FishingCabinDresserDrawer"))
                 {
                     __instance.m_Capacity =
-                        ItemWeight.FromKilograms(Settings.Instance.ContainerFishingHutDrawerCapacity);
+                        ItemWeight.FromKilograms(ContainerSettings.Instance.ContainerFishingHutDrawerCapacity);
                 }
 
                 // Fridge
                 else if (__instance.name.Contains("OBJ_FridgeBottomDoor"))
                 {
-                    __instance.m_Capacity = ItemWeight.FromKilograms(Settings.Instance.ContainerFridgeCapacity);
+                    __instance.m_Capacity = ItemWeight.FromKilograms(ContainerSettings.Instance.ContainerFridgeCapacity);
                 }
 
                 // Freezer
                 else if (__instance.name.Contains("OBJ_FridgeTopDoor"))
                 {
-                    __instance.m_Capacity = ItemWeight.FromKilograms(Settings.Instance.ContainerFreezerCapacity);
+                    __instance.m_Capacity = ItemWeight.FromKilograms(ContainerSettings.Instance.ContainerFreezerCapacity);
                 }
 
                 // Infirmary Drawers
                 else if (__instance.name.Contains("OBJ_InfirmaryDrawer"))
                 {
                     __instance.m_Capacity =
-                        ItemWeight.FromKilograms(Settings.Instance.ContainerInfirmaryDrawerCapacity);
+                        ItemWeight.FromKilograms(ContainerSettings.Instance.ContainerInfirmaryDrawerCapacity);
                 }
 
                 // Oven
                 else if (__instance.name.Contains("OBJ_GasOvenDoor"))
                 {
-                    __instance.m_Capacity = ItemWeight.FromKilograms(Settings.Instance.ContainerOvenCapacity);
+                    __instance.m_Capacity = ItemWeight.FromKilograms(ContainerSettings.Instance.ContainerOvenCapacity);
                 }
 
                 // Kitchen Cabinet
                 else if (__instance.name.Contains("OBJ_KitchenCabinetDoor"))
                 {
-                    __instance.m_Capacity = ItemWeight.FromKilograms(Settings.Instance.ContainerKitchenCabinetCapacity);
+                    __instance.m_Capacity = ItemWeight.FromKilograms(ContainerSettings.Instance.ContainerKitchenCabinetCapacity);
                 }
 
                 // Kitchen Drawer
                 else if (__instance.name.Contains("OBJ_KitchenDrawer"))
                 {
-                    __instance.m_Capacity = ItemWeight.FromKilograms(Settings.Instance.ContainerKitchenDrawerCapacity);
+                    __instance.m_Capacity = ItemWeight.FromKilograms(ContainerSettings.Instance.ContainerKitchenDrawerCapacity);
                 }
 
                 // Metal Desk Drawer Large
                 else if (__instance.name.Contains("OBJ_MetalDeskDrawer1") || __instance.name.Contains("OBJ_MetalDeskDrawer4"))
                 {
-                    __instance.m_Capacity = ItemWeight.FromKilograms(Settings.Instance.ContainerDeskDrawerLgeCapacity);
+                    __instance.m_Capacity = ItemWeight.FromKilograms(ContainerSettings.Instance.ContainerDeskDrawerLgeCapacity);
                 }
 
                 // Metal Desk Drawer Small
                 else if (__instance.name.Contains("OBJ_MetalDeskDrawer2") || __instance.name.Contains("OBJ_MetalDeskDrawer3"))
                 {
-                    __instance.m_Capacity = ItemWeight.FromKilograms(Settings.Instance.ContainerDeskDrawerSmlCapacity);
+                    __instance.m_Capacity = ItemWeight.FromKilograms(ContainerSettings.Instance.ContainerDeskDrawerSmlCapacity);
                 }
 
                 // File Cabinet
                 else if (__instance.name.Contains("OBJ_MetalFileCabinetDrawer"))
                 {
-                    __instance.m_Capacity = ItemWeight.FromKilograms(Settings.Instance.ContainerFileCabinetCapacity);
+                    __instance.m_Capacity = ItemWeight.FromKilograms(ContainerSettings.Instance.ContainerFileCabinetCapacity);
                 }
 
                 // Workbench Drawer
                 else if (__instance.name.Contains("OBJ_WorkBenchDrawer"))
                 {
                     __instance.m_Capacity =
-                        ItemWeight.FromKilograms(Settings.Instance.ContainerWorkbenchDrawerCapacity);
+                        ItemWeight.FromKilograms(ContainerSettings.Instance.ContainerWorkbenchDrawerCapacity);
                 }
 
                 // Locker 3
                 else if (__instance.name.Contains("OBJ_MetalLockerDoor"))
                 {
-                    __instance.m_Capacity = ItemWeight.FromKilograms(Settings.Instance.ContainerLockerCapacity);
+                    __instance.m_Capacity = ItemWeight.FromKilograms(ContainerSettings.Instance.ContainerLockerCapacity);
                 }
 
                 // Small Cabinet 2
                 else if (__instance.name.Contains("OBJ_SmallCabinetDoor"))
                 {
-                    __instance.m_Capacity = ItemWeight.FromKilograms(Settings.Instance.ContainerCabinetSmlCapacity);
+                    __instance.m_Capacity = ItemWeight.FromKilograms(ContainerSettings.Instance.ContainerCabinetSmlCapacity);
                 }
 
                 // Suitcase
                 else if (__instance.name.Contains("OBJ_Suitcase"))
                 {
-                    __instance.m_Capacity = ItemWeight.FromKilograms(Settings.Instance.ContainerSuitcaseCapacity);
+                    __instance.m_Capacity = ItemWeight.FromKilograms(ContainerSettings.Instance.ContainerSuitcaseCapacity);
                 }
 
                 // Tool Cabinet Drawers
@@ -337,12 +337,12 @@ internal static class Container
                     if (__instance.name.Contains("OBJ_ToolCabinetDrawerE"))
                     {
                         __instance.m_Capacity =
-                            ItemWeight.FromKilograms(Settings.Instance.ContainerToolCabinetDrawerLgeCapacity);
+                            ItemWeight.FromKilograms(ContainerSettings.Instance.ContainerToolCabinetDrawerLgeCapacity);
                     }
                     else
                     {
                         __instance.m_Capacity =
-                            ItemWeight.FromKilograms(Settings.Instance.ContainerToolCabinetDrawerSmlCapacity);
+                            ItemWeight.FromKilograms(ContainerSettings.Instance.ContainerToolCabinetDrawerSmlCapacity);
                     }
                 }
 
@@ -350,20 +350,20 @@ internal static class Container
                 else if (__instance.name.Contains("OBJ_WardenDesk"))
                 {
                     __instance.m_Capacity =
-                        ItemWeight.FromKilograms(Settings.Instance.ContainerWardenDeskDrawerCapacity);
+                        ItemWeight.FromKilograms(ContainerSettings.Instance.ContainerWardenDeskDrawerCapacity);
                 }
 
                 // Wood Desk Drawer
                 else if (__instance.name.Contains("OBJ_TrailerInteriorDeskDrawerLg_Prefab"))
                 {
-                    __instance.m_Capacity = ItemWeight.FromKilograms(Settings.Instance.ContainerWoodDeskDrawerCapacity);
+                    __instance.m_Capacity = ItemWeight.FromKilograms(ContainerSettings.Instance.ContainerWoodDeskDrawerCapacity);
                 }
 
                 // Safety Deposit Box
                 else if (__instance.name.Contains("STR_BankAVaultDepositBox"))
                 {
                     __instance.m_Capacity =
-                        ItemWeight.FromKilograms(Settings.Instance.ContainerSafetyDepositBoxCapacity);
+                        ItemWeight.FromKilograms(ContainerSettings.Instance.ContainerSafetyDepositBoxCapacity);
                 }
 
                 else
