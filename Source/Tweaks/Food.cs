@@ -1,5 +1,6 @@
 ﻿using Il2CppTLD.Gear;
 using Il2CppTLD.IntBackedUnit;
+
 using UniversalTweaks.Properties;
 using UniversalTweaks.Utilities;
 
@@ -15,7 +16,7 @@ internal static class Food
     {
         private static void Postfix(GearItem __instance)
         {
-            string[] headacheFoods = 
+            string[] headacheFoods =
             [
                 "GEAR_CookedPiePeach", "GEAR_CookedPieRoseHip", "GEAR_CookedPorridgeFruit", "GEAR_CookedPancakePeach"
             ];
@@ -38,6 +39,7 @@ internal static class Food
             {
                 __instance.gameObject.GetComponentInParent<FoodStatEffect>().m_Effect =
                     Settings.Instance.ReduceStewFatigueLossAmount;
+                Mod.Logger.Log($"Set '{__instance.gameObject.name}' fatigue loss to {Settings.Instance.ReduceStewFatigueLossAmount}.", FlaggedLoggingLevel.Trace);
             }
 
             // TODO: When optimising this mod, consider using the GearItem.LoadPrefab blah blah blah - so we can make a separate 'RefreshGearItems' method that can be called when the settings are changed.
@@ -52,6 +54,7 @@ internal static class Food
             if (Settings.Instance.ConsistantDressingWeight && __instance.gameObject.name is "GEAR_OldMansBeardDressing")
             {
                 __instance.m_GearItemData.m_BaseWeight = ItemWeight.FromKilograms(0.03f);
+                Mod.Logger.Log("Applied consistent dressing weight to Old Man's Dressing.", FlaggedLoggingLevel.Trace);
             }
         }
     }

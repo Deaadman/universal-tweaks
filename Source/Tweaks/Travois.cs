@@ -1,5 +1,6 @@
 ﻿using Il2CppTLD.BigCarry;
 using Il2CppTLD.Interactions;
+
 using UniversalTweaks.Properties;
 
 namespace UniversalTweaks.Tweaks;
@@ -24,6 +25,7 @@ internal static class Travois
             else
             {
                 __result = true;
+                Mod.Logger.Log($"Overrode travois interaction restriction for '{interaction}'.", FlaggedLoggingLevel.Trace);
             }
         }
     }
@@ -57,6 +59,8 @@ internal static class Travois
             __instance.m_MovementDecayPerUnit = Settings.Instance.CheatingTweaks
                 ? Settings.Instance.DecayMovementPerUnitTravois / 100f
                 : 0.05f;
+
+            Mod.Logger.Log("Applied travois tweaks on pickup.", FlaggedLoggingLevel.Debug);
         }
     }
 }

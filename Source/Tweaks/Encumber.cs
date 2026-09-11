@@ -1,4 +1,5 @@
 ﻿using Il2CppTLD.IntBackedUnit;
+
 using UniversalTweaks.Properties;
 
 namespace UniversalTweaks.Tweaks;
@@ -65,6 +66,8 @@ internal static class Encumber
             encumber.m_EncumberLowThreshold = ItemWeight.FromKilograms(31f + additionalWeight);
             encumber.m_EncumberMedThreshold = ItemWeight.FromKilograms(40f + additionalWeight);
             encumber.m_EncumberHighThreshold = ItemWeight.FromKilograms(60f + additionalWeight);
+
+            Mod.Logger.Log($"Applied encumbrance tweaks with {additionalWeight}KG additional weight.", FlaggedLoggingLevel.Debug);
         }
         else
         {

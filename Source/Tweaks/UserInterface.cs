@@ -1,4 +1,5 @@
 ﻿using Il2CppTLD.OptionalContent;
+
 using UniversalTweaks.Properties;
 
 namespace UniversalTweaks.Tweaks;
@@ -30,6 +31,7 @@ internal static class UserInterface
             }
 
             __result = GameManager.GetInventoryComponent().GetBestGearItemWithName("GEAR_SprayPaintCan") == null;
+            Mod.Logger.Log($"Spray paint radial greyed out: {__result}.", FlaggedLoggingLevel.Trace);
             return false;
         }
     }
@@ -46,6 +48,8 @@ internal static class UserInterface
 
             __instance.m_Sprite_FireFill.gameObject.transform.localPosition = new Vector3(159.1f, -31.6f, 0);
             __instance.m_Sprite_FireFill.gameObject.transform.localScale = new Vector3(1.7f, 1.7f, 1);
+
+            Mod.Logger.Log("Applied feed fire sprite fix.", FlaggedLoggingLevel.Debug);
         }
     }
 
@@ -76,6 +80,7 @@ internal static class UserInterface
                 if (__instance.m_MenuItems[i].m_Type == removeType)
                 {
                     __instance.m_MenuItems.RemoveAt(i);
+                    Mod.Logger.Log($"Removed promotional main menu item '{removeType}'.", FlaggedLoggingLevel.Debug);
                 }
             }
         }

@@ -12,22 +12,35 @@ internal static class TextureSwapper
     private static Dictionary<string, Texture2D> LoadTexturesFromAssetBundle()
     {
         var loadedTextures = new Dictionary<string, Texture2D>();
-        if (UniversalTweaksAssetBundle == null) return loadedTextures;
+        if (UniversalTweaksAssetBundle == null)
+        {
+            Mod.Logger.Log("Asset bundle unavailable; no textures were loaded.", FlaggedLoggingLevel.Warning);
+            return loadedTextures;
+        }
 
         foreach (var texture in UniversalTweaksAssetBundle.LoadAllAssets<Texture2D>())
         {
             loadedTextures[texture.name] = texture;
         }
 
+        Mod.Logger.Log($"Loaded {loadedTextures.Count} texture(s) from the asset bundle.", FlaggedLoggingLevel.Debug);
         return loadedTextures;
     }
 
     internal static void SwapGearItemTexture(string gearItemName, string gameObjectName, string newTextureName)
     {
-        if (!Textures.TryGetValue(newTextureName, out var newTexture)) return;
+        if (!Textures.TryGetValue(newTextureName, out var newTexture))
+        {
+            Mod.Logger.Log($"Texture '{newTextureName}' was not found; skipping swap for '{gearItemName}'.", FlaggedLoggingLevel.Warning);
+            return;
+        }
 
         var gearItemPrefab = GearItem.LoadGearItemPrefab(gearItemName);
-        if (gearItemPrefab == null) return;
+        if (gearItemPrefab == null)
+        {
+            Mod.Logger.Log($"Gear item prefab '{gearItemName}' was not found; skipping texture swap.", FlaggedLoggingLevel.Warning);
+            return;
+        }
 
         foreach (var renderer in gearItemPrefab.GetComponentsInChildren<Renderer>(true))
         {
@@ -41,6 +54,8 @@ internal static class TextureSwapper
                 material.mainTexture = newTexture;
             }
         }
+
+        Mod.Logger.Log($"Swapped texture for '{gearItemName}' ('{gameObjectName}') to '{newTextureName}'.", FlaggedLoggingLevel.Debug);
     }
 
     [HarmonyPatch(typeof(Utils), nameof(Utils.GetInventoryIconTexture), typeof(GearItem))]
@@ -69,6 +84,8 @@ internal static class TextureSwapper
             {
                 return true;
             }
+
+            Mod.Logger.Log($"Swapped inventory icon texture for '{gi.name}' to '{textureName}'.", FlaggedLoggingLevel.Trace);
 
             __result = newTexture;
             return false;

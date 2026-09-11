@@ -22,6 +22,10 @@ internal static class RockCache
         {
             __instance.m_MaxRockCachesPerRegion = Settings.Instance.MaximumPerRegionRockCaches;
             __instance.m_MinDistanceBetweenRockCaches = Settings.Instance.MinimumDistanceBetweenRockCaches;
+
+            Mod.Logger.Log(
+                $"Rock cache limits set: max {Settings.Instance.MaximumPerRegionRockCaches} per region, min distance {Settings.Instance.MinimumDistanceBetweenRockCaches}.",
+                FlaggedLoggingLevel.Debug);
         }
     }
 
@@ -53,6 +57,7 @@ internal static class RockCache
                 UnityEngine.Object.Instantiate(GameManager.GetRockCacheManager().m_RockCachePrefab.gameObject);
             if (gameObject == null)
             {
+                Mod.Logger.Log("Failed to instantiate rock cache prefab for indoor placement.", FlaggedLoggingLevel.Error);
                 return false;
             }
 
@@ -60,6 +65,8 @@ internal static class RockCache
             gameObject.SetActive(false);
             GameManager.GetPlayerManagerComponent().StartPlaceMesh(gameObject,
                 GameManager.GetRockCacheManager().m_BuildRangeMax, PlaceMeshFlags.UseMeshVariant);
+
+            Mod.Logger.Log("Started indoor rock cache placement.", FlaggedLoggingLevel.Debug);
 
             return false;
         }

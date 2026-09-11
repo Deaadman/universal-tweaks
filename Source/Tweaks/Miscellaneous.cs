@@ -20,6 +20,8 @@ internal static class Miscellaneous
             itemTransform.eulerAngles = __instance.name.Contains("GEAR_Rifle")
                 ? new Vector3(itemTransform.eulerAngles.x, randomRotationY, 90)
                 : new Vector3(0, randomRotationY, 0);
+
+            Mod.Logger.Log($"Randomized drop rotation for '{__instance.name}' to {randomRotationY:0.##} degrees.", FlaggedLoggingLevel.Trace);
         }
     }
 }

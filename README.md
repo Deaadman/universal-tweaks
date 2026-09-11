@@ -102,6 +102,7 @@ For this mod to work, ensure you have the following mods below:
 
 - [**ModComponent**](https://github.com/dommrogers/ModComponent/releases)
 - [**ModSettings**](https://github.com/DigitalzombieTLD/ModSettings)
+- [**Complex Logger**](https://github.com/Arkhorse/Complex-Logger)
 
 ### Incompatible Mods
 

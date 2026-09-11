@@ -39,11 +39,15 @@
 		<Using Include="UnityEngine" />
 		<Using Include="System.Reflection" />
 		<Using Include="System.Diagnostics.CodeAnalysis" />
+		<Using Include="ComplexLogger.FlaggedLoggingLevel" Alias="FlaggedLoggingLevel" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <Reference Include="ModComponent">
 	    <HintPath>Dependencies\ModComponent.dll</HintPath>
+	  </Reference>
+	  <Reference Include="ComplexLogger">
+	    <HintPath>Dependencies\ComplexLogger.dll</HintPath>
 	  </Reference>
 	</ItemGroup>
 

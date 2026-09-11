@@ -11,12 +11,14 @@ internal static class ComponentUtilities
             var item = GearItem.LoadGearItemPrefab(itemName);
             if (item == null)
             {
+                Mod.Logger.Log($"Gear item prefab '{itemName}' was not found; skipping component removal.", FlaggedLoggingLevel.Warning);
                 continue;
             }
 
             var component = item.gameObject.GetComponent<T>();
             if (component == null)
             {
+                Mod.Logger.Log($"'{itemName}' has no {typeof(T).Name} to remove.", FlaggedLoggingLevel.Trace);
                 continue;
             }
 
@@ -27,6 +29,8 @@ internal static class ComponentUtilities
 
             StoredComponents[itemName][typeof(T)] = component;
             UnityEngine.Object.Destroy(component);
+
+            Mod.Logger.Log($"Removed {typeof(T).Name} from '{itemName}'.", FlaggedLoggingLevel.Debug);
         }
     }
 
@@ -37,6 +41,7 @@ internal static class ComponentUtilities
             if (!StoredComponents.TryGetValue(itemName, out var components) ||
                 !components.TryGetValue(typeof(T), out var component))
             {
+                Mod.Logger.Log($"No stored {typeof(T).Name} to restore for '{itemName}'.", FlaggedLoggingLevel.Trace);
                 continue;
             }
 
@@ -44,6 +49,7 @@ internal static class ComponentUtilities
             if (item != null && item.gameObject.GetComponent<T>() == null)
             {
                 item.gameObject.AddComponent<T>().CopyFrom(component);
+                Mod.Logger.Log($"Restored {typeof(T).Name} on '{itemName}'.", FlaggedLoggingLevel.Debug);
             }
         }
     }
@@ -56,10 +62,17 @@ internal static class ComponentUtilities
             return;
         }
 
-        var fields = type.GetFields(BindingFlags.Public | BindingFlags.Instance);
-        foreach (var field in fields)
+        try
         {
-            field.SetValue(destination, field.GetValue(source));
+            var fields = type.GetFields(BindingFlags.Public | BindingFlags.Instance);
+            foreach (var field in fields)
+            {
+                field.SetValue(destination, field.GetValue(source));
+            }
+        }
+        catch (Exception ex)
+        {
+            Mod.Logger.Log($"Failed to copy field values onto {type.Name} via reflection.", FlaggedLoggingLevel.Exception, ex);
         }
     }
 }

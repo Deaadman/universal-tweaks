@@ -16,6 +16,10 @@ internal static class Noisemaker
 
             __instance.m_NoiseMakerItem.m_BurnLifetimeMinutes = Settings.Instance.NoisemakerBurnLength;
             __instance.m_NoiseMakerItem.m_ThrowForce = Settings.Instance.NoisemakerThrowForce;
+
+            Mod.Logger.Log(
+                $"Applied noisemaker tweaks: burn length {Settings.Instance.NoisemakerBurnLength}, throw force {Settings.Instance.NoisemakerThrowForce}.",
+                FlaggedLoggingLevel.Debug);
         }
     }
 }

@@ -16,7 +16,8 @@ internal class Settings : JsonModSettings
     [Slider(0, 120, NumberFormat = "{0:0.##} KG")]
     public int AdditionalEncumbermentWeight = 0;
 
-    [Name("Breath Visibility")] [Description("Toggle the visual breath effect on or off.")]
+    [Name("Breath Visibility")]
+    [Description("Toggle the visual breath effect on or off.")]
     public bool BreathVisibility = true;
 
     [Name("Consistant Old Man's Dressing Weight")]
@@ -27,7 +28,8 @@ internal class Settings : JsonModSettings
     [Description("Determine whether feat progress counts in custom difficulties.")]
     public bool FeatProgressInCustomMode = false;
 
-    [Name("Infinite Carry Weight")] [Description("Give the player a semi-infinite carrying weight.")]
+    [Name("Infinite Carry Weight")]
+    [Description("Give the player a semi-infinite carrying weight.")]
     public bool InfiniteEncumberWeight = false;
 
     [Name("MRE Texture Variation")]
@@ -45,7 +47,8 @@ internal class Settings : JsonModSettings
     [Slider(1, 20)]
     public int NoisemakerThrowForce = 9;
 
-    [Name("Randomized Item Rotation Drops")] [Description("Randomizes the rotation of items when they are dropped.")]
+    [Name("Randomized Item Rotation Drops")]
+    [Description("Randomizes the rotation of items when they are dropped.")]
     public bool RandomizedItemRotationDrops = false;
 
     [Name("Respirator Canister Duration")]
@@ -53,7 +56,8 @@ internal class Settings : JsonModSettings
     [Slider(45, 90, 4, NumberFormat = "{0:0.##} SEC")]
     public int RespiratorCanisterDuration = 45;
 
-    [Name("Revolver Handling Improvements")] [Description("Allows movement while aiming with the revolver.")]
+    [Name("Revolver Handling Improvements")]
+    [Description("Allows movement while aiming with the revolver.")]
     public bool RevolverImprovements = false;
 
     [Name("Snow Shelter Decay Rate")]
@@ -75,24 +79,27 @@ internal class Settings : JsonModSettings
     [Description("Alters the flashlight's flickering behavior by only flickering during an aurora if enabled.")]
     public bool AuroraFlickering = false;
 
-    [Name("Battery Randomization")] [Description("Sets the flashlight to start with a random battery charge level.")]
+    [Name("Battery Randomization")]
+    [Description("Sets the flashlight to start with a random battery charge level.")]
     public bool BatteryRandomization = false;
 
     [Name("Extended Functionality")]
     [Description("Allows the flashlight to function anytime, not just during auroras.")]
     public bool ExtendedFunctionality = false;
 
-    [Name("High-Beam Restrictions")] [Description("Restricts high beam functionality to aurora events only.")]
+    [Name("High-Beam Restrictions")]
+    [Description("Restricts high beam functionality to aurora events only.")]
     public bool HighBeamRestrictions = false;
 
-    [Name("Flashlight Beam Color")] [Description("Changes the color of the flashlight's beam.")]
+    [Name("Flashlight Beam Color")]
+    [Description("Changes the color of the flashlight's beam.")]
     public FlashlightBeamColor FlashlightBeamColor = FlashlightBeamColor.Default;
 
-    [Name("Red Value")] [Slider(0, 255)] public int FlashlightRedValue = 0;
+    [Name("Red Value")][Slider(0, 255)] public int FlashlightRedValue = 0;
 
-    [Name("Green Value")] [Slider(0, 255)] public int FlashlightGreenValue = 0;
+    [Name("Green Value")][Slider(0, 255)] public int FlashlightGreenValue = 0;
 
-    [Name("Blue Value")] [Slider(0, 255)] public int FlashlightBlueValue = 0;
+    [Name("Blue Value")][Slider(0, 255)] public int FlashlightBlueValue = 0;
 
     [Name("Flashlight Low Beam Duration")]
     [Description("Adjusts the flashlight's low beam duration. Default is 1.")]
@@ -125,14 +132,15 @@ internal class Settings : JsonModSettings
     [Description("Ensures the flashlight's battery never depletes, allowing unlimited use without recharging.")]
     public bool InfiniteBattery = false;
 
-    [Name("Miner's Flashlight Beam Color")] [Description("Changes the color of the miner's flashlight's beam.")]
+    [Name("Miner's Flashlight Beam Color")]
+    [Description("Changes the color of the miner's flashlight's beam.")]
     public FlashlightBeamColor MinersFlashlightBeamColor = FlashlightBeamColor.Default;
 
-    [Name("Red Value")] [Slider(0, 255)] public int MinersFlashlightRedValue = 0;
+    [Name("Red Value")][Slider(0, 255)] public int MinersFlashlightRedValue = 0;
 
-    [Name("Green Value")] [Slider(0, 255)] public int MinersFlashlightGreenValue = 0;
+    [Name("Green Value")][Slider(0, 255)] public int MinersFlashlightGreenValue = 0;
 
-    [Name("Blue Value")] [Slider(0, 255)] public int MinersFlashlightBlueValue = 0;
+    [Name("Blue Value")][Slider(0, 255)] public int MinersFlashlightBlueValue = 0;
 
     [Name("Miner's Flashlight Low Beam Duration")]
     [Description("Adjusts the miner's flashlight's low beam duration. Range: 0.1 (short) to 2 (long).")]
@@ -278,7 +286,8 @@ internal class Settings : JsonModSettings
     [Description("Removes the promotional WINTERMUTE and Expansion menu items. (Requires main menu reload).")]
     public bool RemoveMainMenuItems = false;
 
-    [Name("Permanent Crosshair")] [Description("Keeps the crosshair visible at all times.")]
+    [Name("Permanent Crosshair")]
+    [Description("Keeps the crosshair visible at all times.")]
     public bool PermanentCrosshair = false;
 
     #endregion
@@ -534,7 +543,8 @@ internal class Settings : JsonModSettings
     [Description("Enables tweaks which alters items in a way that can be seen as 'cheating'.")]
     public bool CheatingTweaks = false;
 
-    [Name("Container Weight Tweaks")] [Description("Enables all tweaks related to modifying the containers weight.")]
+    [Name("Container Weight Tweaks")]
+    [Description("Enables all tweaks related to modifying the containers weight.")]
     public bool ContainerWeightTweaks = false;
 
     #endregion
@@ -544,6 +554,8 @@ internal class Settings : JsonModSettings
     protected override void OnConfirm()
     {
         base.OnConfirm();
+
+        Mod.Logger.Log("Settings confirmed.", FlaggedLoggingLevel.Debug);
 
         // Will need to change this return back into a != check if anything else here is added.
         var encumber = GameManager.GetEncumberComponent();
@@ -764,5 +776,7 @@ internal class Settings : JsonModSettings
         Instance.AddToModSettings(BuildInfo.Name);
         Instance.RefreshFields();
         Instance.RefreshGUI();
+
+        Mod.Logger.Log("Settings loaded.", FlaggedLoggingLevel.Debug);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace UniversalTweaks.Tweaks;
 
-internal static class Decals 
+internal static class Decals
 {
     [HarmonyPatch(typeof(DynamicDecalsManager), nameof(DynamicDecalsManager.RenderDynamicDecal))]
     private static class GlowingDecals
@@ -19,6 +19,8 @@ internal static class Decals
 
             __instance.m_AnimatedRevealMaterial = __instance.m_GlowMaterial;
 
+            Mod.Logger.Log("Applied glowing decal material.", FlaggedLoggingLevel.Trace);
+
             return true;
         }
     }
@@ -30,6 +32,8 @@ internal static class Decals
         {
             var dynamicDecalsManager = GameManager.GetDynamicDecalsManager();
             dynamicDecalsManager.m_DecalOverlapLeniencyPercent = Settings.Instance.DecalOverlapLeniency;
+
+            Mod.Logger.Log($"Decal overlap leniency set to {Settings.Instance.DecalOverlapLeniency}.", FlaggedLoggingLevel.Debug);
         }
     }
 }

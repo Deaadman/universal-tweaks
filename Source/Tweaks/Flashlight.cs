@@ -13,6 +13,7 @@ internal static class Flashlight
             if (Settings.Instance.BatteryRandomization)
             {
                 __instance.m_CurrentBatteryCharge = UnityEngine.Random.Range(0f, 1f);
+                Mod.Logger.Log($"Randomized flashlight battery charge to {__instance.m_CurrentBatteryCharge:0.##}.", FlaggedLoggingLevel.Debug);
             }
         }
     }
@@ -45,6 +46,8 @@ internal static class Flashlight
             __instance.m_LightOutdoor.enabled =
                 useOutdoorLighting && state is FlashlightItem.State.Low or FlashlightItem.State.High;
             __instance.m_LightOutdoorHigh.enabled = useOutdoorLighting && state == FlashlightItem.State.High;
+
+            Mod.Logger.Log($"Flashlight beam state changed to {state}.", FlaggedLoggingLevel.Trace);
 
             return false;
         }

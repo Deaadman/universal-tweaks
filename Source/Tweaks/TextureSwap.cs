@@ -12,8 +12,9 @@ internal static class TextureSwap
         {
             if (Settings.Instance.MRETextureVariant)
             {
-                TextureSwapper.SwapGearItemTexture("GEAR_MRE", "Obj_FoodMRE_LOD0", 
+                TextureSwapper.SwapGearItemTexture("GEAR_MRE", "Obj_FoodMRE_LOD0",
                     "GEAR_FoodBrownMRE_Dif");
+                Mod.Logger.Log("Applied brown MRE texture variant.", FlaggedLoggingLevel.Debug);
             }
         }
     }

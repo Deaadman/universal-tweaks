@@ -12,6 +12,7 @@ internal static class FeatProgress
             if (Settings.Instance.FeatProgressInCustomMode)
             {
                 __result = false;
+                Mod.Logger.Log("Allowing feat progress in custom mode.", FlaggedLoggingLevel.Trace);
             }
         }
     }

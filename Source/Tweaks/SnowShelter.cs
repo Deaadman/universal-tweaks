@@ -11,6 +11,8 @@ internal static class SnowShelter
         {
             __result.m_DailyDecayHP =
                 Settings.Instance.CheatingTweaks ? Settings.Instance.SnowShelterDailyDecayRate : 100;
+
+            Mod.Logger.Log($"Set snow shelter daily decay to {__result.m_DailyDecayHP}.", FlaggedLoggingLevel.Debug);
         }
     }
 }

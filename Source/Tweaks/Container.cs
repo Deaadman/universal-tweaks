@@ -1,4 +1,5 @@
 ﻿using Il2CppTLD.IntBackedUnit;
+
 using UniversalTweaks.Properties;
 
 namespace UniversalTweaks.Tweaks;
@@ -359,6 +360,8 @@ internal static class Container
                         ItemWeight.FromKilograms(Settings.Instance.ContainerSafetyDepositBoxCapacity);
                 }
             }
+
+            Mod.Logger.Log($"Container '{__instance.name}' capacity set to {__instance.m_Capacity}.", FlaggedLoggingLevel.Trace);
         }
     }
 }
