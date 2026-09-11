@@ -23,7 +23,7 @@ internal static class Food
             string[] insulatedFlasks =
             [
                 "GEAR_InsulatedFlask_A", "GEAR_InsulatedFlask_B", "GEAR_InsulatedFlask_C", "GEAR_InsulatedFlask_D",
-                "GEAR_InsulatedFlask_E", "GEAR_InsulatedFlask_F"
+                "GEAR_InsulatedFlask_E", "GEAR_InsulatedFlask_F", "GEAR_InsulatedFlask_G"
             ];
 
             if (Settings.Instance.RemoveHeadacheDebuffFromFoods)
