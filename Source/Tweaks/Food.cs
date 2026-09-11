@@ -50,6 +50,10 @@ internal static class Food
                 __instance.m_InsulatedFlask.m_PercentHeatLossPerMinuteOutdoors =
                     Settings.Instance.InsulatedFlaskHeatLossPerMinuteOutdoors;
             }
+            else if (__instance.m_InsulatedFlask != null)
+            {
+                Mod.Logger.Log($"Found insulated flask '{__instance.gameObject.name}' that is missing from the known flasks list.", FlaggedLoggingLevel.Debug);
+            }
 
             if (Settings.Instance.ConsistantDressingWeight && __instance.gameObject.name is "GEAR_OldMansBeardDressing")
             {

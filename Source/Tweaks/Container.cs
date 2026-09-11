@@ -365,6 +365,11 @@ internal static class Container
                     __instance.m_Capacity =
                         ItemWeight.FromKilograms(Settings.Instance.ContainerSafetyDepositBoxCapacity);
                 }
+
+                else
+                {
+                    Mod.Logger.Log($"Found container '{__instance.name}' that is missing from the known containers list.", FlaggedLoggingLevel.Debug);
+                }
             }
 
             Mod.Logger.Log($"Container '{__instance.name}' capacity set to {__instance.m_Capacity}.", FlaggedLoggingLevel.Trace);
