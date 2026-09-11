@@ -19,7 +19,7 @@
 	
 	<PropertyGroup>
 		<BuildInfoFile>$(IntermediateOutputPath)BuildInfo.g.cs</BuildInfoFile>
-		<TheLongDarkPath>D:\SteamLibrary\steamapps\common\TheLongDark</TheLongDarkPath>
+		<TheLongDarkPath>C:\Program Files (x86)\Steam\steamapps\common\TheLongDark</TheLongDarkPath>
 	</PropertyGroup>
 
 	<ItemGroup>
