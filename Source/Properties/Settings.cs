@@ -176,13 +176,13 @@ internal class Settings : JsonModSettings
     [Section("Food Tweaks")]
     [Name("Insulated Flask Duration Indoors")]
     [Description(
-        "Customise the duration of how long heat is keep inside the flask indoors. Range: 0.1 (1000 in-game minutes) to 0.25 (400 in-game minutes / default). (Requires scene reload).")]
+        "Customise the duration of how long heat is keep inside the flask indoors. Range: 0.1 (16.7 in-game hours) to 0.25 (6.7 in-game hours / default). (Requires scene reload).")]
     [Slider(0.1f, 1, 18)]
     public float InsulatedFlaskHeatLossPerMinuteIndoors = 0.25f;
 
     [Name("Insulated Flask Duration Outdoors")]
     [Description(
-        "Customise the duration of how long heat is keep inside the flask outdoors. Range: 0.1 (1000 in-game minutes) to 0.5 (200 in-game minutes / default). (Requires scene reload).")]
+        "Customise the duration of how long heat is keep inside the flask outdoors. Range: 0.1 (16.7 in-game hours) to 0.5 (3.3 in-game hours / default). (Requires scene reload).")]
     [Slider(0.1f, 1, 18)]
     public float InsulatedFlaskHeatLossPerMinuteOutdoors = 0.5f;
 
