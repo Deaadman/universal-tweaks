@@ -1,6 +1,7 @@
 ﻿using Il2CppTLD.IntBackedUnit;
 
 using UniversalTweaks.Properties;
+using UniversalTweaks.Utilities;
 
 namespace UniversalTweaks.Tweaks;
 
@@ -54,30 +55,18 @@ internal static class Encumber
 
     internal static void EncumberUpdate(Il2Cpp.Encumber encumber)
     {
-        if (Settings.Instance.AdditionalEncumbermentWeight > 0 || Settings.Instance.InfiniteEncumberWeight)
-        {
-            var additionalWeight = Settings.Instance.AdditionalEncumbermentWeight;
-            if (Settings.Instance.InfiniteEncumberWeight) additionalWeight = 9970;
+        var additionalWeight = EncumberCalculator.ResolveAdditionalWeight(
+            Settings.Instance.AdditionalEncumbermentWeight, Settings.Instance.InfiniteEncumberWeight);
+        var thresholds = EncumberCalculator.CalculateThresholds(additionalWeight);
 
-            encumber.m_MaxCarryCapacity = ItemWeight.FromKilograms(30f + additionalWeight);
-            encumber.m_MaxCarryCapacityWhenExhausted = ItemWeight.FromKilograms(15f + additionalWeight);
-            encumber.m_NoSprintCarryCapacity = ItemWeight.FromKilograms(40f + additionalWeight);
-            encumber.m_NoWalkCarryCapacity = ItemWeight.FromKilograms(60f + additionalWeight);
-            encumber.m_EncumberLowThreshold = ItemWeight.FromKilograms(31f + additionalWeight);
-            encumber.m_EncumberMedThreshold = ItemWeight.FromKilograms(40f + additionalWeight);
-            encumber.m_EncumberHighThreshold = ItemWeight.FromKilograms(60f + additionalWeight);
+        encumber.m_MaxCarryCapacity = ItemWeight.FromKilograms(thresholds.MaxCarryCapacity);
+        encumber.m_MaxCarryCapacityWhenExhausted = ItemWeight.FromKilograms(thresholds.MaxCarryCapacityWhenExhausted);
+        encumber.m_NoSprintCarryCapacity = ItemWeight.FromKilograms(thresholds.NoSprintCarryCapacity);
+        encumber.m_NoWalkCarryCapacity = ItemWeight.FromKilograms(thresholds.NoWalkCarryCapacity);
+        encumber.m_EncumberLowThreshold = ItemWeight.FromKilograms(thresholds.EncumberLowThreshold);
+        encumber.m_EncumberMedThreshold = ItemWeight.FromKilograms(thresholds.EncumberMedThreshold);
+        encumber.m_EncumberHighThreshold = ItemWeight.FromKilograms(thresholds.EncumberHighThreshold);
 
-            Mod.Logger.Log($"Applied encumbrance tweaks with {additionalWeight}KG additional weight.", FlaggedLoggingLevel.Debug);
-        }
-        else
-        {
-            encumber.m_MaxCarryCapacity = ItemWeight.FromKilograms(30f);
-            encumber.m_MaxCarryCapacityWhenExhausted = ItemWeight.FromKilograms(15f);
-            encumber.m_NoSprintCarryCapacity = ItemWeight.FromKilograms(40f);
-            encumber.m_NoWalkCarryCapacity = ItemWeight.FromKilograms(60f);
-            encumber.m_EncumberLowThreshold = ItemWeight.FromKilograms(31f);
-            encumber.m_EncumberMedThreshold = ItemWeight.FromKilograms(40f);
-            encumber.m_EncumberHighThreshold = ItemWeight.FromKilograms(60f);
-        }
+        Mod.Logger.Log($"Applied encumbrance tweaks with {additionalWeight}KG additional weight.", FlaggedLoggingLevel.Debug);
     }
 }

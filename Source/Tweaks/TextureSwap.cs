@@ -19,18 +19,21 @@ internal static class TextureSwap
         }
     }
 
-    internal static string GetTextureNameForGearItem(GearItem gi)
+    internal static string GetTextureNameForGearItem(GearItem gi) =>
+        ResolveTextureName(gi.name, Settings.Instance.MRETextureVariant);
+
+    internal static string ResolveTextureName(string gearItemName, bool mreTextureVariantEnabled)
     {
         var textureMapping = new Dictionary<string, string>
         {
             { "GEAR_MRE", "ico_GearItem__BrownMRE" }
         };
 
-        if (gi.name == "GEAR_MRE" && !Settings.Instance.MRETextureVariant)
+        if (gearItemName == "GEAR_MRE" && !mreTextureVariantEnabled)
         {
             return string.Empty;
         }
 
-        return textureMapping.TryGetValue(gi.name, out var textureName) ? textureName : string.Empty;
+        return textureMapping.TryGetValue(gearItemName, out var textureName) ? textureName : string.Empty;
     }
 }
