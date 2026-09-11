@@ -52,7 +52,8 @@ filter_commits = true
 # The rolling `nightly` prerelease tag must never be treated as a real version
 # boundary, otherwise "unreleased" would only mean "since last nightly build"
 # instead of "since the last real release".
-tag_pattern = "^v[0-9]+\\.[0-9]+\\.[0-9]+$"
+# Tags are unprefixed (no "v") going forward.
+tag_pattern = "^[0-9]+\\.[0-9]+\\.[0-9]+$"
 skip_tags = "^nightly$"
 ignore_tags = ""
 topo_order = false

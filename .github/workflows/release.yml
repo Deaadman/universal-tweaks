@@ -3,7 +3,7 @@ name: Release
 on:
   push:
     tags:
-      - "v[0-9]+.[0-9]+.[0-9]+"
+      - "[0-9]+.[0-9]+.[0-9]+"
 
 env:
   PROJECT_NAME: UniversalTweaks
@@ -52,11 +52,11 @@ jobs:
     - name: Verify Tag Matches Project Version
       shell: bash
       run: |
-        TAG_VERSION="${GITHUB_REF_NAME#v}"
+        TAG_VERSION="${GITHUB_REF_NAME}"
         CSPROJ_VERSION="$(grep -oP '(?<=<VersionPrefix>)[^<]+' "${{ env.PROJECT_PATH }}")"
 
         if [ "$TAG_VERSION" != "$CSPROJ_VERSION" ]; then
-          echo "::error::Tag v$TAG_VERSION does not match <VersionPrefix>$CSPROJ_VERSION</VersionPrefix> in ${{ env.PROJECT_PATH }}"
+          echo "::error::Tag $TAG_VERSION does not match <VersionPrefix>$CSPROJ_VERSION</VersionPrefix> in ${{ env.PROJECT_PATH }}"
           exit 1
         fi
 
