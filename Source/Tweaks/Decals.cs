@@ -9,7 +9,7 @@ internal static class Decals
     {
         private static bool Prefix(DynamicDecalsManager __instance)
         {
-            if (!Settings.Instance.GlowingDecals && __instance.m_GlowMaterial == null)
+            if (!Settings.Instance.GlowingDecals || __instance.m_GlowMaterial == null)
             {
                 return true;
             }
