@@ -13,10 +13,6 @@ internal class ContainerSettings : JsonModSettings
     #region Container Weight Tweaks
 
     [Section("Container Weight Tweaks")]
-    [Name("Container Weight Tweaks")]
-    [Description("Enables all tweaks related to modifying the containers weight.")]
-    public bool ContainerWeightTweaks = false;
-
     [Name("Infinite Container Weight")]
     [Description("Gives all the containers a semi-infinite weight value.")]
     public bool InfiniteContainerWeight = false;
@@ -267,111 +263,57 @@ internal class ContainerSettings : JsonModSettings
 
     internal void RefreshFields()
     {
-        if (ContainerWeightTweaks && Settings.Instance.CheatingTweaks)
-            SetFieldVisible(nameof(InfiniteContainerWeight), true);
+        SetFieldVisible(nameof(InfiniteContainerWeight), Settings.Instance.CheatingTweaks);
 
-        if (ContainerWeightTweaks)
-        {
-            SetFieldVisible(nameof(ContainerBackpackCapacity), true);
-            SetFieldVisible(nameof(ContainerBriefcaseCapacity), true);
-            SetFieldVisible(nameof(ContainerCabinetSmlCapacity), true);
-            SetFieldVisible(nameof(ContainerCabinetLgeCapacity), true);
-            SetFieldVisible(nameof(ContainerCargoContainerCapacity), true);
-            SetFieldVisible(nameof(ContainerCashRegisterCapacity), true);
-            SetFieldVisible(nameof(ContainerCoalBinCapacity), true);
-            SetFieldVisible(nameof(ContainerCoolerCapacity), true);
-            SetFieldVisible(nameof(ContainerCupboardCapacity), true);
-            SetFieldVisible(nameof(ContainerDresserDrawerCapacity), true);
-            SetFieldVisible(nameof(ContainerDryerCapacity), true);
-            SetFieldVisible(nameof(ContainerFileCabinetCapacity), true);
-            SetFieldVisible(nameof(ContainerFirstAidCapacity), true);
-            SetFieldVisible(nameof(ContainerFirewoodBinCapacity), true);
-            SetFieldVisible(nameof(ContainerFishingHutDrawerCapacity), true);
-            SetFieldVisible(nameof(ContainerFreezerCapacity), true);
-            SetFieldVisible(nameof(ContainerFridgeCapacity), true);
-            SetFieldVisible(nameof(ContainerGloveBoxCapacity), true);
-            SetFieldVisible(nameof(ContainerGunLockerCapacity), true);
-            SetFieldVisible(nameof(ContainerHatchCapacity), true);
-            SetFieldVisible(nameof(ContainerHiddenCacheCapacity), true);
-            SetFieldVisible(nameof(ContainerInfirmaryDrawerCapacity), true);
-            SetFieldVisible(nameof(ContainerKitchenCabinetCapacity), true);
-            SetFieldVisible(nameof(ContainerKitchenDrawerCapacity), true);
-            SetFieldVisible(nameof(ContainerLockBoxCapacity), true);
-            SetFieldVisible(nameof(ContainerLockerCapacity), true);
-            SetFieldVisible(nameof(ContainerMedicineShelfCapacity), true);
-            SetFieldVisible(nameof(ContainerDeskDrawerSmlCapacity), true);
-            SetFieldVisible(nameof(ContainerDeskDrawerLgeCapacity), true);
-            SetFieldVisible(nameof(ContainerMetalContainerCapacity), true);
-            SetFieldVisible(nameof(ContainerOvenCapacity), true);
-            SetFieldVisible(nameof(ContainerPlasticContainerCapacity), true);
-            SetFieldVisible(nameof(ContainerRockCacheCapacity), true);
-            SetFieldVisible(nameof(ContainerSafeCapacity), true);
-            SetFieldVisible(nameof(ContainerSafetyDepositBoxCapacity), true);
-            SetFieldVisible(nameof(ContainerEndTableDrawerCapacity), true);
-            SetFieldVisible(nameof(ContainerSupplyBinCapacity), true);
-            SetFieldVisible(nameof(ContainerSuitcaseCapacity), true);
-            SetFieldVisible(nameof(ContainerToolCabinetDrawerSmlCapacity), true);
-            SetFieldVisible(nameof(ContainerToolCabinetDrawerLgeCapacity), true);
-            SetFieldVisible(nameof(ContainerTrashCanCapacity), true);
-            SetFieldVisible(nameof(ContainerCarTrunkCapacity), true);
-            SetFieldVisible(nameof(ContainerTrunkCapacity), true);
-            SetFieldVisible(nameof(ContainerWardenDeskDrawerCapacity), true);
-            SetFieldVisible(nameof(ContainerWasherCapacity), true);
-            SetFieldVisible(nameof(ContainerWoodDeskDrawerCapacity), true);
-            SetFieldVisible(nameof(ContainerWorkbenchDrawerCapacity), true);
-        }
-        else
-        {
-            SetFieldVisible(nameof(ContainerBackpackCapacity), false);
-            SetFieldVisible(nameof(ContainerBriefcaseCapacity), false);
-            SetFieldVisible(nameof(ContainerCabinetSmlCapacity), false);
-            SetFieldVisible(nameof(ContainerCabinetLgeCapacity), false);
-            SetFieldVisible(nameof(ContainerCargoContainerCapacity), false);
-            SetFieldVisible(nameof(ContainerCashRegisterCapacity), false);
-            SetFieldVisible(nameof(ContainerCoalBinCapacity), false);
-            SetFieldVisible(nameof(ContainerCoolerCapacity), false);
-            SetFieldVisible(nameof(ContainerCupboardCapacity), false);
-            SetFieldVisible(nameof(ContainerDresserDrawerCapacity), false);
-            SetFieldVisible(nameof(ContainerDryerCapacity), false);
-            SetFieldVisible(nameof(ContainerFileCabinetCapacity), false);
-            SetFieldVisible(nameof(ContainerFirstAidCapacity), false);
-            SetFieldVisible(nameof(ContainerFirewoodBinCapacity), false);
-            SetFieldVisible(nameof(ContainerFishingHutDrawerCapacity), false);
-            SetFieldVisible(nameof(ContainerFreezerCapacity), false);
-            SetFieldVisible(nameof(ContainerFridgeCapacity), false);
-            SetFieldVisible(nameof(ContainerGloveBoxCapacity), false);
-            SetFieldVisible(nameof(ContainerGunLockerCapacity), false);
-            SetFieldVisible(nameof(ContainerHatchCapacity), false);
-            SetFieldVisible(nameof(ContainerHiddenCacheCapacity), false);
-            SetFieldVisible(nameof(ContainerInfirmaryDrawerCapacity), false);
-            SetFieldVisible(nameof(ContainerKitchenCabinetCapacity), false);
-            SetFieldVisible(nameof(ContainerKitchenDrawerCapacity), false);
-            SetFieldVisible(nameof(ContainerLockBoxCapacity), false);
-            SetFieldVisible(nameof(ContainerLockerCapacity), false);
-            SetFieldVisible(nameof(ContainerMedicineShelfCapacity), false);
-            SetFieldVisible(nameof(ContainerDeskDrawerSmlCapacity), false);
-            SetFieldVisible(nameof(ContainerDeskDrawerLgeCapacity), false);
-            SetFieldVisible(nameof(ContainerMetalContainerCapacity), false);
-            SetFieldVisible(nameof(ContainerOvenCapacity), false);
-            SetFieldVisible(nameof(ContainerPlasticContainerCapacity), false);
-            SetFieldVisible(nameof(ContainerRockCacheCapacity), false);
-            SetFieldVisible(nameof(ContainerSafeCapacity), false);
-            SetFieldVisible(nameof(ContainerSafetyDepositBoxCapacity), false);
-            SetFieldVisible(nameof(ContainerEndTableDrawerCapacity), false);
-            SetFieldVisible(nameof(ContainerSupplyBinCapacity), false);
-            SetFieldVisible(nameof(ContainerSuitcaseCapacity), false);
-            SetFieldVisible(nameof(ContainerToolCabinetDrawerSmlCapacity), false);
-            SetFieldVisible(nameof(ContainerToolCabinetDrawerLgeCapacity), false);
-            SetFieldVisible(nameof(ContainerTrashCanCapacity), false);
-            SetFieldVisible(nameof(ContainerCarTrunkCapacity), false);
-            SetFieldVisible(nameof(ContainerTrunkCapacity), false);
-            SetFieldVisible(nameof(ContainerWardenDeskDrawerCapacity), false);
-            SetFieldVisible(nameof(ContainerWasherCapacity), false);
-            SetFieldVisible(nameof(ContainerWoodDeskDrawerCapacity), false);
-            SetFieldVisible(nameof(ContainerWorkbenchDrawerCapacity), false);
+        bool showCapacities = !InfiniteContainerWeight;
 
-            SetFieldVisible(nameof(InfiniteContainerWeight), false);
-        }
+        SetFieldVisible(nameof(ContainerBackpackCapacity), showCapacities);
+        SetFieldVisible(nameof(ContainerBriefcaseCapacity), showCapacities);
+        SetFieldVisible(nameof(ContainerCabinetSmlCapacity), showCapacities);
+        SetFieldVisible(nameof(ContainerCabinetLgeCapacity), showCapacities);
+        SetFieldVisible(nameof(ContainerCargoContainerCapacity), showCapacities);
+        SetFieldVisible(nameof(ContainerCashRegisterCapacity), showCapacities);
+        SetFieldVisible(nameof(ContainerCoalBinCapacity), showCapacities);
+        SetFieldVisible(nameof(ContainerCoolerCapacity), showCapacities);
+        SetFieldVisible(nameof(ContainerCupboardCapacity), showCapacities);
+        SetFieldVisible(nameof(ContainerDresserDrawerCapacity), showCapacities);
+        SetFieldVisible(nameof(ContainerDryerCapacity), showCapacities);
+        SetFieldVisible(nameof(ContainerFileCabinetCapacity), showCapacities);
+        SetFieldVisible(nameof(ContainerFirstAidCapacity), showCapacities);
+        SetFieldVisible(nameof(ContainerFirewoodBinCapacity), showCapacities);
+        SetFieldVisible(nameof(ContainerFishingHutDrawerCapacity), showCapacities);
+        SetFieldVisible(nameof(ContainerFreezerCapacity), showCapacities);
+        SetFieldVisible(nameof(ContainerFridgeCapacity), showCapacities);
+        SetFieldVisible(nameof(ContainerGloveBoxCapacity), showCapacities);
+        SetFieldVisible(nameof(ContainerGunLockerCapacity), showCapacities);
+        SetFieldVisible(nameof(ContainerHatchCapacity), showCapacities);
+        SetFieldVisible(nameof(ContainerHiddenCacheCapacity), showCapacities);
+        SetFieldVisible(nameof(ContainerInfirmaryDrawerCapacity), showCapacities);
+        SetFieldVisible(nameof(ContainerKitchenCabinetCapacity), showCapacities);
+        SetFieldVisible(nameof(ContainerKitchenDrawerCapacity), showCapacities);
+        SetFieldVisible(nameof(ContainerLockBoxCapacity), showCapacities);
+        SetFieldVisible(nameof(ContainerLockerCapacity), showCapacities);
+        SetFieldVisible(nameof(ContainerMedicineShelfCapacity), showCapacities);
+        SetFieldVisible(nameof(ContainerDeskDrawerSmlCapacity), showCapacities);
+        SetFieldVisible(nameof(ContainerDeskDrawerLgeCapacity), showCapacities);
+        SetFieldVisible(nameof(ContainerMetalContainerCapacity), showCapacities);
+        SetFieldVisible(nameof(ContainerOvenCapacity), showCapacities);
+        SetFieldVisible(nameof(ContainerPlasticContainerCapacity), showCapacities);
+        SetFieldVisible(nameof(ContainerRockCacheCapacity), showCapacities);
+        SetFieldVisible(nameof(ContainerSafeCapacity), showCapacities);
+        SetFieldVisible(nameof(ContainerSafetyDepositBoxCapacity), showCapacities);
+        SetFieldVisible(nameof(ContainerEndTableDrawerCapacity), showCapacities);
+        SetFieldVisible(nameof(ContainerSupplyBinCapacity), showCapacities);
+        SetFieldVisible(nameof(ContainerSuitcaseCapacity), showCapacities);
+        SetFieldVisible(nameof(ContainerToolCabinetDrawerSmlCapacity), showCapacities);
+        SetFieldVisible(nameof(ContainerToolCabinetDrawerLgeCapacity), showCapacities);
+        SetFieldVisible(nameof(ContainerTrashCanCapacity), showCapacities);
+        SetFieldVisible(nameof(ContainerCarTrunkCapacity), showCapacities);
+        SetFieldVisible(nameof(ContainerTrunkCapacity), showCapacities);
+        SetFieldVisible(nameof(ContainerWardenDeskDrawerCapacity), showCapacities);
+        SetFieldVisible(nameof(ContainerWasherCapacity), showCapacities);
+        SetFieldVisible(nameof(ContainerWoodDeskDrawerCapacity), showCapacities);
+        SetFieldVisible(nameof(ContainerWorkbenchDrawerCapacity), showCapacities);
     }
 
     internal static void OnLoad()

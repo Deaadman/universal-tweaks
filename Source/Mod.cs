@@ -16,7 +16,7 @@ internal sealed class Mod : MelonMod
         Settings.OnLoad();
         ContainerSettings.OnLoad();
 
-        Logger.Log($"{Properties.BuildInfo.Name} v{Properties.BuildInfo.Version} initialized.", FlaggedLoggingLevel.Always);
+        Logger.Log($"{Properties.BuildInfo.Name} v{Properties.BuildInfo.Version} initialized.", FlaggedLoggingLevel.Debug);
     }
 
     private static void LoadLocalizations()
