@@ -309,6 +309,7 @@ internal class ContainerSettings : JsonModSettings
         SetFieldVisible(nameof(ContainerToolCabinetDrawerLgeCapacity), showCapacities);
         SetFieldVisible(nameof(ContainerTrashCanCapacity), showCapacities);
         SetFieldVisible(nameof(ContainerCarTrunkCapacity), showCapacities);
+        SetFieldVisible(nameof(ContainerRusticStorageTrunkCapacity), showCapacities);
         SetFieldVisible(nameof(ContainerTrunkCapacity), showCapacities);
         SetFieldVisible(nameof(ContainerWardenDeskDrawerCapacity), showCapacities);
         SetFieldVisible(nameof(ContainerWasherCapacity), showCapacities);
