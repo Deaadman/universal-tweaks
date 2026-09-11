@@ -63,6 +63,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v6
+      with:
+        fetch-depth: 0 # full history + tags, needed for git-cliff
 
     - uses: actions/download-artifact@v8
       with:
@@ -87,13 +89,36 @@ jobs:
         latest_tag="$(gh api repos/${{ github.repository }}/releases/latest --jq '.tag_name')"
         echo "latest_tag=$latest_tag" >> "$GITHUB_OUTPUT"
 
+    - name: Generate Changelog
+      uses: orhun/git-cliff-action@v4
+      id: git-cliff
+      with:
+        config: cliff.toml
+        # Everything since the last STABLE release, not since the last nightly build,
+        # so nightly notes accumulate rather than resetting on every push.
+        args: --unreleased --strip header
+      env:
+        OUTPUT: CHANGES.md
+
+    - name: Build Release Notes
+      shell: bash
+      run: |
+        if ! grep -q '^### ' CHANGES.md 2>/dev/null; then
+          echo "" >> CHANGES.md
+          echo "_No player-facing changes since the last release yet._" >> CHANGES.md
+        fi
+
+        {
+          cat CHANGES.md
+          echo ""
+          echo "**Full comparison**: https://github.com/${{ github.repository }}/compare/${{ steps.latest.outputs.latest_tag }}...nightly"
+        } > NOTES.md
+
     - name: Publish Release
       run: |
-        compare_url="https://github.com/${{ github.repository }}/compare/${{ steps.latest.outputs.latest_tag }}...nightly"
-        
         gh release create nightly \
           --prerelease \
           --title "${{ env.VERSION }}" \
-          --notes "Click on [this comparison](${compare_url}) to see what has changed since the latest release." \
+          --notes-file NOTES.md \
           --target "${{ github.sha }}" \
           out/${{ env.PROJECT_NAME }}.dll

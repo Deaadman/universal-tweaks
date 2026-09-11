@@ -1,0 +1,59 @@
+[changelog]
+header = """
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+"""
+body = """
+{% if version %}\
+## [{{ version | trim_start_matches(pat="v") }}] - {{ timestamp | date(format="%Y-%m-%d") }}
+{% else %}\
+## [Unreleased]
+{% endif %}\
+{% set group_order = ["Added", "Changed", "Deprecated", "Removed", "Fixed", "Security"] %}\
+{% for group_name in group_order %}\
+{% set group_commits = commits | filter(attribute="group", value=group_name) %}\
+{% if group_commits | length > 0 %}
+### {{ group_name }}
+{% for commit in group_commits %}
+- {{ commit.message | split(pat="\n") | first | trim }}
+{% endfor %}
+{% endif %}\
+{% endfor %}
+"""
+footer = ""
+trim = true
+
+[git]
+# Commits are grouped by their leading word, written as a natural sentence —
+# e.g. "Fixed the fatigue penalty not applying to both stews". No colon/prefix
+# needed; the whole sentence is what shows up in the changelog as-is.
+conventional_commits = false
+filter_unconventional = false
+split_commits = false
+
+commit_parsers = [
+    { message = "^(?i)(added|adding|add)\\b", group = "Added" },
+    { message = "^(?i)(changed|changing|change|updated|updating|update|adjusted|adjusting|adjust|improved|improving|improve)\\b", group = "Changed" },
+    { message = "^(?i)(deprecated|deprecating|deprecate)\\b", group = "Deprecated" },
+    { message = "^(?i)(removed|removing|remove)\\b", group = "Removed" },
+    { message = "^(?i)(fixed|fixing|fix)\\b", group = "Fixed" },
+    { message = "^(?i)(secured|securing|secure|patched|patching|patch)\\b", group = "Security" },
+    # Everything else (chore/ci/test/docs/refactor/build/style/internal/merge/dependency-bump
+    # commits, and anything not matching one of the categories above) is dropped from the
+    # player-facing changelog entirely.
+    { message = ".*", skip = true },
+]
+filter_commits = true
+
+# The rolling `nightly` prerelease tag must never be treated as a real version
+# boundary, otherwise "unreleased" would only mean "since last nightly build"
+# instead of "since the last real release".
+tag_pattern = "^v[0-9]+\\.[0-9]+\\.[0-9]+$"
+skip_tags = "^nightly$"
+ignore_tags = ""
+topo_order = false
+sort_commits = "oldest"

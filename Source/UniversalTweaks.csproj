@@ -14,7 +14,7 @@
 		<Authors>Deadman</Authors>
 		<Copyright>Copyright (c) 2026 $(Authors)</Copyright>
 		<Product>Universal Tweaks</Product>
-		<VersionPrefix>1.4.8</VersionPrefix>
+		<VersionPrefix>1.5.0</VersionPrefix>
 	</PropertyGroup>
 	
 	<PropertyGroup>

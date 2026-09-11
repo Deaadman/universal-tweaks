@@ -1,0 +1,92 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v[0-9]+.[0-9]+.[0-9]+"
+
+env:
+  PROJECT_NAME: UniversalTweaks
+  PROJECT_PATH: Source/UniversalTweaks.csproj
+
+jobs:
+  build:
+    name: Build Artifacts
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v6
+
+    - name: Verify Tag Matches Project Version
+      shell: bash
+      run: |
+        TAG_VERSION="${GITHUB_REF_NAME#v}"
+        CSPROJ_VERSION="$(grep -oP '(?<=<VersionPrefix>)[^<]+' "${{ env.PROJECT_PATH }}")"
+
+        if [ "$TAG_VERSION" != "$CSPROJ_VERSION" ]; then
+          echo "::error::Tag v$TAG_VERSION does not match <VersionPrefix>$CSPROJ_VERSION</VersionPrefix> in ${{ env.PROJECT_PATH }}"
+          exit 1
+        fi
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v5
+      with:
+        dotnet-version: 6.0.x
+
+    - name: Build .NET Project
+      run: dotnet build -c Release
+
+    - name: Move Files
+      shell: bash
+      run: |
+        mkdir -p out
+        cp "Source/bin/Release/net6.0/${{ env.PROJECT_NAME }}.dll" out/
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v7
+      with:
+        name: ${{ env.PROJECT_NAME }}
+        path: out/*
+        retention-days: 1
+        if-no-files-found: error
+
+  publish:
+    name: Publish Release
+    runs-on: ubuntu-latest
+    needs: [build]
+
+    env:
+      GH_REPO: ${{ github.repository }}
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    permissions:
+      contents: write
+
+    steps:
+    - uses: actions/checkout@v6
+      with:
+        fetch-depth: 0 # full history + tags, needed for git-cliff
+
+    - uses: actions/download-artifact@v8
+      with:
+        name: ${{ env.PROJECT_NAME }}
+        path: out
+
+    - name: Generate Changelog
+      uses: orhun/git-cliff-action@v4
+      id: git-cliff
+      with:
+        config: cliff.toml
+        # Only the commits belonging to the tag that triggered this workflow,
+        # i.e. everything since the previous stable release.
+        args: --latest --strip header
+      env:
+        OUTPUT: CHANGES.md
+
+    - name: Publish Release
+      run: |
+        gh release create "${{ github.ref_name }}" \
+          --title "${{ github.ref_name }}" \
+          --notes-file CHANGES.md \
+          --target "${{ github.sha }}" \
+          out/${{ env.PROJECT_NAME }}.dll
