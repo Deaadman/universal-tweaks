@@ -7,17 +7,45 @@ internal static class Decals
     [HarmonyPatch(typeof(DynamicDecalsManager), nameof(DynamicDecalsManager.RenderDynamicDecal))]
     private static class GlowingDecals
     {
+        // A private copy so we never mutate the vanilla m_GlowMaterial asset in place - it's also used by
+        // unrelated GlowDecal-type decals elsewhere (e.g. invisible-creature glow footprints).
+        private static Material? _glowMaterialInstance;
+
+        // The manager's own default spray paint reveal material, captured before we ever swap it out, so
+        // disabling the setting restores exactly what was there instead of guessing at a substitute.
+        private static Material? _originalRevealMaterial;
+
         private static bool Prefix(DynamicDecalsManager __instance)
         {
-            if (!Settings.Instance.GlowingDecals || __instance.m_GlowMaterial == null)
+            // Unity's Object equality (== / != null) detects natively-destroyed objects even when the C#
+            // reference itself isn't null - which a plain ??= would miss, leaving a dangling Material behind
+            // after a scene/region transition destroys our dynamically-created copy.
+            if (_originalRevealMaterial == null)
             {
+                _originalRevealMaterial = __instance.m_AnimatedRevealMaterial;
+            }
+
+            if (!Settings.Instance.ConfirmedGlowingDecals || __instance.m_GlowMaterial == null)
+            {
+                if (__instance.m_AnimatedRevealMaterial == _glowMaterialInstance)
+                {
+                    __instance.m_AnimatedRevealMaterial = _originalRevealMaterial;
+
+                    Mod.Logger.Log("Reverted to standard decal material.", FlaggedLoggingLevel.Trace);
+                }
+
                 return true;
             }
 
-            __instance.m_GlowMaterial.SetColor("_GlowColor", new Color(1f, 0.4489248f, 0f, 0f));
-            __instance.m_GlowMaterial.SetFloat("_GlowMult", Settings.Instance.GlowingDecalMultiplier);
+            if (_glowMaterialInstance == null)
+            {
+                _glowMaterialInstance = new Material(__instance.m_GlowMaterial);
+            }
 
-            __instance.m_AnimatedRevealMaterial = __instance.m_GlowMaterial;
+            _glowMaterialInstance.SetColor("_GlowColor", new Color(1f, 0.4489248f, 0f, 0f));
+            _glowMaterialInstance.SetFloat("_GlowMult", Settings.Instance.ConfirmedGlowingDecalMultiplier);
+
+            __instance.m_AnimatedRevealMaterial = _glowMaterialInstance;
 
             Mod.Logger.Log("Applied glowing decal material.", FlaggedLoggingLevel.Trace);
 

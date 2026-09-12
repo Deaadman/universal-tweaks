@@ -225,7 +225,7 @@ internal class Settings : JsonModSettings
     public float DecalOverlapLeniency = 0.2f;
 
     [Name("Glowing Decals")]
-    [Description("Toggle the glow effect for spray paint decals. (Requires scene reload to turn back off).")]
+    [Description("Toggle the glow effect for spray paint decals. (Applies once settings are confirmed).")]
     public bool GlowingDecals = false;
 
     [Name("Glow Brightness Multiplier")]
@@ -301,11 +301,17 @@ internal class Settings : JsonModSettings
 
     #endregion
 
+    internal bool ConfirmedGlowingDecals { get; private set; }
+    internal float ConfirmedGlowingDecalMultiplier { get; private set; }
+
     protected override void OnChange(FieldInfo field, object? oldValue, object? newValue) => RefreshFields();
 
     protected override void OnConfirm()
     {
         base.OnConfirm();
+
+        ConfirmedGlowingDecals = GlowingDecals;
+        ConfirmedGlowingDecalMultiplier = GlowingDecalMultiplier;
 
         Mod.Logger.Log("Settings confirmed.", FlaggedLoggingLevel.Debug);
 
@@ -424,6 +430,9 @@ internal class Settings : JsonModSettings
         Instance.AddToModSettings(BuildInfo.Name);
         Instance.RefreshFields();
         Instance.RefreshGUI();
+
+        Instance.ConfirmedGlowingDecals = Instance.GlowingDecals;
+        Instance.ConfirmedGlowingDecalMultiplier = Instance.GlowingDecalMultiplier;
 
         Mod.Logger.Log("Settings loaded.", FlaggedLoggingLevel.Debug);
     }
