@@ -8,6 +8,7 @@
 		<DebugType>embedded</DebugType>
 		<GenerateAssemblyInfo>true</GenerateAssemblyInfo>
         <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
+        <DefaultItemExcludes>$(DefaultItemExcludes);ref\**</DefaultItemExcludes>
 	</PropertyGroup>
 	
 	<PropertyGroup>

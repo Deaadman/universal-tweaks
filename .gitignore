@@ -397,3 +397,6 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 *.idea
+
+# Decompiled game reference source (Hinterland's IP - local reference only, never commit)
+Source/ref/
