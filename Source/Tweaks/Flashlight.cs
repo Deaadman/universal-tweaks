@@ -238,15 +238,17 @@ internal static class Flashlight
         if (transform == null)
             return;
 
-        Light childLight = transform.GetComponent<Light>();
+        // The FX root itself usually holds no Light (it's a container for the light + particle/flare
+        // children), so this must keep recursing regardless - returning early here silently no-ops every color change.
+        var childLight = transform.GetComponent<Light>();
+        if (childLight != null)
+        {
+            childLight.color = color;
+        }
 
-        if (childLight == null)
-            return;
-
-        childLight.color = color;
         for (var i = 0; i < transform.childCount; i++)
         {
-            if (transform.GetChild(i) != null) UpdateLightColorRecursive(transform.GetChild(i), color);
+            UpdateLightColorRecursive(transform.GetChild(i), color);
         }
     }
 }
