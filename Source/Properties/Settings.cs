@@ -106,22 +106,30 @@ internal class Settings : JsonModSettings
     [Slider(0.08333334f, 2f, 20)]
     public float FlashlightLowBeamDuration = 1f;
 
-    //[Name("Flashlight Low Beam Intensity")]
-    //[Slider(0, 25)] public int FlashlightLowBeamIntensity = 1;
+    [Name("Flashlight Low Beam Intensity")]
+    [Description("Adjusts the brightness of the flashlight's low beam. Default is 1.")]
+    [Slider(0, 25)]
+    public int FlashlightLowBeamIntensity = 1;
 
-    //[Name("Flashlight Low Beam Range")]
-    //[Slider(0, 100)] public int FlashlightLowBeamRange = 40;
+    [Name("Flashlight Low Beam Range")]
+    [Description("Adjusts the reach of the flashlight's low beam. Default is 40.")]
+    [Slider(0, 100)]
+    public int FlashlightLowBeamRange = 40;
 
     [Name("Flashlight High Beam Duration")]
     [Description("Adjusts the flashlight's high beam duration. Range: 0.1 (short) to 2 (long).")]
     [Slider(0.08333334f, 2f, 20)]
     public float FlashlightHighBeamDuration = 0.08333334f;
 
-    //[Name("Flashlight High Beam Intensity")]
-    //[Slider(0, 25, 26)] public float FlashlightHighBeamIntensity = 7.86f;
+    [Name("Flashlight High Beam Intensity")]
+    [Description("Adjusts the brightness of the flashlight's high beam. Default is 7.86.")]
+    [Slider(0, 25, 26)]
+    public float FlashlightHighBeamIntensity = 7.86f;
 
-    //[Name("Flashlight High Beam Range")]
-    //[Slider(0, 200)] public int FlashlightHighBeamRange = 80;
+    [Name("Flashlight High Beam Range")]
+    [Description("Adjusts the reach of the flashlight's high beam. Default is 80.")]
+    [Slider(0, 200)]
+    public int FlashlightHighBeamRange = 80;
 
     [Name("Flashlight Recharge Time")]
     [Description("Sets the recharge time for the flashlight's battery. Range: 0 (fast) to 2 (slow).")]
@@ -147,22 +155,30 @@ internal class Settings : JsonModSettings
     [Slider(0.08333334f, 2f, 20)]
     public float MinersFlashlightLowBeamDuration = 1.5f;
 
-    //[Name("Miner's Flashlight Low Beam Intensity")]
-    //[Slider(0, 25)] public int MinersFlashlightLowBeamIntensity = 1;
+    [Name("Miner's Flashlight Low Beam Intensity")]
+    [Description("Adjusts the brightness of the miner's flashlight's low beam. Default is 1.")]
+    [Slider(0, 25)]
+    public int MinersFlashlightLowBeamIntensity = 1;
 
-    //[Name("Miner's Flashlight Low Beam Range")]
-    //[Slider(0, 100)] public int MinersFlashlightLowBeamRange = 40;
+    [Name("Miner's Flashlight Low Beam Range")]
+    [Description("Adjusts the reach of the miner's flashlight's low beam. Default is 40.")]
+    [Slider(0, 100)]
+    public int MinersFlashlightLowBeamRange = 40;
 
     [Name("Miner's Flashlight High Beam Duration")]
     [Description("Adjusts the miner's flashlight's high beam duration. Range: 0.1 (short) to 2 (long).")]
     [Slider(0.08333334f, 2f, 20)]
     public float MinersFlashlightHighBeamDuration = 0.08333334f;
 
-    //[Name("Miner's Flashlight High Beam Intensity")]
-    //[Slider(0, 25, 26)] public float MinersFlashlightHighBeamIntensity = 7.86f;
+    [Name("Miner's Flashlight High Beam Intensity")]
+    [Description("Adjusts the brightness of the miner's flashlight's high beam. Default is 7.86.")]
+    [Slider(0, 25, 26)]
+    public float MinersFlashlightHighBeamIntensity = 7.86f;
 
-    //[Name("Miner's Flashlight High Beam Range")]
-    //[Slider(0, 200)] public int MinersFlashlightHighBeamRange = 80;
+    [Name("Miner's Flashlight High Beam Range")]
+    [Description("Adjusts the reach of the miner's flashlight's high beam. Default is 80.")]
+    [Slider(0, 200)]
+    public int MinersFlashlightHighBeamRange = 80;
 
     [Name("Miner's Flashlight Recharge Time")]
     [Description("Sets the recharge time for the miner's flashlight's battery. Range: 0 (fast) to 2 (slow).")]
@@ -373,18 +389,18 @@ internal class Settings : JsonModSettings
             SetFieldVisible(nameof(FlashlightLowBeamDuration), true);
             SetFieldVisible(nameof(FlashlightHighBeamDuration), true);
             SetFieldVisible(nameof(FlashlightRechargeTime), true);
-            //SetFieldVisible(nameof(FlashlightLowBeamIntensity), true);
-            //SetFieldVisible(nameof(FlashlightLowBeamRange), true);
-            //SetFieldVisible(nameof(FlashlightHighBeamIntensity), true);
-            //SetFieldVisible(nameof(FlashlightHighBeamRange), true);
+            SetFieldVisible(nameof(FlashlightLowBeamIntensity), true);
+            SetFieldVisible(nameof(FlashlightLowBeamRange), true);
+            SetFieldVisible(nameof(FlashlightHighBeamIntensity), true);
+            SetFieldVisible(nameof(FlashlightHighBeamRange), true);
 
             SetFieldVisible(nameof(MinersFlashlightLowBeamDuration), true);
             SetFieldVisible(nameof(MinersFlashlightHighBeamDuration), true);
             SetFieldVisible(nameof(MinersFlashlightRechargeTime), true);
-            //SetFieldVisible(nameof(MinersFlashlightLowBeamIntensity), true);
-            //SetFieldVisible(nameof(MinersFlashlightLowBeamRange), true);
-            //SetFieldVisible(nameof(MinersFlashlightHighBeamIntensity), true);
-            //SetFieldVisible(nameof(MinersFlashlightHighBeamRange), true);
+            SetFieldVisible(nameof(MinersFlashlightLowBeamIntensity), true);
+            SetFieldVisible(nameof(MinersFlashlightLowBeamRange), true);
+            SetFieldVisible(nameof(MinersFlashlightHighBeamIntensity), true);
+            SetFieldVisible(nameof(MinersFlashlightHighBeamRange), true);
 
             SetFieldVisible(nameof(OverrideTravoisMovementRestrictions), true);
             SetFieldVisible(nameof(OverrideTravoisInteractionRestrictions), true);
@@ -403,18 +419,18 @@ internal class Settings : JsonModSettings
             SetFieldVisible(nameof(FlashlightLowBeamDuration), false);
             SetFieldVisible(nameof(FlashlightHighBeamDuration), false);
             SetFieldVisible(nameof(FlashlightRechargeTime), false);
-            //SetFieldVisible(nameof(FlashlightLowBeamIntensity), false);
-            //SetFieldVisible(nameof(FlashlightLowBeamRange), false);
-            //SetFieldVisible(nameof(FlashlightHighBeamIntensity), false);
-            //SetFieldVisible(nameof(FlashlightHighBeamRange), false);
+            SetFieldVisible(nameof(FlashlightLowBeamIntensity), false);
+            SetFieldVisible(nameof(FlashlightLowBeamRange), false);
+            SetFieldVisible(nameof(FlashlightHighBeamIntensity), false);
+            SetFieldVisible(nameof(FlashlightHighBeamRange), false);
 
             SetFieldVisible(nameof(MinersFlashlightLowBeamDuration), false);
             SetFieldVisible(nameof(MinersFlashlightHighBeamDuration), false);
             SetFieldVisible(nameof(MinersFlashlightRechargeTime), false);
-            //SetFieldVisible(nameof(MinersFlashlightLowBeamIntensity), false);
-            //SetFieldVisible(nameof(MinersFlashlightLowBeamRange), false);
-            //SetFieldVisible(nameof(MinersFlashlightHighBeamIntensity), false);
-            //SetFieldVisible(nameof(MinersFlashlightHighBeamRange), false);
+            SetFieldVisible(nameof(MinersFlashlightLowBeamIntensity), false);
+            SetFieldVisible(nameof(MinersFlashlightLowBeamRange), false);
+            SetFieldVisible(nameof(MinersFlashlightHighBeamIntensity), false);
+            SetFieldVisible(nameof(MinersFlashlightHighBeamRange), false);
 
             SetFieldVisible(nameof(OverrideTravoisMovementRestrictions), false);
             SetFieldVisible(nameof(OverrideTravoisInteractionRestrictions), false);

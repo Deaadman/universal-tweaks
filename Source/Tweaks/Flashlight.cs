@@ -141,6 +141,18 @@ internal static class Flashlight
                     ? 1.75f
                     : 2f;
 
+            var (lowBeamIntensity, lowBeamRange, highBeamIntensity, highBeamRange) = GetBeamLightSettings(isMinersFlashlight);
+
+            __instance.m_LightIndoor.intensity = lowBeamIntensity;
+            __instance.m_LightOutdoor.intensity = lowBeamIntensity;
+            __instance.m_LightIndoor.range = lowBeamRange;
+            __instance.m_LightOutdoor.range = lowBeamRange;
+
+            __instance.m_LightIndoorHigh.intensity = highBeamIntensity;
+            __instance.m_LightOutdoorHigh.intensity = highBeamIntensity;
+            __instance.m_LightIndoorHigh.range = highBeamRange;
+            __instance.m_LightOutdoorHigh.range = highBeamRange;
+
             UpdateFlashlightBeamColor(__instance, __instance.m_FxObjectLow, __instance.m_FxObjectHigh);
         }
     }
@@ -153,8 +165,31 @@ internal static class Flashlight
             var itemInHands = GameManager.GetPlayerManagerComponent().m_ItemInHands;
             if (itemInHands == null) return;
             var flashlightItem = itemInHands.m_FlashlightItem;
+            if (flashlightItem == null) return;
 
             UpdateFlashlightBeamColor(flashlightItem, __instance.m_LowFxGameObject, __instance.m_HighFxGameObject);
+
+            // These are the lights the player actually sees in first person - FlashlightItem's own
+            // m_LightIndoor/m_LightOutdoor pair only drives the world-space representation of the item.
+            var isMinersFlashlight = flashlightItem.m_GearItem?.name is "GEAR_Flashlight_LongLasting";
+            var (lowBeamIntensity, lowBeamRange, highBeamIntensity, highBeamRange) = GetBeamLightSettings(isMinersFlashlight);
+
+            __instance.m_LightIndoorsLow.intensity = lowBeamIntensity;
+            __instance.m_LightIndoorsLow.range = lowBeamRange;
+            __instance.m_LightOutdoorsLow.intensity = lowBeamIntensity;
+            __instance.m_LightOutdoorsLow.range = lowBeamRange;
+
+            if (__instance.m_LightIndoorsHigh != null)
+            {
+                __instance.m_LightIndoorsHigh.intensity = highBeamIntensity;
+                __instance.m_LightIndoorsHigh.range = highBeamRange;
+            }
+
+            if (__instance.m_LightOutdoorsHigh != null)
+            {
+                __instance.m_LightOutdoorsHigh.intensity = highBeamIntensity;
+                __instance.m_LightOutdoorsHigh.range = highBeamRange;
+            }
         }
     }
 
@@ -176,6 +211,33 @@ internal static class Flashlight
 
             return true;
         }
+    }
+
+    private static (float lowIntensity, float lowRange, float highIntensity, float highRange) GetBeamLightSettings(
+        bool isMinersFlashlight)
+    {
+        var lowIntensity = Settings.Instance.CheatingTweaks
+            ? isMinersFlashlight
+                ? Settings.Instance.MinersFlashlightLowBeamIntensity
+                : Settings.Instance.FlashlightLowBeamIntensity
+            : 1f;
+        var lowRange = Settings.Instance.CheatingTweaks
+            ? isMinersFlashlight
+                ? Settings.Instance.MinersFlashlightLowBeamRange
+                : Settings.Instance.FlashlightLowBeamRange
+            : 40f;
+        var highIntensity = Settings.Instance.CheatingTweaks
+            ? isMinersFlashlight
+                ? Settings.Instance.MinersFlashlightHighBeamIntensity
+                : Settings.Instance.FlashlightHighBeamIntensity
+            : 7.86f;
+        var highRange = Settings.Instance.CheatingTweaks
+            ? isMinersFlashlight
+                ? Settings.Instance.MinersFlashlightHighBeamRange
+                : Settings.Instance.FlashlightHighBeamRange
+            : 80f;
+
+        return (lowIntensity, lowRange, highIntensity, highRange);
     }
 
     private static Color GetColorFromFlashlight(FlashlightItem flashlightItem)

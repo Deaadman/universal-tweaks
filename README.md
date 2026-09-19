@@ -37,6 +37,7 @@ Universal Tweaks is a mod for [**The Long Dark**](https://www.hinterlandgames.co
 - **All-Time Functionality:** Enable flashlight usage anytime, not limited to auroras.
 - **Aurora-Dependent Flickering:** Make flashlights only flicker during aurora events.
 - **Beam Duration & Recharge Options:** Adjust the duration of low and high beams and set recharge times.
+- **Beam Intensity & Range Options:** Adjust the brightness and reach of low and high beams.
 - **Customizable Beam Colors:** Alter the color of flashlight beams for standard and miner's flashlights.
 - **High-Beam Limitation:** Restrict the flashlight's high beam mode to auroras only.
 - **Infinite Battery Life:** Ensure the flashlight never runs out of battery, for uninterrupted use.
