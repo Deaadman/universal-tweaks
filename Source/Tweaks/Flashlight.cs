@@ -47,7 +47,7 @@ internal static class Flashlight
                 useOutdoorLighting && state is FlashlightItem.State.Low or FlashlightItem.State.High;
             __instance.m_LightOutdoorHigh.enabled = useOutdoorLighting && state == FlashlightItem.State.High;
 
-            Mod.Logger.Log($"Flashlight beam state changed to {state}.", FlaggedLoggingLevel.Trace);
+            Mod.Logger.Log($"Flashlight world light state set to {state} (actual beam state: {__instance.m_State}).", FlaggedLoggingLevel.Trace);
 
             return false;
         }
