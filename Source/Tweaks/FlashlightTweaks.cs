@@ -10,6 +10,9 @@ internal static class FlashlightTweaks
     // Last colour applied per FX root, so the light hierarchy is only walked when the colour actually changes.
     private static readonly Dictionary<int, Color> AppliedBeamColors = new();
 
+    // The game's own value per light, captured before the first change so turning 'Cheat' Tweaks off restores it.
+    private static readonly Dictionary<int, (float Intensity, float Range)> OriginalLightValues = new();
+
     [HarmonyPatch(typeof(FlashlightItem), nameof(FlashlightItem.Awake))]
     private static class FlashlightCustomization
     {
@@ -139,10 +142,11 @@ internal static class FlashlightTweaks
             __instance.m_HighBeamDuration = tuning.HighBeamDuration;
             __instance.m_RechargeTime = tuning.RechargeTime;
 
-            ApplyBeamLight(__instance.m_LightIndoor, tuning.LowBeamIntensity, tuning.LowBeamRange);
-            ApplyBeamLight(__instance.m_LightOutdoor, tuning.LowBeamIntensity, tuning.LowBeamRange);
-            ApplyBeamLight(__instance.m_LightIndoorHigh, tuning.HighBeamIntensity, tuning.HighBeamRange);
-            ApplyBeamLight(__instance.m_LightOutdoorHigh, tuning.HighBeamIntensity, tuning.HighBeamRange);
+            var beamLights = GetBeamLights(isMinersFlashlight);
+            ApplyBeamLight(__instance.m_LightIndoor, beamLights.LowIntensity, beamLights.LowRange);
+            ApplyBeamLight(__instance.m_LightOutdoor, beamLights.LowIntensity, beamLights.LowRange);
+            ApplyBeamLight(__instance.m_LightIndoorHigh, beamLights.HighIntensity, beamLights.HighRange);
+            ApplyBeamLight(__instance.m_LightOutdoorHigh, beamLights.HighIntensity, beamLights.HighRange);
 
             ApplyBeamColor(GetBeamColor(isMinersFlashlight), __instance.m_FxObjectLow, __instance.m_FxObjectHigh);
         }
@@ -163,12 +167,12 @@ internal static class FlashlightTweaks
 
             // These are the lights the player actually sees in first person - FlashlightItem's own
             // m_LightIndoor/m_LightOutdoor pair only drives the world-space representation of the item.
-            var tuning = GetTuning(isMinersFlashlight);
+            var beamLights = GetBeamLights(isMinersFlashlight);
 
-            ApplyBeamLight(__instance.m_LightIndoorsLow, tuning.LowBeamIntensity, tuning.LowBeamRange);
-            ApplyBeamLight(__instance.m_LightOutdoorsLow, tuning.LowBeamIntensity, tuning.LowBeamRange);
-            ApplyBeamLight(__instance.m_LightIndoorsHigh, tuning.HighBeamIntensity, tuning.HighBeamRange);
-            ApplyBeamLight(__instance.m_LightOutdoorsHigh, tuning.HighBeamIntensity, tuning.HighBeamRange);
+            ApplyBeamLight(__instance.m_LightIndoorsLow, beamLights.LowIntensity, beamLights.LowRange);
+            ApplyBeamLight(__instance.m_LightOutdoorsLow, beamLights.LowIntensity, beamLights.LowRange);
+            ApplyBeamLight(__instance.m_LightIndoorsHigh, beamLights.HighIntensity, beamLights.HighRange);
+            ApplyBeamLight(__instance.m_LightOutdoorsHigh, beamLights.HighIntensity, beamLights.HighRange);
         }
     }
 
@@ -204,15 +208,24 @@ internal static class FlashlightTweaks
             ? new FlashlightTuning(
                 settings.MinersFlashlightLowBeamDuration,
                 settings.MinersFlashlightHighBeamDuration,
-                settings.MinersFlashlightRechargeTime,
+                settings.MinersFlashlightRechargeTime)
+            : new FlashlightTuning(
+                settings.FlashlightLowBeamDuration,
+                settings.FlashlightHighBeamDuration,
+                settings.FlashlightRechargeTime);
+    }
+
+    private static BeamLightTuning GetBeamLights(bool isMinersFlashlight)
+    {
+        var settings = Settings.Instance;
+
+        return isMinersFlashlight
+            ? new BeamLightTuning(
                 settings.MinersFlashlightLowBeamIntensity,
                 settings.MinersFlashlightLowBeamRange,
                 settings.MinersFlashlightHighBeamIntensity,
                 settings.MinersFlashlightHighBeamRange)
-            : new FlashlightTuning(
-                settings.FlashlightLowBeamDuration,
-                settings.FlashlightHighBeamDuration,
-                settings.FlashlightRechargeTime,
+            : new BeamLightTuning(
                 settings.FlashlightLowBeamIntensity,
                 settings.FlashlightLowBeamRange,
                 settings.FlashlightHighBeamIntensity,
@@ -253,6 +266,19 @@ internal static class FlashlightTweaks
             return;
         }
 
+        var id = light.GetInstanceID();
+        if (!Settings.Instance.CheatingTweaks)
+        {
+            if (OriginalLightValues.Remove(id, out var original))
+            {
+                light.intensity = original.Intensity;
+                light.range = original.Range;
+            }
+
+            return;
+        }
+
+        OriginalLightValues.TryAdd(id, (light.intensity, light.range));
         light.intensity = intensity;
         light.range = range;
     }

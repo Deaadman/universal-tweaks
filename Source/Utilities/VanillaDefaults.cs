@@ -1,16 +1,12 @@
 namespace UniversalTweaks.Utilities;
 
-// The game's own values, restored whenever 'Cheat' Tweaks is disabled.
+// The game's own values, restored whenever 'Cheat' Tweaks is disabled. Beam lights restore their captured values instead.
 internal static class VanillaDefaults
 {
     internal static readonly FlashlightTuning Flashlight = new(
         LowBeamDuration: 1f,
         HighBeamDuration: 0.08333334f,
-        RechargeTime: 2f,
-        LowBeamIntensity: 1f,
-        LowBeamRange: 40f,
-        HighBeamIntensity: 7.86f,
-        HighBeamRange: 80f);
+        RechargeTime: 2f);
 
     internal static readonly FlashlightTuning MinersFlashlight = Flashlight with
     {
