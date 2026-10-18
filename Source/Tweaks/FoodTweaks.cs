@@ -74,19 +74,52 @@ internal static class FoodTweaks
         }
     }
 
-    // TODO: Possibly move this to the Awake() method and attach a GearItemExtension.cs MonoBehaviour to each GearItem prefab.
-    // From there we can call a method that will set the values of the GearItem based on the settings without relying on Harmony Patches.
-    // This will allow us to change the settings and have them apply immediately without needing to reload the game.
+    private const string DressingGearName = "GEAR_OldMansBeardDressing";
+    private const float ConsistentDressingWeightKG = 0.03f;
+
+    // Captured before the first change so turning the setting off can put the vanilla weight back.
+    private static ItemWeight? _originalDressingWeight;
+
+    // The weight lives on the shared GearItemData asset, so this also covers a reloaded asset after a scene change.
     [HarmonyPatch(typeof(GearItem), nameof(GearItem.Deserialize))]
     private static class ApplyFoodItemTweaks
     {
         private static void Postfix(GearItem __instance)
         {
-            if (Settings.Instance.ConsistantDressingWeight && __instance.gameObject.name is "GEAR_OldMansBeardDressing")
+            if (__instance.gameObject.name is DressingGearName)
             {
-                __instance.m_GearItemData.m_BaseWeight = ItemWeight.FromKilograms(0.03f);
-                Mod.Logger.Log("Applied consistent dressing weight to Old Man's Dressing.", FlaggedLoggingLevel.Trace);
+                ApplyDressingWeight(__instance.m_GearItemData);
             }
         }
+    }
+
+    internal static void RefreshDressingWeight()
+    {
+        var prefab = GearItem.LoadGearItemPrefab(DressingGearName);
+        if (prefab != null)
+        {
+            ApplyDressingWeight(prefab.m_GearItemData);
+        }
+    }
+
+    private static void ApplyDressingWeight(GearItemData? data)
+    {
+        if (data == null)
+        {
+            return;
+        }
+
+        _originalDressingWeight ??= data.m_BaseWeight;
+
+        if (Settings.Instance.ConsistantDressingWeight)
+        {
+            data.m_BaseWeight = ItemWeight.FromKilograms(ConsistentDressingWeightKG);
+        }
+        else
+        {
+            data.m_BaseWeight = _originalDressingWeight.Value;
+        }
+
+        Mod.Logger.Log($"Set Old Man's Dressing base weight to {data.m_BaseWeight}.", FlaggedLoggingLevel.Trace);
     }
 }
