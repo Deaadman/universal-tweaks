@@ -5,16 +5,15 @@ namespace UniversalTweaks.Tweaks;
 
 internal static class SnowShelterTweaks
 {
-    [HarmonyPatch(typeof(SnowShelterManager), nameof(SnowShelterManager.InstantiateSnowShelter))]
+    // Applied each tick rather than on creation so setting changes reach shelters that already exist.
+    [HarmonyPatch(typeof(SnowShelter), nameof(SnowShelter.Update))]
     private static class SnowShelterDecayRate
     {
-        private static void Postfix(ref SnowShelter __result)
+        private static void Prefix(SnowShelter __instance)
         {
-            __result.m_DailyDecayHP = Settings.Instance.CheatingTweaks
+            __instance.m_DailyDecayHP = Settings.Instance.CheatingTweaks
                 ? Settings.Instance.SnowShelterDailyDecayRate
                 : VanillaDefaults.SnowShelterDailyDecayHP;
-
-            Mod.Logger.Log($"Set snow shelter daily decay to {__result.m_DailyDecayHP}.", FlaggedLoggingLevel.Debug);
         }
     }
 }
