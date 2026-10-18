@@ -10,8 +10,10 @@ internal static class FlashlightTweaks
     // Last colour applied per FX root, so the light hierarchy is only walked when the colour actually changes.
     private static readonly ObjectStateCache<GameObject, Color> AppliedBeamColors = new();
 
-    // The game's own value per light, captured before the first change so turning 'Cheat' Tweaks off restores it.
-    private static readonly ObjectStateCache<Light, (float Intensity, float Range)> OriginalLightValues = new();
+    // The game's own values per light, captured before the first change so turning 'Cheat' Tweaks off restores them.
+    private static readonly ObjectStateCache<Light, BeamLightState> OriginalBeamLights = new();
+
+    private sealed record BeamLightState(float Intensity, float Range, LightRandomIntensity? Flicker);
 
     [HarmonyPatch(typeof(FlashlightItem), nameof(FlashlightItem.Awake))]
     private static class FlashlightCustomization
@@ -186,7 +188,19 @@ internal static class FlashlightTweaks
                 return true;
             }
 
-            return __instance.gameObject.name is not ("LightIndoors" or "LightOutdoors" or "LightExtend");
+            if (__instance.gameObject.name is not ("LightIndoors" or "LightOutdoors" or "LightExtend"))
+            {
+                return true;
+            }
+
+            // Hold the beam steady at its base intensity instead of freezing on whatever the last flicker left.
+            var light = __instance.m_Light != null ? __instance.m_Light.GetLightComponent() : null;
+            if (light != null)
+            {
+                light.intensity = __instance.m_LightIntensityStart;
+            }
+
+            return false;
         }
     }
 
@@ -266,18 +280,43 @@ internal static class FlashlightTweaks
 
         if (!Settings.Instance.CheatingTweaks)
         {
-            if (OriginalLightValues.Remove(light, out var original))
+            if (OriginalBeamLights.Remove(light, out var original))
             {
-                light.intensity = original.Intensity;
+                SetBeamIntensity(light, original.Flicker, original.Intensity);
                 light.range = original.Range;
             }
 
             return;
         }
 
-        OriginalLightValues.TryAdd(light, (light.intensity, light.range));
-        light.intensity = intensity;
+        if (!OriginalBeamLights.TryGet(light, out var state))
+        {
+            var flicker = light.GetComponent<LightRandomIntensity>();
+            var baseIntensity = flicker != null && flicker.m_LightIntensityStart > 0f
+                ? flicker.m_LightIntensityStart
+                : light.intensity;
+
+            state = new BeamLightState(baseIntensity, light.range, flicker);
+            OriginalBeamLights.Set(light, state);
+        }
+
+        SetBeamIntensity(light, state.Flicker, intensity);
         light.range = range;
+    }
+
+    // The flicker script rewrites intensity every frame from its base value, so that base is what has to change.
+    private static void SetBeamIntensity(Light light, LightRandomIntensity? flicker, float intensity)
+    {
+        if (flicker != null)
+        {
+            flicker.m_LightIntensityStart = intensity;
+            if (flicker.enabled)
+            {
+                return;
+            }
+        }
+
+        light.intensity = intensity;
     }
 
     private static void ApplyBeamColor(Color color, GameObject? lowFxGameObject, GameObject? highFxGameObject)
