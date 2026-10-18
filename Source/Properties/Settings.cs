@@ -33,8 +33,7 @@ internal class Settings : JsonModSettings
     public bool InfiniteEncumberWeight = false;
 
     [Name("MRE Texture Variation")]
-    [Description(
-        "Switches the MRE texture to a brown variant. (Requires scene reload to change to the variant, and a game restart back to the original).")]
+    [Description("Switches the MRE texture to a brown variant. (Applies once settings are confirmed).")]
     public bool MRETextureVariant = false;
 
     [Name("Noisemaker Burn Length")]
@@ -326,10 +325,13 @@ internal class Settings : JsonModSettings
 
         Mod.Logger.Log("Settings confirmed.", FlaggedLoggingLevel.Debug);
 
-        // Will need to change this return back into a != check if anything else here is added.
         var encumber = GameManager.GetEncumberComponent();
-        if (encumber == null) return;
-        Tweaks.EncumberTweaks.EncumberUpdate(encumber);
+        if (encumber != null)
+        {
+            Tweaks.EncumberTweaks.EncumberUpdate(encumber);
+        }
+
+        Tweaks.TextureSwapTweaks.RefreshMreTextures();
     }
 
     // Update the following code below, move it to another class underneath Utilities called SettingsOptionsVisibility or something

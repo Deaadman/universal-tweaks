@@ -18,6 +18,8 @@ internal static class TextureSwapper
 
         foreach (var texture in UniversalTweaksAssetBundle.LoadAllAssets<Texture2D>())
         {
+            // Unreferenced textures (e.g. icons) are otherwise unloaded on scene change, leaving this cache dangling.
+            texture.hideFlags |= HideFlags.DontUnloadUnusedAsset;
             loadedTextures[texture.name] = texture;
         }
 
@@ -25,37 +27,35 @@ internal static class TextureSwapper
         return loadedTextures;
     }
 
-    internal static void SwapGearItemTexture(string gearItemName, string gameObjectName, string newTextureName)
+    internal static Texture? GetMainTexture(GameObject root, string rendererName)
     {
-        if (!Textures.TryGetValue(newTextureName, out var newTexture))
+        foreach (var renderer in root.GetComponentsInChildren<Renderer>(true))
         {
-            Mod.Logger.Log($"Texture '{newTextureName}' was not found; skipping swap for '{gearItemName}'.", FlaggedLoggingLevel.Warning);
-            return;
+            if (renderer.gameObject.name == rendererName)
+            {
+                return renderer.sharedMaterial != null ? renderer.sharedMaterial.mainTexture : null;
+            }
         }
 
-        var gearItemPrefab = GearItem.LoadGearItemPrefab(gearItemName);
-        if (gearItemPrefab == null)
-        {
-            Mod.Logger.Log($"Gear item prefab '{gearItemName}' was not found; skipping texture swap.", FlaggedLoggingLevel.Warning);
-            return;
-        }
+        return null;
+    }
 
-        foreach (var renderer in gearItemPrefab.GetComponentsInChildren<Renderer>(true))
+    internal static void SetMainTexture(GameObject root, string rendererName, Texture texture)
+    {
+        foreach (var renderer in root.GetComponentsInChildren<Renderer>(true))
         {
-            if (renderer.gameObject.name != gameObjectName)
+            if (renderer.gameObject.name != rendererName)
             {
                 continue;
             }
 
             foreach (var material in renderer.materials)
             {
-                material.mainTexture = newTexture;
+                material.mainTexture = texture;
             }
         }
-
-        Mod.Logger.Log($"Swapped texture for '{gearItemName}' ('{gameObjectName}') to '{newTextureName}'.", FlaggedLoggingLevel.Debug);
     }
 
     internal static bool TryGetTexture(string textureName, [MaybeNullWhen(false)] out Texture2D texture) =>
-        Textures.TryGetValue(textureName, out texture);
+        Textures.TryGetValue(textureName, out texture) && texture != null;
 }
