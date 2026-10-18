@@ -19,7 +19,6 @@
 	</PropertyGroup>
 	
 	<PropertyGroup>
-		<BuildInfoFile>$(IntermediateOutputPath)BuildInfo.g.cs</BuildInfoFile>
 		<TheLongDarkPath>C:\Program Files (x86)\Steam\steamapps\common\TheLongDark</TheLongDarkPath>
 	</PropertyGroup>
 
@@ -29,8 +28,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="STBlade.Modding.TLD.Il2CppAssemblies.Windows" Version="*" />
-		<PackageReference Include="STBlade.Modding.TLD.ModSettings" Version="*" />
+		<PackageReference Include="STBlade.Modding.TLD.Il2CppAssemblies.Windows" Version="2.55.0" />
+		<PackageReference Include="STBlade.Modding.TLD.ModSettings" Version="1.9.0" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -61,6 +60,10 @@
 	</Target>
 
 	<Target Name="GenerateBuildInfo" BeforeTargets="CoreCompile">
+		<!-- Set here rather than at evaluation time, where IntermediateOutputPath is still empty. -->
+		<PropertyGroup>
+			<BuildInfoFile>$(IntermediateOutputPath)BuildInfo.g.cs</BuildInfoFile>
+		</PropertyGroup>
 
 		<WriteLinesToFile
 				File="$(BuildInfoFile)"
