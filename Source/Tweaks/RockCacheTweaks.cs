@@ -2,10 +2,10 @@
 
 namespace UniversalTweaks.Tweaks;
 
-internal static class RockCache
+internal static class RockCacheTweaks
 {
     [HarmonyPatch(typeof(RockCacheManager), nameof(RockCacheManager.CanAttemptToPlaceRockCache))]
-    public static class RockCacheRadialMenuIndoors
+    private static class RockCacheRadialMenuIndoors
     {
         private static bool Prefix(ref bool __result)
         {
@@ -30,7 +30,7 @@ internal static class RockCache
     }
 
     [HarmonyPatch(typeof(Panel_Actions), nameof(Panel_Actions.OnPlaceRockCache))]
-    public static class RockCachePlacementIndoors
+    private static class RockCachePlacementIndoors
     {
         private static bool Prefix()
         {

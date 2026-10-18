@@ -4,7 +4,7 @@ using UniversalTweaks.Properties;
 
 namespace UniversalTweaks.Tweaks;
 
-internal static class UserInterface
+internal static class UserInterfaceTweaks
 {
     [HarmonyPatch(typeof(HUDManager), nameof(HUDManager.UpdateCrosshair))]
     private static class PermanentCrosshair
@@ -54,7 +54,7 @@ internal static class UserInterface
     }
 
     [HarmonyPatch(typeof(Panel_MainMenu), nameof(Panel_MainMenu.Initialize))]
-    private class RemoveOptionalContentMenus
+    private static class RemoveOptionalContentMenus
     {
         private static void Postfix(Panel_MainMenu __instance)
         {

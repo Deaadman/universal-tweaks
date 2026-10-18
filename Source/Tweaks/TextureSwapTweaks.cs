@@ -3,7 +3,7 @@ using UniversalTweaks.Utilities;
 
 namespace UniversalTweaks.Tweaks;
 
-internal static class TextureSwap
+internal static class TextureSwapTweaks
 {
     private static readonly Dictionary<string, string> IconTextures = new()
     {
@@ -26,8 +26,28 @@ internal static class TextureSwap
         }
     }
 
-    internal static string GetTextureNameForGearItem(GearItem gi) =>
-        ResolveTextureName(gi.name, Settings.Instance.MRETextureVariant);
+    [HarmonyPatch(typeof(Utils), nameof(Utils.GetInventoryIconTexture), typeof(GearItem))]
+    private static class GenericIconTextureSwap
+    {
+        private static bool Prefix(GearItem gi, ref Texture2D __result)
+        {
+            if (gi == null)
+            {
+                return true;
+            }
+
+            var textureName = ResolveTextureName(gi.name, Settings.Instance.MRETextureVariant);
+            if (string.IsNullOrEmpty(textureName) || !TextureSwapper.TryGetTexture(textureName, out var newTexture))
+            {
+                return true;
+            }
+
+            Mod.Logger.Log($"Swapped inventory icon texture for '{gi.name}' to '{textureName}'.", FlaggedLoggingLevel.Trace);
+
+            __result = newTexture;
+            return false;
+        }
+    }
 
     internal static string ResolveTextureName(string gearItemName, bool mreTextureVariantEnabled)
     {

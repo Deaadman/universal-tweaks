@@ -2,7 +2,7 @@
 
 namespace UniversalTweaks.Tweaks;
 
-internal static class FeatProgress
+internal static class FeatProgressTweaks
 {
     [HarmonyPatch(typeof(Feat), nameof(Feat.ShouldBlockIncrement))]
     private static class FeatProgressInCustomMode

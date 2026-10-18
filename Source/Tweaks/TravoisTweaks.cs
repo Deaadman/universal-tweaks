@@ -6,7 +6,7 @@ using UniversalTweaks.Utilities;
 
 namespace UniversalTweaks.Tweaks;
 
-internal static class Travois
+internal static class TravoisTweaks
 {
     [HarmonyPatch(typeof(TravoisBigCarryItem), nameof(TravoisBigCarryItem.CanPerformInteractionWhileCarrying))]
     private static class OverrideInteractionRestrictionsWhileCarrying

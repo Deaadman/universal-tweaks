@@ -1,6 +1,4 @@
-﻿using UniversalTweaks.Tweaks;
-
-namespace UniversalTweaks.Utilities;
+﻿namespace UniversalTweaks.Utilities;
 
 internal static class TextureSwapper
 {
@@ -58,31 +56,6 @@ internal static class TextureSwapper
         Mod.Logger.Log($"Swapped texture for '{gearItemName}' ('{gameObjectName}') to '{newTextureName}'.", FlaggedLoggingLevel.Debug);
     }
 
-    [HarmonyPatch(typeof(Utils), nameof(Utils.GetInventoryIconTexture), typeof(GearItem))]
-    private static class GenericIconTextureSwap
-    {
-        private static bool Prefix(GearItem gi, ref Texture2D __result)
-        {
-            if (gi == null)
-            {
-                return true;
-            }
-
-            var textureName = TextureSwap.GetTextureNameForGearItem(gi);
-            if (string.IsNullOrEmpty(textureName))
-            {
-                return true;
-            }
-
-            if (!Textures.TryGetValue(textureName, out var newTexture))
-            {
-                return true;
-            }
-
-            Mod.Logger.Log($"Swapped inventory icon texture for '{gi.name}' to '{textureName}'.", FlaggedLoggingLevel.Trace);
-
-            __result = newTexture;
-            return false;
-        }
-    }
+    internal static bool TryGetTexture(string textureName, [MaybeNullWhen(false)] out Texture2D texture) =>
+        Textures.TryGetValue(textureName, out texture);
 }

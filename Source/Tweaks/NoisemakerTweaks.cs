@@ -2,7 +2,7 @@
 
 namespace UniversalTweaks.Tweaks;
 
-internal static class Noisemaker
+internal static class NoisemakerTweaks
 {
     [HarmonyPatch(typeof(GearItem), nameof(GearItem.Deserialize))]
     private static class AdjustNoisemakerValues

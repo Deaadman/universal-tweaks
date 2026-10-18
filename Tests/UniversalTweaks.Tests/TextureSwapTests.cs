@@ -9,7 +9,7 @@ public class TextureSwapTests
     [Fact]
     public void ResolveTextureName_MreWithVariantDisabled_ReturnsEmpty()
     {
-        var result = TextureSwap.ResolveTextureName("GEAR_MRE", mreTextureVariantEnabled: false);
+        var result = TextureSwapTweaks.ResolveTextureName("GEAR_MRE", mreTextureVariantEnabled: false);
 
         Assert.Equal(string.Empty, result);
     }
@@ -17,7 +17,7 @@ public class TextureSwapTests
     [Fact]
     public void ResolveTextureName_MreWithVariantEnabled_ReturnsBrownMreTexture()
     {
-        var result = TextureSwap.ResolveTextureName("GEAR_MRE", mreTextureVariantEnabled: true);
+        var result = TextureSwapTweaks.ResolveTextureName("GEAR_MRE", mreTextureVariantEnabled: true);
 
         Assert.Equal("ico_GearItem__BrownMRE", result);
     }
@@ -27,7 +27,7 @@ public class TextureSwapTests
     [InlineData(false)]
     public void ResolveTextureName_UnmappedGearItem_ReturnsEmpty(bool mreTextureVariantEnabled)
     {
-        var result = TextureSwap.ResolveTextureName("GEAR_SomeOtherItem", mreTextureVariantEnabled);
+        var result = TextureSwapTweaks.ResolveTextureName("GEAR_SomeOtherItem", mreTextureVariantEnabled);
 
         Assert.Equal(string.Empty, result);
     }

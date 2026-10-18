@@ -2,12 +2,12 @@
 
 namespace UniversalTweaks.Tweaks;
 
-internal static class Breath
+internal static class BreathTweaks
 {
-    [HarmonyPatch(typeof(Il2Cpp.Breath), nameof(Il2Cpp.Breath.PlayBreathEffect))]
+    [HarmonyPatch(typeof(Breath), nameof(Breath.PlayBreathEffect))]
     private static class BreathVisibility
     {
-        private static void Postfix(Il2Cpp.Breath __instance)
+        private static void Postfix(Breath __instance)
         {
             __instance.m_SuppressEffects = !Settings.Instance.BreathVisibility;
         }

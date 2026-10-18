@@ -7,7 +7,7 @@ namespace UniversalTweaks.Tweaks;
 // This entire class needs to be revisited with the following changes...
 // Create a dedicated method for updating these prefabs, instantly update them like we are with the encumbering tweaks.
 // Make sure that all of these containers are up-to-date, it has been awhile since it was last touched.
-internal static class Container
+internal static class ContainerTweaks
 {
     // Matched in order against the container's name; the first fragment it contains wins.
     private static readonly (string NameFragment, Func<ContainerSettings, float> Capacity)[] Capacities =
@@ -74,10 +74,10 @@ internal static class Container
         ("STR_BankAVaultDepositBox", s => s.ContainerSafetyDepositBoxCapacity),
     ];
 
-    [HarmonyPatch(typeof(Il2Cpp.Container), nameof(Il2Cpp.Container.Awake))]
+    [HarmonyPatch(typeof(Container), nameof(Container.Awake))]
     private static class AdjustContainerCapacityAmount
     {
-        private static void Postfix(Il2Cpp.Container __instance)
+        private static void Postfix(Container __instance)
         {
             var settings = ContainerSettings.Instance;
 

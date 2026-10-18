@@ -5,19 +5,19 @@ using UniversalTweaks.Utilities;
 
 namespace UniversalTweaks.Tweaks;
 
-internal static class Encumber
+internal static class EncumberTweaks
 {
-    [HarmonyPatch(typeof(Il2Cpp.Encumber), nameof(Il2Cpp.Encumber.Start))]
-    private class StartEncumberTweaks
+    [HarmonyPatch(typeof(Encumber), nameof(Encumber.Start))]
+    private static class StartEncumberTweaks
     {
-        private static void Postfix(Il2Cpp.Encumber __instance)
+        private static void Postfix(Encumber __instance)
         {
             EncumberUpdate(__instance);
         }
     }
 
     [HarmonyPatch(typeof(PlayerManager), nameof(PlayerManager.CalculateModifiedCalorieBurnRate), [typeof(float)])]
-    private class CalorieBurnRateFix
+    private static class CalorieBurnRateFix
     {
         private static void Postfix(PlayerManager __instance, float baseBurnRate, ref float __result)
         {
@@ -53,7 +53,7 @@ internal static class Encumber
         }
     }
 
-    internal static void EncumberUpdate(Il2Cpp.Encumber encumber)
+    internal static void EncumberUpdate(Encumber encumber)
     {
         var additionalWeight = EncumberCalculator.ResolveAdditionalWeight(
             Settings.Instance.AdditionalEncumbermentWeight, Settings.Instance.InfiniteEncumberWeight);

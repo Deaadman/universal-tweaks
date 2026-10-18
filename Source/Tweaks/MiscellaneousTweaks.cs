@@ -2,10 +2,10 @@
 
 namespace UniversalTweaks.Tweaks;
 
-internal static class Miscellaneous
+internal static class MiscellaneousTweaks
 {
     [HarmonyPatch(typeof(GearItem), nameof(GearItem.Drop))]
-    public class RandomizedItemRotation
+    private static class RandomizedItemRotation
     {
         private static void Postfix(GearItem __instance)
         {

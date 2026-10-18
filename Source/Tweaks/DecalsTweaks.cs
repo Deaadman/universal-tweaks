@@ -2,7 +2,7 @@
 
 namespace UniversalTweaks.Tweaks;
 
-internal static class Decals
+internal static class DecalsTweaks
 {
     [HarmonyPatch(typeof(DynamicDecalsManager), nameof(DynamicDecalsManager.RenderDynamicDecal))]
     private static class GlowingDecals

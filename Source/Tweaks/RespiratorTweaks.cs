@@ -4,12 +4,12 @@ using UniversalTweaks.Properties;
 
 namespace UniversalTweaks.Tweaks;
 
-internal static class Respirator
+internal static class RespiratorTweaks
 {
-    [HarmonyPatch(typeof(Il2CppTLD.Gear.Respirator), nameof(Il2CppTLD.Gear.Respirator.AttachCanister))]
+    [HarmonyPatch(typeof(Respirator), nameof(Respirator.AttachCanister))]
     private static class ModifyCanisterDuration
     {
-        private static void Postfix(Il2CppTLD.Gear.Respirator __instance, RespiratorCanister canister)
+        private static void Postfix(Respirator __instance, RespiratorCanister canister)
         {
             canister.m_ProtectionDurationRTSeconds = Settings.Instance.RespiratorCanisterDuration;
 

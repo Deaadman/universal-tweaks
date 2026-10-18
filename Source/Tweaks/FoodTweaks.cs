@@ -6,7 +6,7 @@ using UniversalTweaks.Utilities;
 
 namespace UniversalTweaks.Tweaks;
 
-internal static class Food
+internal static class FoodTweaks
 {
     private static readonly string[] HeadacheFoods =
     [

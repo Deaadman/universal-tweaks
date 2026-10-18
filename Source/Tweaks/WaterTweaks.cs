@@ -2,7 +2,7 @@
 
 namespace UniversalTweaks.Tweaks;
 
-internal static class Water
+internal static class WaterTweaks
 {
     [HarmonyPatch(typeof(WaterSource), nameof(WaterSource.Update))]
     private static class NonPotableToiletWater

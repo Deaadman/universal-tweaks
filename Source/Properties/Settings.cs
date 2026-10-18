@@ -293,11 +293,6 @@ internal class Settings : JsonModSettings
     #region UI Tweaks
 
     [Section("UI Tweaks")]
-    /*[Name("Campfire HUD Elements")] [Description("Disables all the elements on the UI that are related to the campfire lives remaining.")]
-    public bool DisableCampfireHUDElements = false;*/
-
-    // [Name("Cougar HUD Elements")] [Description("Disables all the elements on the UI that are related to the Cougar.")]
-    // public bool DisableCougarHUDElements = false;
     [Name("Promotional Main Menu Items")]
     [Description("Removes the promotional WINTERMUTE and Expansion menu items. (Requires main menu reload).")]
     public bool RemoveMainMenuItems = false;
@@ -334,7 +329,7 @@ internal class Settings : JsonModSettings
         // Will need to change this return back into a != check if anything else here is added.
         var encumber = GameManager.GetEncumberComponent();
         if (encumber == null) return;
-        Tweaks.Encumber.EncumberUpdate(encumber);
+        Tweaks.EncumberTweaks.EncumberUpdate(encumber);
     }
 
     // Update the following code below, move it to another class underneath Utilities called SettingsOptionsVisibility or something

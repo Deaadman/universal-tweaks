@@ -3,7 +3,7 @@ using UniversalTweaks.Utilities;
 
 namespace UniversalTweaks.Tweaks;
 
-internal static class Flashlight
+internal static class FlashlightTweaks
 {
     private static readonly Color DefaultBeamColor = new(0.7215686f, 0.8117647f, 0.9176471f);
 

@@ -2,7 +2,7 @@
 
 namespace UniversalTweaks.Tweaks;
 
-internal static class Guns
+internal static class GunsTweaks
 {
     [HarmonyPatch(typeof(vp_FPSPlayer), nameof(vp_FPSPlayer.Update))]
     private static class RevolverMovementUnblocked
