@@ -202,7 +202,7 @@ internal class Settings : JsonModSettings
     public float InsulatedFlaskHeatLossPerMinuteOutdoors = 0.5f;
 
     [Name("Remove Headache from Foods")]
-    [Description("Removes the headache debuff from certain foods. (Requires scene reload).")]
+    [Description("Removes the headache debuff from any food that causes one.")]
     public bool RemoveHeadacheDebuffFromFoods = false;
 
     [Name("Reduce Stew Fatigue Loss")]

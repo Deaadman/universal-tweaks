@@ -2,46 +2,47 @@
 using Il2CppTLD.IntBackedUnit;
 
 using UniversalTweaks.Properties;
-using UniversalTweaks.Utilities;
 
 namespace UniversalTweaks.Tweaks;
 
 internal static class FoodTweaks
 {
-    private static readonly string[] HeadacheFoods =
-    [
-        "GEAR_CookedPiePeach", "GEAR_CookedPieRoseHip", "GEAR_CookedPorridgeFruit", "GEAR_CookedPancakePeach"
-    ];
+    // Patching the debuff itself covers every food carrying the component, including any Hinterland add later.
+    [HarmonyPatch(typeof(CausesHeadacheDebuff), nameof(CausesHeadacheDebuff.Apply))]
+    private static class BlockHeadacheDebuff
+    {
+        private static bool Prefix(CausesHeadacheDebuff __instance)
+        {
+            if (!Settings.Instance.RemoveHeadacheDebuffFromFoods)
+            {
+                return true;
+            }
 
-    private static readonly string[] InsulatedFlasks =
-    [
-        "GEAR_InsulatedFlask_A", "GEAR_InsulatedFlask_B", "GEAR_InsulatedFlask_C", "GEAR_InsulatedFlask_D",
-        "GEAR_InsulatedFlask_E", "GEAR_InsulatedFlask_F", "GEAR_InsulatedFlask_G"
-    ];
+            Mod.Logger.Log($"Blocked headache debuff from '{__instance.name}'.", FlaggedLoggingLevel.Trace);
+            return false;
+        }
+    }
 
-    // Deserialize fires for every item in a scene load; the prefab edit only needs to land once per frame of that.
-    private static readonly OncePerFrame HeadacheFoodPrefabUpdate = new();
+    [HarmonyPatch(typeof(CausesHeadacheDebuff), nameof(CausesHeadacheDebuff.GetEffect))]
+    private static class HideHeadacheDebuffEffect
+    {
+        private static void Postfix(ref IFoodEffect.Effect __result)
+        {
+            if (Settings.Instance.RemoveHeadacheDebuffFromFoods)
+            {
+                __result = IFoodEffect.Effect.Neutral;
+            }
+        }
+    }
 
     // TODO: Possibly move this to the Awake() method and attach a GearItemExtension.cs MonoBehaviour to each GearItem prefab.
     // From there we can call a method that will set the values of the GearItem based on the settings without relying on Harmony Patches.
     // This will allow us to change the settings and have them apply immediately without needing to reload the game.
     [HarmonyPatch(typeof(GearItem), nameof(GearItem.Deserialize))]
-    private static class RemoveHeadacheComponents
+    private static class ApplyFoodItemTweaks
     {
         private static void Postfix(GearItem __instance)
         {
-            if (HeadacheFoodPrefabUpdate.ShouldRun())
-            {
-                if (Settings.Instance.RemoveHeadacheDebuffFromFoods)
-                {
-                    ComponentUtilities.RemoveComponent<CausesHeadacheDebuff>(HeadacheFoods);
-                }
-                else
-                {
-                    ComponentUtilities.RestoreComponent<CausesHeadacheDebuff>(HeadacheFoods);
-                }
-            }
-
             if (__instance.gameObject.name is "GEAR_CookedStewMeat" or "GEAR_CookedStewVegetables")
             {
                 __instance.gameObject.GetComponentInParent<FoodStatEffect>().m_Effect =
@@ -50,16 +51,12 @@ internal static class FoodTweaks
             }
 
             // TODO: When optimising this mod, consider using the GearItem.LoadPrefab blah blah blah - so we can make a separate 'RefreshGearItems' method that can be called when the settings are changed.
-            if (InsulatedFlasks.Contains(__instance.gameObject.name))
+            if (__instance.m_InsulatedFlask != null)
             {
                 __instance.m_InsulatedFlask.m_PercentHeatLossPerMinuteIndoors =
                     Settings.Instance.InsulatedFlaskHeatLossPerMinuteIndoors;
                 __instance.m_InsulatedFlask.m_PercentHeatLossPerMinuteOutdoors =
                     Settings.Instance.InsulatedFlaskHeatLossPerMinuteOutdoors;
-            }
-            else if (__instance.m_InsulatedFlask != null)
-            {
-                Mod.Logger.Log($"Found insulated flask '{__instance.gameObject.name}' that is missing from the known flasks list.", FlaggedLoggingLevel.Debug);
             }
 
             if (Settings.Instance.ConsistantDressingWeight && __instance.gameObject.name is "GEAR_OldMansBeardDressing")
