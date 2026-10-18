@@ -259,6 +259,12 @@ internal class ContainerSettings : JsonModSettings
 
     #endregion
 
+    protected override void OnConfirm()
+    {
+        base.OnConfirm();
+        Tweaks.ContainerTweaks.RefreshContainerCapacities();
+    }
+
     protected override void OnChange(FieldInfo field, object? oldValue, object? newValue) => RefreshFields();
 
     internal void RefreshFields()

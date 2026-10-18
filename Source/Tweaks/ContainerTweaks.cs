@@ -4,9 +4,7 @@ using UniversalTweaks.Properties;
 
 namespace UniversalTweaks.Tweaks;
 
-// This entire class needs to be revisited with the following changes...
-// Create a dedicated method for updating these prefabs, instantly update them like we are with the encumbering tweaks.
-// Make sure that all of these containers are up-to-date, it has been awhile since it was last touched.
+// TODO: Make sure that all of these containers are up-to-date, it has been awhile since it was last touched.
 internal static class ContainerTweaks
 {
     // Matched in order against the container's name; the first fragment it contains wins.
@@ -74,27 +72,53 @@ internal static class ContainerTweaks
         ("STR_BankAVaultDepositBox", s => s.ContainerSafetyDepositBoxCapacity),
     ];
 
+    // Vanilla capacity per container instance, so unlisted containers can be restored when infinite weight is turned off.
+    private static readonly Dictionary<int, ItemWeight> OriginalCapacities = new();
+
     [HarmonyPatch(typeof(Container), nameof(Container.Awake))]
     private static class AdjustContainerCapacityAmount
     {
         private static void Postfix(Container __instance)
         {
-            var settings = ContainerSettings.Instance;
-
-            if (settings.InfiniteContainerWeight)
-            {
-                __instance.m_Capacity = ItemWeight.FromKilograms(10000);
-            }
-            else if (TryGetCapacity(__instance.name, settings, out var capacity))
-            {
-                __instance.m_Capacity = ItemWeight.FromKilograms(capacity);
-            }
-            else
-            {
-                Mod.Logger.Log($"Found container '{__instance.name}' that is missing from the known containers list.", FlaggedLoggingLevel.Debug);
-            }
+            OriginalCapacities[__instance.GetInstanceID()] = __instance.m_Capacity;
+            ApplyCapacity(__instance);
 
             Mod.Logger.Log($"Container '{__instance.name}' capacity set to {__instance.m_Capacity}.", FlaggedLoggingLevel.Trace);
+        }
+    }
+
+    internal static void RefreshContainerCapacities()
+    {
+        // Only containers that went through Awake are touched, which skips prefabs and leaves their vanilla values intact.
+        var refreshed = 0;
+        foreach (var container in Resources.FindObjectsOfTypeAll<Container>())
+        {
+            if (OriginalCapacities.ContainsKey(container.GetInstanceID()))
+            {
+                ApplyCapacity(container);
+                refreshed++;
+            }
+        }
+
+        Mod.Logger.Log($"Refreshed the capacity of {refreshed} container(s).", FlaggedLoggingLevel.Debug);
+    }
+
+    private static void ApplyCapacity(Container container)
+    {
+        var settings = ContainerSettings.Instance;
+
+        if (settings.InfiniteContainerWeight)
+        {
+            container.m_Capacity = ItemWeight.FromKilograms(10000);
+        }
+        else if (TryGetCapacity(container.name, settings, out var capacity))
+        {
+            container.m_Capacity = ItemWeight.FromKilograms(capacity);
+        }
+        else if (OriginalCapacities.TryGetValue(container.GetInstanceID(), out var originalCapacity))
+        {
+            container.m_Capacity = originalCapacity;
+            Mod.Logger.Log($"Found container '{container.name}' that is missing from the known containers list.", FlaggedLoggingLevel.Debug);
         }
     }
 
