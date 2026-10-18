@@ -53,6 +53,29 @@ internal static class DecalsTweaks
         }
     }
 
+    // The visibility check is shared with charcoal surveys and rock caches, so it's only bypassed while placing a decal.
+    private static bool _placingDecal;
+
+    [HarmonyPatch(typeof(PlayerManager), nameof(PlayerManager.OnCompletedDecalPlaceDown))]
+    private static class TrackDecalPlacement
+    {
+        private static void Prefix() => _placingDecal = true;
+
+        private static void Finalizer() => _placingDecal = false;
+    }
+
+    [HarmonyPatch(typeof(CharcoalItem), nameof(CharcoalItem.HasSurveyVisibility))]
+    private static class IgnoreDecalMapVisibility
+    {
+        private static void Postfix(ref bool __result)
+        {
+            if (_placingDecal && Settings.Instance.IgnoreDecalMapVisibility)
+            {
+                __result = true;
+            }
+        }
+    }
+
     [HarmonyPatch(typeof(Panel_SprayPaint), nameof(Panel_SprayPaint.Enable), [typeof(bool)])]
     private static class DecalRestrictions
     {

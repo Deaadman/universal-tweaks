@@ -277,6 +277,10 @@ internal class Settings : JsonModSettings
     [Slider(0.5f, 1.5f, 11)]
     public float GlowingDecalMultiplier = 1f;
 
+    [Name("Ignore Map Visibility")]
+    [Description("Spray paint markings are added to the map even in low visibility, such as at night or in fog.")]
+    public bool IgnoreDecalMapVisibility = false;
+
     #endregion
 
     #region Travois Tweaks

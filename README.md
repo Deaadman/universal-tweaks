@@ -58,6 +58,7 @@ Universal Tweaks is a mod for [**The Long Dark**](https://www.hinterlandgames.co
 - **Brightness Control for Glowing Decals:** Adjust the intensity of the glow effect on decals.
 - **Decal Placement Flexibility:** Modify how closely decals can be placed to one another.
 - **Glowing Decals Feature:** Enable a glow effect for spray paint decals, visible in dark environments.
+- **Ignore Map Visibility:** Spray paint markings are added to the map even in low visibility.
 </details>
 
 <details>
