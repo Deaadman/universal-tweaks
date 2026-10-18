@@ -28,7 +28,7 @@ Universal Tweaks is a mod for [**The Long Dark**](https://www.hinterlandgames.co
 - **Randomised Item Rotation:** When an item is dropped, make it drop in a random direction.
 - **Respirator Canister Duration:** Determine how long the canisters for respirators last.
 - **Slower Snow Shelter Decay:** Adjust the rate at which snow shelters degrade over time.
-- **Toilet Water Quality Setting:** Decide whether water from toilets starts as potable or non-potable.
+- **Toilet Water Quality Setting:** Decide whether water from toilets is potable or non-potable, or leave it to the game.
 </details>
 
 <details>

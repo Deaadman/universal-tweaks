@@ -94,9 +94,9 @@ internal class Settings : JsonModSettings
     public int SnowShelterDailyDecayRate = 100;
 
     [Name("Toilet Water Potability")]
-    [Description("Sets whether water obtained from toilets is potable or non-potable.")]
-    [Choice("Potable", "Non-Potable")]
-    public int ToiletWaterQuality = 0;
+    [Description("Sets whether water obtained from toilets is potable or non-potable. Vanilla leaves it to the game.")]
+    [Choice("Potable", "Non-Potable", "Vanilla")]
+    public int ToiletWaterQuality = 2;
 
     #endregion
 
