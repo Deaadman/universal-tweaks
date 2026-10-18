@@ -7,6 +7,9 @@ internal static class FlashlightTweaks
 {
     private static readonly Color DefaultBeamColor = new(0.7215686f, 0.8117647f, 0.9176471f);
 
+    // Last colour applied per FX root, so the light hierarchy is only walked when the colour actually changes.
+    private static readonly Dictionary<int, Color> AppliedBeamColors = new();
+
     [HarmonyPatch(typeof(FlashlightItem), nameof(FlashlightItem.Awake))]
     private static class FlashlightCustomization
     {
@@ -48,8 +51,6 @@ internal static class FlashlightTweaks
             __instance.m_LightOutdoor.enabled =
                 useOutdoorLighting && state is FlashlightItem.State.Low or FlashlightItem.State.High;
             __instance.m_LightOutdoorHigh.enabled = useOutdoorLighting && state == FlashlightItem.State.High;
-
-            Mod.Logger.Log($"Flashlight world light state set to {state} (actual beam state: {__instance.m_State}).", FlaggedLoggingLevel.Trace);
 
             return false;
         }
@@ -164,18 +165,14 @@ internal static class FlashlightTweaks
     {
         private static bool Prefix(LightRandomIntensity __instance)
         {
-            if (!Settings.Instance.AuroraFlickering)
+            // Runs for every flickering light in the scene, so the name (a marshalled string) is read last.
+            if (!Settings.Instance.AuroraFlickering || !Settings.Instance.ExtendedFunctionality ||
+                GameManager.GetAuroraManager().AuroraIsActive())
             {
                 return true;
             }
 
-            if (__instance.gameObject.name is "LightIndoors" or "LightOutdoors" or "LightExtend" &&
-                !GameManager.GetAuroraManager().AuroraIsActive() && Settings.Instance.ExtendedFunctionality)
-            {
-                return false;
-            }
-
-            return true;
+            return __instance.gameObject.name is not ("LightIndoors" or "LightOutdoors" or "LightExtend");
         }
     }
 
@@ -250,15 +247,25 @@ internal static class FlashlightTweaks
 
     private static void ApplyBeamColor(Color color, GameObject? lowFxGameObject, GameObject? highFxGameObject)
     {
-        if (lowFxGameObject != null)
+        ApplyBeamColor(color, lowFxGameObject);
+        ApplyBeamColor(color, highFxGameObject);
+    }
+
+    private static void ApplyBeamColor(Color color, GameObject? fxGameObject)
+    {
+        if (fxGameObject == null)
         {
-            UpdateLightColorRecursive(lowFxGameObject.transform, color);
+            return;
         }
 
-        if (highFxGameObject != null)
+        var id = fxGameObject.GetInstanceID();
+        if (AppliedBeamColors.TryGetValue(id, out var appliedColor) && appliedColor == color)
         {
-            UpdateLightColorRecursive(highFxGameObject.transform, color);
+            return;
         }
+
+        UpdateLightColorRecursive(fxGameObject.transform, color);
+        AppliedBeamColors[id] = color;
     }
 
     private static void UpdateLightColorRecursive(Transform transform, Color color)

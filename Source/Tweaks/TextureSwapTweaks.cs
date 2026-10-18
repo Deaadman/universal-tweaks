@@ -61,8 +61,6 @@ internal static class TextureSwapTweaks
                 return true;
             }
 
-            Mod.Logger.Log($"Swapped inventory icon texture for '{gi.name}' to '{textureName}'.", FlaggedLoggingLevel.Trace);
-
             __result = newTexture;
             return false;
         }

@@ -22,10 +22,6 @@ internal static class RockCacheTweaks
         {
             __instance.m_MaxRockCachesPerRegion = Settings.Instance.MaximumPerRegionRockCaches;
             __instance.m_MinDistanceBetweenRockCaches = Settings.Instance.MinimumDistanceBetweenRockCaches;
-
-            Mod.Logger.Log(
-                $"Rock cache limits set: max {Settings.Instance.MaximumPerRegionRockCaches} per region, min distance {Settings.Instance.MinimumDistanceBetweenRockCaches}.",
-                FlaggedLoggingLevel.Debug);
         }
     }
 

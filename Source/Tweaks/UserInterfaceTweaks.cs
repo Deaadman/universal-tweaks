@@ -31,7 +31,6 @@ internal static class UserInterfaceTweaks
             }
 
             __result = GameManager.GetInventoryComponent().GetBestGearItemWithName("GEAR_SprayPaintCan") == null;
-            Mod.Logger.Log($"Spray paint radial greyed out: {__result}.", FlaggedLoggingLevel.Trace);
             return false;
         }
     }
