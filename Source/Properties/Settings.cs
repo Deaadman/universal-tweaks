@@ -6,6 +6,35 @@ namespace UniversalTweaks.Properties;
 
 internal class Settings : JsonModSettings
 {
+    // Declared before Instance so it is initialised before the constructor could reach RefreshFields.
+    // Split these up into different bool methods to hide or enable all fields like CheatTweaks, ContainerTweaks etc.
+    // After doing that, when certain options are selected - hide certain ones. Example being infinite container weight, hide the rest of the options.
+    private static readonly string[] CheatingTweakFields =
+    [
+        nameof(SnowShelterDailyDecayRate),
+        nameof(DecayBlizzardTravois),
+        nameof(DecayHPPerHourTravois),
+        nameof(DecayMovementPerUnitTravois),
+        nameof(InfiniteBattery),
+        nameof(FlashlightLowBeamDuration),
+        nameof(FlashlightHighBeamDuration),
+        nameof(FlashlightRechargeTime),
+        nameof(FlashlightLowBeamIntensity),
+        nameof(FlashlightLowBeamRange),
+        nameof(FlashlightHighBeamIntensity),
+        nameof(FlashlightHighBeamRange),
+        nameof(MinersFlashlightLowBeamDuration),
+        nameof(MinersFlashlightHighBeamDuration),
+        nameof(MinersFlashlightRechargeTime),
+        nameof(MinersFlashlightLowBeamIntensity),
+        nameof(MinersFlashlightLowBeamRange),
+        nameof(MinersFlashlightHighBeamIntensity),
+        nameof(MinersFlashlightHighBeamRange),
+        nameof(OverrideTravoisMovementRestrictions),
+        nameof(OverrideTravoisInteractionRestrictions),
+        nameof(InfiniteEncumberWeight),
+    ];
+
     internal static Settings Instance { get; } = new();
 
     #region General Tweaks
@@ -338,33 +367,6 @@ internal class Settings : JsonModSettings
     }
 
     // Update the following code below, move it to another class underneath Utilities called SettingsOptionsVisibility or something
-    // Split these up into different bool methods to hide or enable all fields like CheatTweaks, ContainerTweaks etc.
-    // After doing that, when certain options are selected - hide certain ones. Example being infinite container weight, hide the rest of the options.
-    private static readonly string[] CheatingTweakFields =
-    [
-        nameof(SnowShelterDailyDecayRate),
-        nameof(DecayBlizzardTravois),
-        nameof(DecayHPPerHourTravois),
-        nameof(DecayMovementPerUnitTravois),
-        nameof(InfiniteBattery),
-        nameof(FlashlightLowBeamDuration),
-        nameof(FlashlightHighBeamDuration),
-        nameof(FlashlightRechargeTime),
-        nameof(FlashlightLowBeamIntensity),
-        nameof(FlashlightLowBeamRange),
-        nameof(FlashlightHighBeamIntensity),
-        nameof(FlashlightHighBeamRange),
-        nameof(MinersFlashlightLowBeamDuration),
-        nameof(MinersFlashlightHighBeamDuration),
-        nameof(MinersFlashlightRechargeTime),
-        nameof(MinersFlashlightLowBeamIntensity),
-        nameof(MinersFlashlightLowBeamRange),
-        nameof(MinersFlashlightHighBeamIntensity),
-        nameof(MinersFlashlightHighBeamRange),
-        nameof(OverrideTravoisMovementRestrictions),
-        nameof(OverrideTravoisInteractionRestrictions),
-        nameof(InfiniteEncumberWeight),
-    ];
 
     private void RefreshFields()
     {
