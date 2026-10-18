@@ -126,7 +126,12 @@ internal static class FlashlightTweaks
                 if (__instance.m_CurrentBatteryCharge <= 0f)
                 {
                     __instance.m_CurrentBatteryCharge = 0f;
-                    __instance.m_State = FlashlightItem.State.Off;
+                    if (__instance.m_State != FlashlightItem.State.Off)
+                    {
+                        __instance.m_State = FlashlightItem.State.Off;
+                        // Flipping the state alone leaves the beam lights enabled, lit wherever the item now is.
+                        __instance.EnableLights(FlashlightItem.State.Off);
+                    }
                 }
             }
 
