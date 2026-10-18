@@ -35,6 +35,17 @@ internal static class FoodTweaks
         }
     }
 
+    // Runs every tick and for the elapsed-time catch-up on load, so setting changes apply immediately.
+    [HarmonyPatch(typeof(InsulatedFlask), nameof(InsulatedFlask.CalculateHeatLoss))]
+    private static class InsulatedFlaskHeatLoss
+    {
+        private static void Prefix(InsulatedFlask __instance)
+        {
+            __instance.m_PercentHeatLossPerMinuteIndoors = Settings.Instance.InsulatedFlaskHeatLossPerMinuteIndoors;
+            __instance.m_PercentHeatLossPerMinuteOutdoors = Settings.Instance.InsulatedFlaskHeatLossPerMinuteOutdoors;
+        }
+    }
+
     // TODO: Possibly move this to the Awake() method and attach a GearItemExtension.cs MonoBehaviour to each GearItem prefab.
     // From there we can call a method that will set the values of the GearItem based on the settings without relying on Harmony Patches.
     // This will allow us to change the settings and have them apply immediately without needing to reload the game.
@@ -48,15 +59,6 @@ internal static class FoodTweaks
                 __instance.gameObject.GetComponentInParent<FoodStatEffect>().m_Effect =
                     Settings.Instance.ReduceStewFatigueLossAmount;
                 Mod.Logger.Log($"Set '{__instance.gameObject.name}' fatigue loss to {Settings.Instance.ReduceStewFatigueLossAmount}.", FlaggedLoggingLevel.Trace);
-            }
-
-            // TODO: When optimising this mod, consider using the GearItem.LoadPrefab blah blah blah - so we can make a separate 'RefreshGearItems' method that can be called when the settings are changed.
-            if (__instance.m_InsulatedFlask != null)
-            {
-                __instance.m_InsulatedFlask.m_PercentHeatLossPerMinuteIndoors =
-                    Settings.Instance.InsulatedFlaskHeatLossPerMinuteIndoors;
-                __instance.m_InsulatedFlask.m_PercentHeatLossPerMinuteOutdoors =
-                    Settings.Instance.InsulatedFlaskHeatLossPerMinuteOutdoors;
             }
 
             if (Settings.Instance.ConsistantDressingWeight && __instance.gameObject.name is "GEAR_OldMansBeardDressing")
