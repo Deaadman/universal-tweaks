@@ -2,6 +2,7 @@
 using Il2CppTLD.Interactions;
 
 using UniversalTweaks.Properties;
+using UniversalTweaks.Utilities;
 
 namespace UniversalTweaks.Tweaks;
 
@@ -51,14 +52,15 @@ internal static class Travois
             __instance.m_TravoisMovement.m_MaxSlopeClimbAngle = Settings.Instance.MaximumSlopeAngleTravois;
             __instance.m_TravoisMovement.m_MaxSlopeDownhillAngle = Settings.Instance.MaximumSlopeAngleTravois;
 
-            __instance.m_BlizzardDecayPerHour =
-                Settings.Instance.CheatingTweaks ? Settings.Instance.DecayBlizzardTravois : 3;
+            __instance.m_BlizzardDecayPerHour = Settings.Instance.CheatingTweaks
+                ? Settings.Instance.DecayBlizzardTravois
+                : VanillaDefaults.TravoisBlizzardDecayPerHour;
             __instance.m_DecayHPPerHour = Settings.Instance.CheatingTweaks
                 ? Settings.Instance.DecayHPPerHourTravois / 1000f
-                : 0.01f;
+                : VanillaDefaults.TravoisDecayHPPerHour;
             __instance.m_MovementDecayPerUnit = Settings.Instance.CheatingTweaks
                 ? Settings.Instance.DecayMovementPerUnitTravois / 100f
-                : 0.05f;
+                : VanillaDefaults.TravoisMovementDecayPerUnit;
 
             Mod.Logger.Log("Applied travois tweaks on pickup.", FlaggedLoggingLevel.Debug);
         }

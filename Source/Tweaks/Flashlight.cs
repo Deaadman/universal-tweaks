@@ -5,6 +5,8 @@ namespace UniversalTweaks.Tweaks;
 
 internal static class Flashlight
 {
+    private static readonly Color DefaultBeamColor = new(0.7215686f, 0.8117647f, 0.9176471f);
+
     [HarmonyPatch(typeof(FlashlightItem), nameof(FlashlightItem.Awake))]
     private static class FlashlightCustomization
     {
@@ -117,43 +119,19 @@ internal static class Flashlight
                 __instance.m_CurrentBatteryCharge = 1f;
             }
 
-            var isMinersFlashlight = __instance.m_GearItem != null &&
-                                     __instance.m_GearItem.name == "GEAR_Flashlight_LongLasting";
-            __instance.m_LowBeamDuration = Settings.Instance.CheatingTweaks
-                ?
-                isMinersFlashlight
-                    ? Settings.Instance.MinersFlashlightLowBeamDuration
-                    : Settings.Instance.FlashlightLowBeamDuration
-                : isMinersFlashlight
-                    ? 1.5f
-                    : 1f;
-            __instance.m_HighBeamDuration = Settings.Instance.CheatingTweaks
-                ? isMinersFlashlight
-                    ? Settings.Instance.MinersFlashlightHighBeamDuration
-                    : Settings.Instance.FlashlightHighBeamDuration
-                : 0.08333334f;
-            __instance.m_RechargeTime = Settings.Instance.CheatingTweaks
-                ?
-                isMinersFlashlight
-                    ? Settings.Instance.MinersFlashlightRechargeTime
-                    : Settings.Instance.FlashlightRechargeTime
-                : isMinersFlashlight
-                    ? 1.75f
-                    : 2f;
+            var isMinersFlashlight = IsMinersFlashlight(__instance);
+            var tuning = GetTuning(isMinersFlashlight);
 
-            var (lowBeamIntensity, lowBeamRange, highBeamIntensity, highBeamRange) = GetBeamLightSettings(isMinersFlashlight);
+            __instance.m_LowBeamDuration = tuning.LowBeamDuration;
+            __instance.m_HighBeamDuration = tuning.HighBeamDuration;
+            __instance.m_RechargeTime = tuning.RechargeTime;
 
-            __instance.m_LightIndoor.intensity = lowBeamIntensity;
-            __instance.m_LightOutdoor.intensity = lowBeamIntensity;
-            __instance.m_LightIndoor.range = lowBeamRange;
-            __instance.m_LightOutdoor.range = lowBeamRange;
+            ApplyBeamLight(__instance.m_LightIndoor, tuning.LowBeamIntensity, tuning.LowBeamRange);
+            ApplyBeamLight(__instance.m_LightOutdoor, tuning.LowBeamIntensity, tuning.LowBeamRange);
+            ApplyBeamLight(__instance.m_LightIndoorHigh, tuning.HighBeamIntensity, tuning.HighBeamRange);
+            ApplyBeamLight(__instance.m_LightOutdoorHigh, tuning.HighBeamIntensity, tuning.HighBeamRange);
 
-            __instance.m_LightIndoorHigh.intensity = highBeamIntensity;
-            __instance.m_LightOutdoorHigh.intensity = highBeamIntensity;
-            __instance.m_LightIndoorHigh.range = highBeamRange;
-            __instance.m_LightOutdoorHigh.range = highBeamRange;
-
-            UpdateFlashlightBeamColor(__instance, __instance.m_FxObjectLow, __instance.m_FxObjectHigh);
+            ApplyBeamColor(GetBeamColor(isMinersFlashlight), __instance.m_FxObjectLow, __instance.m_FxObjectHigh);
         }
     }
 
@@ -167,29 +145,17 @@ internal static class Flashlight
             var flashlightItem = itemInHands.m_FlashlightItem;
             if (flashlightItem == null) return;
 
-            UpdateFlashlightBeamColor(flashlightItem, __instance.m_LowFxGameObject, __instance.m_HighFxGameObject);
+            var isMinersFlashlight = IsMinersFlashlight(flashlightItem);
+            ApplyBeamColor(GetBeamColor(isMinersFlashlight), __instance.m_LowFxGameObject, __instance.m_HighFxGameObject);
 
             // These are the lights the player actually sees in first person - FlashlightItem's own
             // m_LightIndoor/m_LightOutdoor pair only drives the world-space representation of the item.
-            var isMinersFlashlight = flashlightItem.m_GearItem?.name is "GEAR_Flashlight_LongLasting";
-            var (lowBeamIntensity, lowBeamRange, highBeamIntensity, highBeamRange) = GetBeamLightSettings(isMinersFlashlight);
+            var tuning = GetTuning(isMinersFlashlight);
 
-            __instance.m_LightIndoorsLow.intensity = lowBeamIntensity;
-            __instance.m_LightIndoorsLow.range = lowBeamRange;
-            __instance.m_LightOutdoorsLow.intensity = lowBeamIntensity;
-            __instance.m_LightOutdoorsLow.range = lowBeamRange;
-
-            if (__instance.m_LightIndoorsHigh != null)
-            {
-                __instance.m_LightIndoorsHigh.intensity = highBeamIntensity;
-                __instance.m_LightIndoorsHigh.range = highBeamRange;
-            }
-
-            if (__instance.m_LightOutdoorsHigh != null)
-            {
-                __instance.m_LightOutdoorsHigh.intensity = highBeamIntensity;
-                __instance.m_LightOutdoorsHigh.range = highBeamRange;
-            }
+            ApplyBeamLight(__instance.m_LightIndoorsLow, tuning.LowBeamIntensity, tuning.LowBeamRange);
+            ApplyBeamLight(__instance.m_LightOutdoorsLow, tuning.LowBeamIntensity, tuning.LowBeamRange);
+            ApplyBeamLight(__instance.m_LightIndoorsHigh, tuning.HighBeamIntensity, tuning.HighBeamRange);
+            ApplyBeamLight(__instance.m_LightOutdoorsHigh, tuning.HighBeamIntensity, tuning.HighBeamRange);
         }
     }
 
@@ -213,56 +179,53 @@ internal static class Flashlight
         }
     }
 
-    private static (float lowIntensity, float lowRange, float highIntensity, float highRange) GetBeamLightSettings(
-        bool isMinersFlashlight)
-    {
-        var lowIntensity = Settings.Instance.CheatingTweaks
-            ? isMinersFlashlight
-                ? Settings.Instance.MinersFlashlightLowBeamIntensity
-                : Settings.Instance.FlashlightLowBeamIntensity
-            : 1f;
-        var lowRange = Settings.Instance.CheatingTweaks
-            ? isMinersFlashlight
-                ? Settings.Instance.MinersFlashlightLowBeamRange
-                : Settings.Instance.FlashlightLowBeamRange
-            : 40f;
-        var highIntensity = Settings.Instance.CheatingTweaks
-            ? isMinersFlashlight
-                ? Settings.Instance.MinersFlashlightHighBeamIntensity
-                : Settings.Instance.FlashlightHighBeamIntensity
-            : 7.86f;
-        var highRange = Settings.Instance.CheatingTweaks
-            ? isMinersFlashlight
-                ? Settings.Instance.MinersFlashlightHighBeamRange
-                : Settings.Instance.FlashlightHighBeamRange
-            : 80f;
+    private static bool IsMinersFlashlight(FlashlightItem flashlightItem) =>
+        flashlightItem.m_GearItem != null && flashlightItem.m_GearItem.name == "GEAR_Flashlight_LongLasting";
 
-        return (lowIntensity, lowRange, highIntensity, highRange);
+    private static FlashlightTuning GetTuning(bool isMinersFlashlight)
+    {
+        var settings = Settings.Instance;
+
+        if (!settings.CheatingTweaks)
+        {
+            return isMinersFlashlight ? VanillaDefaults.MinersFlashlight : VanillaDefaults.Flashlight;
+        }
+
+        return isMinersFlashlight
+            ? new FlashlightTuning(
+                settings.MinersFlashlightLowBeamDuration,
+                settings.MinersFlashlightHighBeamDuration,
+                settings.MinersFlashlightRechargeTime,
+                settings.MinersFlashlightLowBeamIntensity,
+                settings.MinersFlashlightLowBeamRange,
+                settings.MinersFlashlightHighBeamIntensity,
+                settings.MinersFlashlightHighBeamRange)
+            : new FlashlightTuning(
+                settings.FlashlightLowBeamDuration,
+                settings.FlashlightHighBeamDuration,
+                settings.FlashlightRechargeTime,
+                settings.FlashlightLowBeamIntensity,
+                settings.FlashlightLowBeamRange,
+                settings.FlashlightHighBeamIntensity,
+                settings.FlashlightHighBeamRange);
     }
 
-    private static Color GetColorFromFlashlight(FlashlightItem flashlightItem)
+    private static Color GetBeamColor(bool isMinersFlashlight)
     {
-        var isMinersFlashlight = flashlightItem.m_GearItem?.name is "GEAR_Flashlight_LongLasting";
-        return GetColorFromSettings(
-            isMinersFlashlight ? Settings.Instance.MinersFlashlightBeamColor : Settings.Instance.FlashlightBeamColor,
-            isMinersFlashlight);
+        var settings = Settings.Instance;
+
+        return isMinersFlashlight
+            ? ToColor(settings.MinersFlashlightBeamColor, settings.MinersFlashlightRedValue,
+                settings.MinersFlashlightGreenValue, settings.MinersFlashlightBlueValue)
+            : ToColor(settings.FlashlightBeamColor, settings.FlashlightRedValue,
+                settings.FlashlightGreenValue, settings.FlashlightBlueValue);
     }
 
-    private static Color GetColorFromSettings(FlashlightBeamColor beamColor, bool isMinersFlashlight)
+    private static Color ToColor(FlashlightBeamColor beamColor, int red, int green, int blue)
     {
         return beamColor switch
         {
-            FlashlightBeamColor.Custom => new Color(
-                (isMinersFlashlight
-                    ? Settings.Instance.MinersFlashlightRedValue
-                    : Settings.Instance.FlashlightRedValue) / 255f,
-                (isMinersFlashlight
-                    ? Settings.Instance.MinersFlashlightGreenValue
-                    : Settings.Instance.FlashlightGreenValue) / 255f,
-                (isMinersFlashlight
-                    ? Settings.Instance.MinersFlashlightBlueValue
-                    : Settings.Instance.FlashlightBlueValue) / 255f),
-            FlashlightBeamColor.Default => new Color(0.7215686f, 0.8117647f, 0.9176471f),
+            FlashlightBeamColor.Custom => new Color(red / 255f, green / 255f, blue / 255f),
             FlashlightBeamColor.Red => Color.red,
             FlashlightBeamColor.Green => Color.green,
             FlashlightBeamColor.Blue => Color.blue,
@@ -270,28 +233,31 @@ internal static class Flashlight
             FlashlightBeamColor.Purple => new Color(0.5f, 0f, 0.5f),
             FlashlightBeamColor.Orange => new Color(1f, 0.6470588f, 0f),
             FlashlightBeamColor.White => Color.white,
-            _ => new Color(0.7215686f, 0.8117647f, 0.9176471f),
+            _ => DefaultBeamColor,
         };
     }
 
-    private static void UpdateFlashlightBeamColor(FlashlightItem flashlightItem, GameObject lowFxGameObject,
-        GameObject highFxGameObject)
+    private static void ApplyBeamLight(Light? light, float intensity, float range)
     {
-        if (flashlightItem == null)
+        if (light == null)
         {
             return;
         }
 
-        var newColor = GetColorFromFlashlight(flashlightItem);
+        light.intensity = intensity;
+        light.range = range;
+    }
 
+    private static void ApplyBeamColor(Color color, GameObject? lowFxGameObject, GameObject? highFxGameObject)
+    {
         if (lowFxGameObject != null)
         {
-            UpdateLightColorRecursive(lowFxGameObject.transform, newColor);
+            UpdateLightColorRecursive(lowFxGameObject.transform, color);
         }
 
         if (highFxGameObject != null)
         {
-            UpdateLightColorRecursive(highFxGameObject.transform, newColor);
+            UpdateLightColorRecursive(highFxGameObject.transform, color);
         }
     }
 
