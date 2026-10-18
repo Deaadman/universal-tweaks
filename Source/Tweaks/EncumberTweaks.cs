@@ -16,25 +16,34 @@ internal static class EncumberTweaks
         }
     }
 
+    // Scales the weight burn back to vanilla's 30 kg capacity; without extra carry weight the game's result stands.
     [HarmonyPatch(typeof(PlayerManager), nameof(PlayerManager.CalculateModifiedCalorieBurnRate), [typeof(float)])]
     private static class CalorieBurnRateFix
     {
         private static void Postfix(PlayerManager __instance, float baseBurnRate, ref float __result)
         {
+            if (ResolveAdditionalWeight() <= 0f)
+            {
+                return;
+            }
+
+            var encumber = GameManager.GetEncumberComponent();
+            var freezing = GameManager.GetFreezingComponent();
+            var isMoving = __instance.PlayerIsSprinting() || __instance.PlayerIsWalking();
             var rate = baseBurnRate;
 
-            if (__instance.PlayerIsSprinting() || __instance.PlayerIsWalking() || __instance.PlayerIsClimbing())
+            if (isMoving || __instance.PlayerIsClimbing())
             {
-                rate += GameManager.GetEncumberComponent().GetHourlyCalorieBurnFromWeight() *
-                        (30f / GameManager.GetEncumberComponent().m_MaxCarryCapacity.m_Units);
+                var maxCarryCapacityKG = encumber.m_MaxCarryCapacity.m_Units / (float)OneKilogram.m_Units;
+                rate += encumber.GetHourlyCalorieBurnFromWeight() * (30f / maxCarryCapacityKG);
             }
 
-            if (GameManager.GetFreezingComponent().IsFreezing())
+            if (freezing.IsFreezing())
             {
-                rate *= GameManager.GetFreezingComponent().m_CalorieBurnMultiplier;
+                rate *= freezing.m_CalorieBurnMultiplier;
             }
 
-            if (__instance.PlayerIsSprinting() || __instance.PlayerIsWalking())
+            if (isMoving)
             {
                 var playerVelocity = GameManager.GetVpFPSPlayer().Controller.Velocity.normalized.y;
                 if (playerVelocity > 0.1f)
@@ -47,17 +56,20 @@ internal static class EncumberTweaks
             }
 
             rate *= GameManager.GetExperienceModeManagerComponent().GetCalorieBurnScale();
-            var moddedBurn = rate * GameManager.GetFeatEfficientMachine().ReduceCaloriesScale();
-
-            __result = moddedBurn;
+            __result = rate * GameManager.GetFeatEfficientMachine().ReduceCaloriesScale();
         }
     }
 
+    // ItemWeight stores whole internal units rather than kilograms, so conversions go through a 1 kg reference.
+    private static ItemWeight OneKilogram => ItemWeight.FromKilograms(1f);
+
+    private static float ResolveAdditionalWeight() =>
+        EncumberCalculator.ResolveAdditionalWeight(Settings.Instance.AdditionalEncumbermentWeight,
+            Settings.Instance.CheatingTweaks && Settings.Instance.InfiniteEncumberWeight);
+
     internal static void EncumberUpdate(Encumber encumber)
     {
-        var additionalWeight = EncumberCalculator.ResolveAdditionalWeight(
-            Settings.Instance.AdditionalEncumbermentWeight,
-            Settings.Instance.CheatingTweaks && Settings.Instance.InfiniteEncumberWeight);
+        var additionalWeight = ResolveAdditionalWeight();
         var thresholds = EncumberCalculator.CalculateThresholds(additionalWeight);
 
         encumber.m_MaxCarryCapacity = ItemWeight.FromKilograms(thresholds.MaxCarryCapacity);
