@@ -8,10 +8,10 @@ internal static class FlashlightTweaks
     private static readonly Color DefaultBeamColor = new(0.7215686f, 0.8117647f, 0.9176471f);
 
     // Last colour applied per FX root, so the light hierarchy is only walked when the colour actually changes.
-    private static readonly Dictionary<int, Color> AppliedBeamColors = new();
+    private static readonly ObjectStateCache<GameObject, Color> AppliedBeamColors = new();
 
     // The game's own value per light, captured before the first change so turning 'Cheat' Tweaks off restores it.
-    private static readonly Dictionary<int, (float Intensity, float Range)> OriginalLightValues = new();
+    private static readonly ObjectStateCache<Light, (float Intensity, float Range)> OriginalLightValues = new();
 
     [HarmonyPatch(typeof(FlashlightItem), nameof(FlashlightItem.Awake))]
     private static class FlashlightCustomization
@@ -78,16 +78,14 @@ internal static class FlashlightTweaks
     private static class FlashlightFunctionality
     {
         // IsLit is polled several times a frame, so the failure is only announced once per switch to high beam.
-        private static readonly HashSet<int> HighBeamFailureAnnounced = new();
+        private static readonly ObjectStateCache<FlashlightItem, bool> HighBeamFailureAnnounced = new();
 
         private static bool Prefix(FlashlightItem __instance, ref bool __result)
         {
-            var id = __instance.GetInstanceID();
-
             if (Settings.Instance.ExtendedFunctionality && Settings.Instance.HighBeamRestrictions &&
                 __instance.m_State == FlashlightItem.State.High && !GameManager.GetAuroraManager().AuroraIsActive())
             {
-                if (HighBeamFailureAnnounced.Add(id))
+                if (HighBeamFailureAnnounced.TryAdd(__instance, true))
                 {
                     GameAudioManager.PlayGUIError();
                     HUDMessage.AddMessage(Localization.Get("GAMEPLAY_StateHighFail"));
@@ -97,7 +95,7 @@ internal static class FlashlightTweaks
                 return true;
             }
 
-            HighBeamFailureAnnounced.Remove(id);
+            HighBeamFailureAnnounced.Remove(__instance, out _);
 
             __result = __instance.IsOn();
             return false;
@@ -266,10 +264,9 @@ internal static class FlashlightTweaks
             return;
         }
 
-        var id = light.GetInstanceID();
         if (!Settings.Instance.CheatingTweaks)
         {
-            if (OriginalLightValues.Remove(id, out var original))
+            if (OriginalLightValues.Remove(light, out var original))
             {
                 light.intensity = original.Intensity;
                 light.range = original.Range;
@@ -278,7 +275,7 @@ internal static class FlashlightTweaks
             return;
         }
 
-        OriginalLightValues.TryAdd(id, (light.intensity, light.range));
+        OriginalLightValues.TryAdd(light, (light.intensity, light.range));
         light.intensity = intensity;
         light.range = range;
     }
@@ -296,14 +293,13 @@ internal static class FlashlightTweaks
             return;
         }
 
-        var id = fxGameObject.GetInstanceID();
-        if (AppliedBeamColors.TryGetValue(id, out var appliedColor) && appliedColor == color)
+        if (AppliedBeamColors.TryGet(fxGameObject, out var appliedColor) && appliedColor == color)
         {
             return;
         }
 
         UpdateLightColorRecursive(fxGameObject.transform, color);
-        AppliedBeamColors[id] = color;
+        AppliedBeamColors.Set(fxGameObject, color);
     }
 
     private static void UpdateLightColorRecursive(Transform transform, Color color)

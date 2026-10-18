@@ -1,6 +1,7 @@
 using LocalizationUtilities;
 
 using UniversalTweaks.Properties;
+using UniversalTweaks.Utilities;
 
 namespace UniversalTweaks;
 
@@ -18,6 +19,8 @@ internal sealed class Mod : MelonMod
 
         Logger.Log($"{Properties.BuildInfo.Name} v{Properties.BuildInfo.Version} initialized.", FlaggedLoggingLevel.Debug);
     }
+
+    public override void OnSceneWasLoaded(int buildIndex, string sceneName) => ObjectStateCaches.PruneAll();
 
     private static void LoadLocalizations()
     {

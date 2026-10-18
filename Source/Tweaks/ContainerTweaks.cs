@@ -1,6 +1,7 @@
 ﻿using Il2CppTLD.IntBackedUnit;
 
 using UniversalTweaks.Properties;
+using UniversalTweaks.Utilities;
 
 namespace UniversalTweaks.Tweaks;
 
@@ -73,14 +74,14 @@ internal static class ContainerTweaks
     ];
 
     // Vanilla capacity per container instance, so unlisted containers can be restored when infinite weight is turned off.
-    private static readonly Dictionary<int, ItemWeight> OriginalCapacities = new();
+    private static readonly ObjectStateCache<Container, ItemWeight> OriginalCapacities = new();
 
     [HarmonyPatch(typeof(Container), nameof(Container.Awake))]
     private static class AdjustContainerCapacityAmount
     {
         private static void Postfix(Container __instance)
         {
-            OriginalCapacities[__instance.GetInstanceID()] = __instance.m_Capacity;
+            OriginalCapacities.Set(__instance, __instance.m_Capacity);
             ApplyCapacity(__instance);
 
             Mod.Logger.Log($"Container '{__instance.name}' capacity set to {__instance.m_Capacity}.", FlaggedLoggingLevel.Trace);
@@ -91,9 +92,9 @@ internal static class ContainerTweaks
     {
         // Only containers that went through Awake are touched, which skips prefabs and leaves their vanilla values intact.
         var refreshed = 0;
-        foreach (var container in Resources.FindObjectsOfTypeAll<Container>())
+        foreach (var container in OriginalCapacities.Owners)
         {
-            if (OriginalCapacities.ContainsKey(container.GetInstanceID()))
+            if (container != null)
             {
                 ApplyCapacity(container);
                 refreshed++;
@@ -115,7 +116,7 @@ internal static class ContainerTweaks
         {
             container.m_Capacity = ItemWeight.FromKilograms(capacity);
         }
-        else if (OriginalCapacities.TryGetValue(container.GetInstanceID(), out var originalCapacity))
+        else if (OriginalCapacities.TryGet(container, out var originalCapacity))
         {
             container.m_Capacity = originalCapacity;
             Mod.Logger.Log($"Found container '{container.name}' that is missing from the known containers list.", FlaggedLoggingLevel.Debug);
