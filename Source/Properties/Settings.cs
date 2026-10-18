@@ -20,7 +20,7 @@ internal class Settings : JsonModSettings
     [Description("Toggle the visual breath effect on or off.")]
     public bool BreathVisibility = true;
 
-    [Name("Consistant Old Man's Dressing Weight")]
+    [Name("Consistent Old Man's Dressing Weight")]
     [Description("Changes the old man's dressing weight to be the same as lichen.")]
     public bool ConsistantDressingWeight = false;
 
