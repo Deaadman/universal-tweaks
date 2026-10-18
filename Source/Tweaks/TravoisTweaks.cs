@@ -43,39 +43,44 @@ internal static class TravoisTweaks
         }
     }
 
-    // Applied each tick rather than on pickup so setting changes reach a travois that is already placed or carried.
-    [HarmonyPatch(typeof(TravoisMovement), nameof(TravoisMovement.UpdateTravoisMovement))]
-    private static class ApplyMovementTweaks
+    // The game's own movement and decay helpers look inlined (no callers in IL2CPP), so these hook their entry points.
+    [HarmonyPatch(typeof(TravoisBigCarryItem), nameof(TravoisBigCarryItem.UpdateItem))]
+    private static class ApplyTweaksOnUpdate
     {
-        private static void Prefix(TravoisMovement __instance)
+        private static void Prefix(TravoisBigCarryItem __instance) => ApplyTravoisTweaks(__instance);
+    }
+
+    [HarmonyPatch(typeof(TravoisBigCarryItem), nameof(TravoisBigCarryItem.DeserializePostSceneLoad))]
+    private static class ApplyTweaksOnLoad
+    {
+        private static void Prefix(TravoisBigCarryItem __instance) => ApplyTravoisTweaks(__instance);
+    }
+
+    [HarmonyPatch(typeof(TravoisBigCarryItem), nameof(TravoisBigCarryItem.OnCarried))]
+    private static class ApplyTweaksOnCarried
+    {
+        private static void Postfix(TravoisBigCarryItem __instance) => ApplyTravoisTweaks(__instance);
+    }
+
+    internal static void RefreshTravois()
+    {
+        foreach (var travois in UnityEngine.Object.FindObjectsOfType<TravoisBigCarryItem>())
         {
-            __instance.m_TurnSpeed = Settings.Instance.TurnSpeedTravois;
-            __instance.m_MaxSlopeClimbAngle = Settings.Instance.MaximumSlopeAngleTravois;
-            __instance.m_MaxSlopeDownhillAngle = Settings.Instance.MaximumSlopeAngleTravois;
+            ApplyTravoisTweaks(travois);
         }
     }
 
-    [HarmonyPatch(typeof(TravoisBigCarryItem), nameof(TravoisBigCarryItem.UpdateTimeDecay))]
-    private static class ApplyTimeDecayTweaks
-    {
-        private static void Prefix(TravoisBigCarryItem __instance) => ApplyDecayTweaks(__instance);
-    }
-
-    [HarmonyPatch(typeof(TravoisBigCarryItem), nameof(TravoisBigCarryItem.UpdateBlizzardDecay))]
-    private static class ApplyBlizzardDecayTweaks
-    {
-        private static void Prefix(TravoisBigCarryItem __instance) => ApplyDecayTweaks(__instance);
-    }
-
-    [HarmonyPatch(typeof(TravoisBigCarryItem), nameof(TravoisBigCarryItem.UpdateTravelDecay))]
-    private static class ApplyTravelDecayTweaks
-    {
-        private static void Prefix(TravoisBigCarryItem __instance) => ApplyDecayTweaks(__instance);
-    }
-
-    private static void ApplyDecayTweaks(TravoisBigCarryItem travois)
+    private static void ApplyTravoisTweaks(TravoisBigCarryItem travois)
     {
         var settings = Settings.Instance;
+
+        var movement = travois.m_TravoisMovement;
+        if (movement != null)
+        {
+            movement.m_TurnSpeed = settings.TurnSpeedTravois;
+            movement.m_MaxSlopeClimbAngle = settings.MaximumSlopeAngleTravois;
+            movement.m_MaxSlopeDownhillAngle = settings.MaximumSlopeAngleTravois;
+        }
 
         travois.m_BlizzardDecayPerHour = settings.CheatingTweaks
             ? settings.DecayBlizzardTravois

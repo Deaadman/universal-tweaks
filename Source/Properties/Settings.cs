@@ -333,6 +333,7 @@ internal class Settings : JsonModSettings
 
         Tweaks.TextureSwapTweaks.RefreshMreTextures();
         Tweaks.FoodTweaks.RefreshDressingWeight();
+        Tweaks.TravoisTweaks.RefreshTravois();
     }
 
     // Update the following code below, move it to another class underneath Utilities called SettingsOptionsVisibility or something
