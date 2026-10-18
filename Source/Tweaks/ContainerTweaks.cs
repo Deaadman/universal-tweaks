@@ -107,7 +107,7 @@ internal static class ContainerTweaks
     {
         var settings = ContainerSettings.Instance;
 
-        if (settings.InfiniteContainerWeight)
+        if (Settings.Instance.CheatingTweaks && settings.InfiniteContainerWeight)
         {
             container.m_Capacity = ItemWeight.FromKilograms(10000);
         }

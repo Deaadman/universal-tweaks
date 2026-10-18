@@ -127,7 +127,7 @@ internal static class FlashlightTweaks
                 }
             }
 
-            if (Settings.Instance.InfiniteBattery)
+            if (Settings.Instance.CheatingTweaks && Settings.Instance.InfiniteBattery)
             {
                 __instance.m_CurrentBatteryCharge = 1f;
             }

@@ -1,5 +1,4 @@
 ﻿using Il2CppTLD.BigCarry;
-using Il2CppTLD.Interactions;
 
 using UniversalTweaks.Properties;
 using UniversalTweaks.Utilities;
@@ -11,9 +10,9 @@ internal static class TravoisTweaks
     [HarmonyPatch(typeof(TravoisBigCarryItem), nameof(TravoisBigCarryItem.CanPerformInteractionWhileCarrying))]
     private static class OverrideInteractionRestrictionsWhileCarrying
     {
-        private static void Postfix(ref bool __result, IInteraction interaction)
+        private static void Postfix(ref bool __result)
         {
-            if (!Settings.Instance.OverrideTravoisInteractionRestrictions)
+            if (!Settings.Instance.CheatingTweaks || !Settings.Instance.OverrideTravoisInteractionRestrictions)
             {
                 return;
             }
@@ -26,7 +25,6 @@ internal static class TravoisTweaks
             else
             {
                 __result = true;
-                Mod.Logger.Log($"Overrode travois interaction restriction for '{interaction}'.", FlaggedLoggingLevel.Trace);
             }
         }
     }
@@ -36,7 +34,7 @@ internal static class TravoisTweaks
     {
         private static void Postfix(ref CarryDisplayError __result)
         {
-            if (Settings.Instance.OverrideTravoisMovementRestrictions)
+            if (Settings.Instance.CheatingTweaks && Settings.Instance.OverrideTravoisMovementRestrictions)
             {
                 __result = CarryDisplayError.None;
             }

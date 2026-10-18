@@ -56,7 +56,8 @@ internal static class EncumberTweaks
     internal static void EncumberUpdate(Encumber encumber)
     {
         var additionalWeight = EncumberCalculator.ResolveAdditionalWeight(
-            Settings.Instance.AdditionalEncumbermentWeight, Settings.Instance.InfiniteEncumberWeight);
+            Settings.Instance.AdditionalEncumbermentWeight,
+            Settings.Instance.CheatingTweaks && Settings.Instance.InfiniteEncumberWeight);
         var thresholds = EncumberCalculator.CalculateThresholds(additionalWeight);
 
         encumber.m_MaxCarryCapacity = ItemWeight.FromKilograms(thresholds.MaxCarryCapacity);
