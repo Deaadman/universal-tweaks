@@ -43,26 +43,48 @@ internal static class TravoisTweaks
         }
     }
 
-    [HarmonyPatch(typeof(TravoisBigCarryItem), nameof(TravoisBigCarryItem.OnCarried))]
-    private static class AllTravoisTweaks
+    // Applied each tick rather than on pickup so setting changes reach a travois that is already placed or carried.
+    [HarmonyPatch(typeof(TravoisMovement), nameof(TravoisMovement.UpdateTravoisMovement))]
+    private static class ApplyMovementTweaks
     {
-        private static void Postfix(TravoisBigCarryItem __instance)
+        private static void Prefix(TravoisMovement __instance)
         {
-            __instance.m_TravoisMovement.m_TurnSpeed = Settings.Instance.TurnSpeedTravois;
-            __instance.m_TravoisMovement.m_MaxSlopeClimbAngle = Settings.Instance.MaximumSlopeAngleTravois;
-            __instance.m_TravoisMovement.m_MaxSlopeDownhillAngle = Settings.Instance.MaximumSlopeAngleTravois;
-
-            __instance.m_BlizzardDecayPerHour = Settings.Instance.CheatingTweaks
-                ? Settings.Instance.DecayBlizzardTravois
-                : VanillaDefaults.TravoisBlizzardDecayPerHour;
-            __instance.m_DecayHPPerHour = Settings.Instance.CheatingTweaks
-                ? Settings.Instance.DecayHPPerHourTravois / 1000f
-                : VanillaDefaults.TravoisDecayHPPerHour;
-            __instance.m_MovementDecayPerUnit = Settings.Instance.CheatingTweaks
-                ? Settings.Instance.DecayMovementPerUnitTravois / 100f
-                : VanillaDefaults.TravoisMovementDecayPerUnit;
-
-            Mod.Logger.Log("Applied travois tweaks on pickup.", FlaggedLoggingLevel.Debug);
+            __instance.m_TurnSpeed = Settings.Instance.TurnSpeedTravois;
+            __instance.m_MaxSlopeClimbAngle = Settings.Instance.MaximumSlopeAngleTravois;
+            __instance.m_MaxSlopeDownhillAngle = Settings.Instance.MaximumSlopeAngleTravois;
         }
+    }
+
+    [HarmonyPatch(typeof(TravoisBigCarryItem), nameof(TravoisBigCarryItem.UpdateTimeDecay))]
+    private static class ApplyTimeDecayTweaks
+    {
+        private static void Prefix(TravoisBigCarryItem __instance) => ApplyDecayTweaks(__instance);
+    }
+
+    [HarmonyPatch(typeof(TravoisBigCarryItem), nameof(TravoisBigCarryItem.UpdateBlizzardDecay))]
+    private static class ApplyBlizzardDecayTweaks
+    {
+        private static void Prefix(TravoisBigCarryItem __instance) => ApplyDecayTweaks(__instance);
+    }
+
+    [HarmonyPatch(typeof(TravoisBigCarryItem), nameof(TravoisBigCarryItem.UpdateTravelDecay))]
+    private static class ApplyTravelDecayTweaks
+    {
+        private static void Prefix(TravoisBigCarryItem __instance) => ApplyDecayTweaks(__instance);
+    }
+
+    private static void ApplyDecayTweaks(TravoisBigCarryItem travois)
+    {
+        var settings = Settings.Instance;
+
+        travois.m_BlizzardDecayPerHour = settings.CheatingTweaks
+            ? settings.DecayBlizzardTravois
+            : VanillaDefaults.TravoisBlizzardDecayPerHour;
+        travois.m_DecayHPPerHour = settings.CheatingTweaks
+            ? settings.DecayHPPerHourTravois / 1000f
+            : VanillaDefaults.TravoisDecayHPPerHour;
+        travois.m_MovementDecayPerUnit = settings.CheatingTweaks
+            ? settings.DecayMovementPerUnitTravois / 100f
+            : VanillaDefaults.TravoisMovementDecayPerUnit;
     }
 }
