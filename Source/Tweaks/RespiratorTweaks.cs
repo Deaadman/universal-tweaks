@@ -6,14 +6,13 @@ namespace UniversalTweaks.Tweaks;
 
 internal static class RespiratorTweaks
 {
-    [HarmonyPatch(typeof(Respirator), nameof(Respirator.AttachCanister))]
+    // Applied each tick while attached rather than on attach, so setting changes reach a canister already in use.
+    [HarmonyPatch(typeof(RespiratorCanister), nameof(RespiratorCanister.ManualUpdate))]
     private static class ModifyCanisterDuration
     {
-        private static void Postfix(Respirator __instance, RespiratorCanister canister)
+        private static void Prefix(RespiratorCanister __instance)
         {
-            canister.m_ProtectionDurationRTSeconds = Settings.Instance.RespiratorCanisterDuration;
-
-            Mod.Logger.Log($"Set respirator canister duration to {Settings.Instance.RespiratorCanisterDuration} seconds.", FlaggedLoggingLevel.Debug);
+            __instance.m_ProtectionDurationRTSeconds = Settings.Instance.RespiratorCanisterDuration;
         }
     }
 }
