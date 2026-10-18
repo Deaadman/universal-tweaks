@@ -4,22 +4,22 @@ namespace UniversalTweaks.Tweaks;
 
 internal static class NoisemakerTweaks
 {
-    [HarmonyPatch(typeof(GearItem), nameof(GearItem.Deserialize))]
-    private static class AdjustNoisemakerValues
+    // Applied each tick and on lifetime queries rather than on load, so setting changes reach existing noisemakers.
+    [HarmonyPatch(typeof(NoiseMakerItem), nameof(NoiseMakerItem.Update))]
+    private static class ApplyNoisemakerTweaksOnUpdate
     {
-        private static void Postfix(GearItem __instance)
-        {
-            if (__instance.gameObject.name is not "GEAR_NoiseMaker")
-            {
-                return;
-            }
+        private static void Prefix(NoiseMakerItem __instance) => ApplyNoisemakerTweaks(__instance);
+    }
 
-            __instance.m_NoiseMakerItem.m_BurnLifetimeMinutes = Settings.Instance.NoisemakerBurnLength;
-            __instance.m_NoiseMakerItem.m_ThrowForce = Settings.Instance.NoisemakerThrowForce;
+    [HarmonyPatch(typeof(NoiseMakerItem), nameof(NoiseMakerItem.GetModifiedBurnLifetimeMinutes))]
+    private static class ApplyNoisemakerTweaksOnLifetimeQuery
+    {
+        private static void Prefix(NoiseMakerItem __instance) => ApplyNoisemakerTweaks(__instance);
+    }
 
-            Mod.Logger.Log(
-                $"Applied noisemaker tweaks: burn length {Settings.Instance.NoisemakerBurnLength}, throw force {Settings.Instance.NoisemakerThrowForce}.",
-                FlaggedLoggingLevel.Debug);
-        }
+    private static void ApplyNoisemakerTweaks(NoiseMakerItem noisemaker)
+    {
+        noisemaker.m_BurnLifetimeMinutes = Settings.Instance.NoisemakerBurnLength;
+        noisemaker.m_ThrowForce = Settings.Instance.NoisemakerThrowForce;
     }
 }
