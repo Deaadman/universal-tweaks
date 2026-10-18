@@ -132,3 +132,6 @@ Avoid using the following mods below as they are incompatible with this mod:
 
 ### Translations
 - [**Elderly-Emre**](https://github.com/Elderly-Emre) - For providing Turkish translations.
+
+> [!NOTE]
+> AI assistance has been used within this project.
