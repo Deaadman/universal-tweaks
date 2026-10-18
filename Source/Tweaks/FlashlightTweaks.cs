@@ -74,16 +74,27 @@ internal static class FlashlightTweaks
     [HarmonyPatch(typeof(FlashlightItem), nameof(FlashlightItem.IsLit))]
     private static class FlashlightFunctionality
     {
+        // IsLit is polled several times a frame, so the failure is only announced once per switch to high beam.
+        private static readonly HashSet<int> HighBeamFailureAnnounced = new();
+
         private static bool Prefix(FlashlightItem __instance, ref bool __result)
         {
-            if (Settings.Instance.HighBeamRestrictions && __instance.m_State == FlashlightItem.State.High &&
-                !GameManager.GetAuroraManager().AuroraIsActive())
+            var id = __instance.GetInstanceID();
+
+            if (Settings.Instance.ExtendedFunctionality && Settings.Instance.HighBeamRestrictions &&
+                __instance.m_State == FlashlightItem.State.High && !GameManager.GetAuroraManager().AuroraIsActive())
             {
-                GameAudioManager.PlayGUIError();
-                HUDMessage.AddMessage(Localization.Get("GAMEPLAY_StateHighFail"));
+                if (HighBeamFailureAnnounced.Add(id))
+                {
+                    GameAudioManager.PlayGUIError();
+                    HUDMessage.AddMessage(Localization.Get("GAMEPLAY_StateHighFail"));
+                }
+
                 __result = __instance.IsOn();
                 return true;
             }
+
+            HighBeamFailureAnnounced.Remove(id);
 
             __result = __instance.IsOn();
             return false;
@@ -103,7 +114,8 @@ internal static class FlashlightTweaks
                 {
                     __instance.m_CurrentBatteryCharge -= todHours / __instance.m_LowBeamDuration;
                 }
-                else if (!Settings.Instance.HighBeamRestrictions && __instance.m_State == FlashlightItem.State.High)
+                else if (!(Settings.Instance.ExtendedFunctionality && Settings.Instance.HighBeamRestrictions) &&
+                         __instance.m_State == FlashlightItem.State.High)
                 {
                     __instance.m_CurrentBatteryCharge -= todHours / __instance.m_HighBeamDuration;
                 }
