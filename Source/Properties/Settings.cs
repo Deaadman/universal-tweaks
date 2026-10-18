@@ -340,102 +340,49 @@ internal class Settings : JsonModSettings
     // Update the following code below, move it to another class underneath Utilities called SettingsOptionsVisibility or something
     // Split these up into different bool methods to hide or enable all fields like CheatTweaks, ContainerTweaks etc.
     // After doing that, when certain options are selected - hide certain ones. Example being infinite container weight, hide the rest of the options.
+    private static readonly string[] CheatingTweakFields =
+    [
+        nameof(SnowShelterDailyDecayRate),
+        nameof(DecayBlizzardTravois),
+        nameof(DecayHPPerHourTravois),
+        nameof(DecayMovementPerUnitTravois),
+        nameof(InfiniteBattery),
+        nameof(FlashlightLowBeamDuration),
+        nameof(FlashlightHighBeamDuration),
+        nameof(FlashlightRechargeTime),
+        nameof(FlashlightLowBeamIntensity),
+        nameof(FlashlightLowBeamRange),
+        nameof(FlashlightHighBeamIntensity),
+        nameof(FlashlightHighBeamRange),
+        nameof(MinersFlashlightLowBeamDuration),
+        nameof(MinersFlashlightHighBeamDuration),
+        nameof(MinersFlashlightRechargeTime),
+        nameof(MinersFlashlightLowBeamIntensity),
+        nameof(MinersFlashlightLowBeamRange),
+        nameof(MinersFlashlightHighBeamIntensity),
+        nameof(MinersFlashlightHighBeamRange),
+        nameof(OverrideTravoisMovementRestrictions),
+        nameof(OverrideTravoisInteractionRestrictions),
+        nameof(InfiniteEncumberWeight),
+    ];
+
     private void RefreshFields()
     {
-        if (ExtendedFunctionality)
+        SetFieldVisible(nameof(HighBeamRestrictions), ExtendedFunctionality);
+
+        var showFlashlightCustomColor = FlashlightBeamColor == FlashlightBeamColor.Custom;
+        SetFieldVisible(nameof(FlashlightRedValue), showFlashlightCustomColor);
+        SetFieldVisible(nameof(FlashlightGreenValue), showFlashlightCustomColor);
+        SetFieldVisible(nameof(FlashlightBlueValue), showFlashlightCustomColor);
+
+        var showMinersFlashlightCustomColor = MinersFlashlightBeamColor == FlashlightBeamColor.Custom;
+        SetFieldVisible(nameof(MinersFlashlightRedValue), showMinersFlashlightCustomColor);
+        SetFieldVisible(nameof(MinersFlashlightGreenValue), showMinersFlashlightCustomColor);
+        SetFieldVisible(nameof(MinersFlashlightBlueValue), showMinersFlashlightCustomColor);
+
+        foreach (var field in CheatingTweakFields)
         {
-            SetFieldVisible(nameof(HighBeamRestrictions), true);
-        }
-        else
-        {
-            SetFieldVisible(nameof(HighBeamRestrictions), false);
-        }
-
-        if (FlashlightBeamColor == FlashlightBeamColor.Custom)
-        {
-            SetFieldVisible(nameof(FlashlightRedValue), true);
-            SetFieldVisible(nameof(FlashlightGreenValue), true);
-            SetFieldVisible(nameof(FlashlightBlueValue), true);
-        }
-        else
-        {
-            SetFieldVisible(nameof(FlashlightRedValue), false);
-            SetFieldVisible(nameof(FlashlightGreenValue), false);
-            SetFieldVisible(nameof(FlashlightBlueValue), false);
-        }
-
-        if (MinersFlashlightBeamColor == FlashlightBeamColor.Custom)
-        {
-            SetFieldVisible(nameof(MinersFlashlightRedValue), true);
-            SetFieldVisible(nameof(MinersFlashlightGreenValue), true);
-            SetFieldVisible(nameof(MinersFlashlightBlueValue), true);
-        }
-        else
-        {
-            SetFieldVisible(nameof(MinersFlashlightRedValue), false);
-            SetFieldVisible(nameof(MinersFlashlightGreenValue), false);
-            SetFieldVisible(nameof(MinersFlashlightBlueValue), false);
-        }
-
-        if (CheatingTweaks)
-        {
-            SetFieldVisible(nameof(SnowShelterDailyDecayRate), true);
-
-            SetFieldVisible(nameof(DecayBlizzardTravois), true);
-            SetFieldVisible(nameof(DecayHPPerHourTravois), true);
-            SetFieldVisible(nameof(DecayMovementPerUnitTravois), true);
-
-            SetFieldVisible(nameof(InfiniteBattery), true);
-            SetFieldVisible(nameof(FlashlightLowBeamDuration), true);
-            SetFieldVisible(nameof(FlashlightHighBeamDuration), true);
-            SetFieldVisible(nameof(FlashlightRechargeTime), true);
-            SetFieldVisible(nameof(FlashlightLowBeamIntensity), true);
-            SetFieldVisible(nameof(FlashlightLowBeamRange), true);
-            SetFieldVisible(nameof(FlashlightHighBeamIntensity), true);
-            SetFieldVisible(nameof(FlashlightHighBeamRange), true);
-
-            SetFieldVisible(nameof(MinersFlashlightLowBeamDuration), true);
-            SetFieldVisible(nameof(MinersFlashlightHighBeamDuration), true);
-            SetFieldVisible(nameof(MinersFlashlightRechargeTime), true);
-            SetFieldVisible(nameof(MinersFlashlightLowBeamIntensity), true);
-            SetFieldVisible(nameof(MinersFlashlightLowBeamRange), true);
-            SetFieldVisible(nameof(MinersFlashlightHighBeamIntensity), true);
-            SetFieldVisible(nameof(MinersFlashlightHighBeamRange), true);
-
-            SetFieldVisible(nameof(OverrideTravoisMovementRestrictions), true);
-            SetFieldVisible(nameof(OverrideTravoisInteractionRestrictions), true);
-
-            SetFieldVisible(nameof(InfiniteEncumberWeight), true);
-        }
-        else
-        {
-            SetFieldVisible(nameof(SnowShelterDailyDecayRate), false);
-
-            SetFieldVisible(nameof(DecayBlizzardTravois), false);
-            SetFieldVisible(nameof(DecayHPPerHourTravois), false);
-            SetFieldVisible(nameof(DecayMovementPerUnitTravois), false);
-
-            SetFieldVisible(nameof(InfiniteBattery), false);
-            SetFieldVisible(nameof(FlashlightLowBeamDuration), false);
-            SetFieldVisible(nameof(FlashlightHighBeamDuration), false);
-            SetFieldVisible(nameof(FlashlightRechargeTime), false);
-            SetFieldVisible(nameof(FlashlightLowBeamIntensity), false);
-            SetFieldVisible(nameof(FlashlightLowBeamRange), false);
-            SetFieldVisible(nameof(FlashlightHighBeamIntensity), false);
-            SetFieldVisible(nameof(FlashlightHighBeamRange), false);
-
-            SetFieldVisible(nameof(MinersFlashlightLowBeamDuration), false);
-            SetFieldVisible(nameof(MinersFlashlightHighBeamDuration), false);
-            SetFieldVisible(nameof(MinersFlashlightRechargeTime), false);
-            SetFieldVisible(nameof(MinersFlashlightLowBeamIntensity), false);
-            SetFieldVisible(nameof(MinersFlashlightLowBeamRange), false);
-            SetFieldVisible(nameof(MinersFlashlightHighBeamIntensity), false);
-            SetFieldVisible(nameof(MinersFlashlightHighBeamRange), false);
-
-            SetFieldVisible(nameof(OverrideTravoisMovementRestrictions), false);
-            SetFieldVisible(nameof(OverrideTravoisInteractionRestrictions), false);
-
-            SetFieldVisible(nameof(InfiniteEncumberWeight), false);
+            SetFieldVisible(field, CheatingTweaks);
         }
 
         ContainerSettings.Instance.RefreshFields();
