@@ -151,7 +151,7 @@ internal class Settings : JsonModSettings
 
     [Name("Flashlight High Beam Intensity")]
     [Description("Adjusts the brightness of the flashlight's high beam. Default is 7.86.")]
-    [Slider(0, 25, 26)]
+    [Slider(0f, 25f, 2501, NumberFormat = "{0:0.##}")]
     public float FlashlightHighBeamIntensity = 7.86f;
 
     [Name("Flashlight High Beam Range")]
@@ -200,7 +200,7 @@ internal class Settings : JsonModSettings
 
     [Name("Miner's Flashlight High Beam Intensity")]
     [Description("Adjusts the brightness of the miner's flashlight's high beam. Default is 7.86.")]
-    [Slider(0, 25, 26)]
+    [Slider(0f, 25f, 2501, NumberFormat = "{0:0.##}")]
     public float MinersFlashlightHighBeamIntensity = 7.86f;
 
     [Name("Miner's Flashlight High Beam Range")]
