@@ -206,7 +206,7 @@ internal class Settings : JsonModSettings
     public bool RemoveHeadacheDebuffFromFoods = false;
 
     [Name("Reduce Stew Fatigue Loss")]
-    [Description("Reduces the amount of fatigue lost after consuming. Default is 15. (Requires scene reload).")]
+    [Description("Reduces the amount of fatigue lost after consuming. Default is 15.")]
     [Slider(0, 15, 15)]
     public int ReduceStewFatigueLossAmount = 15;
 

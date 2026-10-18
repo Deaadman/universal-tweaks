@@ -46,6 +46,34 @@ internal static class FoodTweaks
         }
     }
 
+    // Applied whenever the effect is read or consumed, so setting changes reach stews that already exist.
+    [HarmonyPatch(typeof(FoodStatEffect), nameof(FoodStatEffect.Apply))]
+    private static class ApplyStewFatigueOnConsume
+    {
+        private static void Prefix(FoodStatEffect __instance) => ApplyStewFatigue(__instance);
+    }
+
+    [HarmonyPatch(typeof(FoodStatEffect), nameof(FoodStatEffect.GetStatEffect))]
+    private static class ApplyStewFatigueOnStatQuery
+    {
+        private static void Prefix(FoodStatEffect __instance) => ApplyStewFatigue(__instance);
+    }
+
+    [HarmonyPatch(typeof(FoodStatEffect), nameof(FoodStatEffect.GetEffect))]
+    private static class ApplyStewFatigueOnEffectQuery
+    {
+        private static void Prefix(FoodStatEffect __instance) => ApplyStewFatigue(__instance);
+    }
+
+    private static void ApplyStewFatigue(FoodStatEffect effect)
+    {
+        if (effect.m_Stat == FoodStatEffect.StatType.Fatigue &&
+            effect.gameObject.name is "GEAR_CookedStewMeat" or "GEAR_CookedStewVegetables")
+        {
+            effect.m_Effect = Settings.Instance.ReduceStewFatigueLossAmount;
+        }
+    }
+
     // TODO: Possibly move this to the Awake() method and attach a GearItemExtension.cs MonoBehaviour to each GearItem prefab.
     // From there we can call a method that will set the values of the GearItem based on the settings without relying on Harmony Patches.
     // This will allow us to change the settings and have them apply immediately without needing to reload the game.
@@ -54,13 +82,6 @@ internal static class FoodTweaks
     {
         private static void Postfix(GearItem __instance)
         {
-            if (__instance.gameObject.name is "GEAR_CookedStewMeat" or "GEAR_CookedStewVegetables")
-            {
-                __instance.gameObject.GetComponentInParent<FoodStatEffect>().m_Effect =
-                    Settings.Instance.ReduceStewFatigueLossAmount;
-                Mod.Logger.Log($"Set '{__instance.gameObject.name}' fatigue loss to {Settings.Instance.ReduceStewFatigueLossAmount}.", FlaggedLoggingLevel.Trace);
-            }
-
             if (Settings.Instance.ConsistantDressingWeight && __instance.gameObject.name is "GEAR_OldMansBeardDressing")
             {
                 __instance.m_GearItemData.m_BaseWeight = ItemWeight.FromKilograms(0.03f);
