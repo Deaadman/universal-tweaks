@@ -5,12 +5,19 @@ namespace UniversalTweaks.Tweaks;
 
 internal static class TextureSwap
 {
+    private static readonly Dictionary<string, string> IconTextures = new()
+    {
+        { "GEAR_MRE", "ico_GearItem__BrownMRE" }
+    };
+
+    private static readonly OncePerFrame PrefabTextureUpdate = new();
+
     [HarmonyPatch(typeof(GearItem), nameof(GearItem.Deserialize))]
     private static class SwapGearItemTextures
     {
         private static void Postfix()
         {
-            if (Settings.Instance.MRETextureVariant)
+            if (Settings.Instance.MRETextureVariant && PrefabTextureUpdate.ShouldRun())
             {
                 TextureSwapper.SwapGearItemTexture("GEAR_MRE", "Obj_FoodMRE_LOD0",
                     "GEAR_FoodBrownMRE_Dif");
@@ -24,16 +31,11 @@ internal static class TextureSwap
 
     internal static string ResolveTextureName(string gearItemName, bool mreTextureVariantEnabled)
     {
-        var textureMapping = new Dictionary<string, string>
-        {
-            { "GEAR_MRE", "ico_GearItem__BrownMRE" }
-        };
-
         if (gearItemName == "GEAR_MRE" && !mreTextureVariantEnabled)
         {
             return string.Empty;
         }
 
-        return textureMapping.TryGetValue(gearItemName, out var textureName) ? textureName : string.Empty;
+        return IconTextures.TryGetValue(gearItemName, out var textureName) ? textureName : string.Empty;
     }
 }

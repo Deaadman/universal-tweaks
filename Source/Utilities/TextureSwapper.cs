@@ -74,13 +74,7 @@ internal static class TextureSwapper
                 return true;
             }
 
-            var textures = LoadTexturesFromAssetBundle();
-            if (textures.Count == 0)
-            {
-                return true;
-            }
-
-            if (!textures.TryGetValue(textureName, out var newTexture))
+            if (!Textures.TryGetValue(textureName, out var newTexture))
             {
                 return true;
             }
