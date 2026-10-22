@@ -1,22 +1,41 @@
-name: Feature Request
-description: Suggest a new feature or enhancement for this mod.
-
+name: Feature request
+description: An idea for something Universal Tweaks could do, or do better.
+labels: ["feature"]
 body:
   - type: markdown
     attributes:
       value: |
-        When requesting for features, follow the guidelines in this template.
-        - Write a descriptive issue title above.
-        - Search [open](https://github.com/Deaadman/UniversalTweaks/issues) and [closed](https://github.com/Deaadman/UniversalTweaks/issues?q=is%3Aissue%20state%3Aclosed) issues to ensure the feature has not already been requested.
+        Check the [open issues](https://github.com/Deaadman/universal-tweaks/issues) first, in case someone has already suggested it.
 
   - type: textarea
+    id: problem
     attributes:
-      label: Describe the problem or limitation that you are having in your game.
+      label: What you're trying to do
+      description: The moment in the game where something gets in your way. Start from your game, not the feature.
+      placeholder: When I spray paint a marker at night, it never shows up on my map.
     validations:
       required: true
 
   - type: textarea
+    id: idea
     attributes:
-      label: Describe the feature / enhancement and how it helps to overcome the problem or limitation.
+      label: Your idea
+      description: What the mod could do about it.
+      placeholder: A setting so spray paint markings always reach the map, whatever the visibility.
     validations:
       required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Which part of the mod
+      multiple: true
+      options:
+        - Carry weight or containers
+        - Flashlights
+        - Food and drink
+        - Rock caches
+        - Spray paint
+        - Travois
+        - The HUD or menus
+        - Something the mod doesn't touch yet

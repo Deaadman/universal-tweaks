@@ -1,4 +1,4 @@
 <Solution>
-  <Project Path="Source/UniversalTweaks.csproj" />
-  <Project Path="Tests/UniversalTweaks.Tests/UniversalTweaks.Tests.csproj" />
+  <Project Path="src/UniversalTweaks.csproj" />
+  <Project Path="tests/UniversalTweaks.Tests/UniversalTweaks.Tests.csproj" />
 </Solution>

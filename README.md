@@ -1,138 +1,85 @@
 <div align="center">
 
-<img src="https://raw.githubusercontent.com/Deaadman/UniversalTweaks/release/Images/Banner.webp" alt="Universal Tweaks Banner">
+![Universal Tweaks](docs/images/banner.webp)
 
-[![Latest Release](https://img.shields.io/github/v/release/Deaadman/UniversalTweaks?style=for-the-badge&label=Latest%20Release)](https://github.com/Deaadman/UniversalTweaks/releases/latest)
-
-[![All Downloads](https://img.shields.io/github/downloads/Deaadman/UniversalTweaks/total?style=for-the-badge&label=All%20Downloads)](https://github.com/Deaadman/UniversalTweaks/releases)
-[![Latest Downloads](https://img.shields.io/github/downloads/Deaadman/UniversalTweaks/latest/total?style=for-the-badge&label=Latest%20Downloads)](https://github.com/Deaadman/UniversalTweaks/releases/latest)
-
-[![Nightly Workflow](https://img.shields.io/github/actions/workflow/status/Deaadman/UniversalTweaks/release_nightly.yml?style=for-the-badge&label=Nightly%20Build)](https://github.com/Deaadman/UniversalTweaks/actions/workflows/release_nightly.yml)
-[![Nightly Downloads](https://img.shields.io/github/downloads/Deaadman/UniversalTweaks/nightly/total?style=for-the-badge&label=Nightly%20Downloads)](https://github.com/Deaadman/UniversalTweaks/releases/tag/nightly)
+[![Latest release](https://img.shields.io/github/v/release/Deaadman/universal-tweaks?style=flat-square&label=release)](https://github.com/Deaadman/universal-tweaks/releases/latest) [![Downloads](https://img.shields.io/github/downloads/Deaadman/universal-tweaks/total?style=flat-square)](https://github.com/Deaadman/universal-tweaks/releases) [![Latest downloads](https://img.shields.io/github/downloads/Deaadman/universal-tweaks/latest/total?style=flat-square&label=latest%20downloads)](https://github.com/Deaadman/universal-tweaks/releases/latest) [![Nightly downloads](https://img.shields.io/github/downloads/Deaadman/universal-tweaks/nightly/total?style=flat-square&label=nightly%20downloads)](https://github.com/Deaadman/universal-tweaks/releases/tag/nightly) [![Nightly](https://img.shields.io/github/actions/workflow/status/Deaadman/universal-tweaks/nightly.yml?branch=develop&style=flat-square&label=nightly)](https://github.com/Deaadman/universal-tweaks/releases/tag/nightly) [![License](https://img.shields.io/badge/license-GPL--3.0-blue?style=flat-square)](LICENSE)
 
 </div>
 
-## Features
+Universal Tweaks is a [MelonLoader](https://github.com/LavaGang/MelonLoader) mod for [The Long Dark](https://www.hinterlandgames.com/the-long-dark/) that adjusts lots of small things in the game in ways that just make sense. Every tweak is a setting, and most are off until you turn them on.
 
-Universal Tweaks is a mod for [**The Long Dark**](https://www.hinterlandgames.com/the-long-dark/) that enhances existing gameplay elements by modifying them in a way that just make sense.
+## Install
 
-<details>
-    <summary>General Tweaks</summary>
+1. Install [MelonLoader](https://github.com/LavaGang/MelonLoader/releases/latest/download/MelonLoader.Installer.exe) into The Long Dark.
+2. Install the mods it needs, in the `Mods` folder in the game's folder:
+   - [Complex Logger](https://github.com/Arkhorse/Complex-Logger/releases/latest)
+   - [ModSettings](https://github.com/DigitalzombieTLD/ModSettings), for the mod's settings menu (Complex Logger needs it too)
+   - [ModComponent](https://github.com/dommrogers/ModComponent/releases/latest), for the mod's translations
+3. Download [UniversalTweaks.dll](https://github.com/Deaadman/universal-tweaks/releases/latest/download/UniversalTweaks.dll) and put it in the `Mods` folder too.
+4. Start the game.
 
-- **Breath Effects Control:** Choose whether to display the character's visible breath effect.
-- **Headache-Free Foods:** Remove the headache debuff caused by consuming porridges and pies.
-- **Improved Revolver Handling:** Allow movement while aiming with the revolver.
-- **Insulated Flasks Duration:** Customise how long the heat lasts inside insulated flasks.
-- **MRE Texture Variant:** Switch between the traditional blue and a new brown texture for MREs.
-- **Noisemaker Adjustments:** Choose how long the fuse lasts or how far the player can throw noisemakers.
-- **Randomised Item Rotation:** When an item is dropped, make it drop in a random direction.
-- **Respirator Canister Duration:** Determine how long the canisters for respirators last.
-- **Slower Snow Shelter Decay:** Adjust the rate at which snow shelters degrade over time.
-- **Toilet Water Quality Setting:** Decide whether water from toilets is potable or non-potable, or leave it to the game.
-</details>
+To update, replace `UniversalTweaks.dll` with the new one. To uninstall, delete it.
 
-<details>
-    <summary>Flashlight Tweaks</summary>
+Each release says which version of The Long Dark it was made for. After a game update, the mod may not work until it's updated too.
 
-- **All-Time Functionality:** Enable flashlight usage anytime, not limited to auroras.
-- **Aurora-Dependent Flickering:** Make flashlights only flicker during aurora events.
-- **Beam Duration & Recharge Options:** Adjust the duration of low and high beams and set recharge times.
-- **Beam Intensity & Range Options:** Adjust the brightness and reach of low and high beams.
-- **Customizable Beam Colors:** Alter the color of flashlight beams for standard and miner's flashlights.
-- **High-Beam Limitation:** Restrict the flashlight's high beam mode to auroras only.
-- **Infinite Battery Life:** Ensure the flashlight never runs out of battery, for uninterrupted use.
-- **Random Battery Charge:** Start with a random battery charge level for added unpredictability.
-</details>
+### Doesn't work with
 
-<details>
-    <summary>Rock Cache Tweaks</summary>
+These mods do things Universal Tweaks already does, so don't use them alongside it. Some of them stop it loading.
 
-- **Adjustable Region Limits:** Set a custom maximum number of rock caches per region.
-- **Indoor Placement Option:** Allow building rock caches indoors, expanding placement possibilities.
-- **Minimum Cache Distance Setting:** Determine the necessary spacing between each rock cache.
-</details>
+- [Carry Weight](https://github.com/Xpazeman/tld-carry-weight-mod)
+- [Container Tweaks](https://github.com/GruffCassquatch/ContainerTweaks)
+- [Disable Breath Effects](https://github.com/Thekillergreece/DisableBreathEffect)
+- [Enable Feat Progress In Custom Mode](https://github.com/RomainDeschampsFR/EnableFeatProgressInCustomModeLegacy)
+- [Limitless Container Space](https://github.com/Atlas-Lumi/LimitlessContainerSpace)
+- [TLD_NonPotableToiletWater](https://github.com/Ezinw/TLD_NonPotableToiletWater)
+- [Unlimited Rock Caches](https://github.com/dommrogers/UnlimitedRockCaches)
 
-<details>
-    <summary>Spray Paint Tweaks</summary>
+### Nightly builds
 
-- **Brightness Control for Glowing Decals:** Adjust the intensity of the glow effect on decals.
-- **Decal Placement Flexibility:** Modify how closely decals can be placed to one another.
-- **Glowing Decals Feature:** Enable a glow effect for spray paint decals, visible in dark environments.
-- **Ignore Map Visibility:** Spray paint markings are added to the map even in low visibility.
-</details>
+Every change is built straight away and published as the [nightly release](https://github.com/Deaadman/universal-tweaks/releases/tag/nightly). It has the newest fixes and features, but it may be unstable. Back up your saves first.
 
-<details>
-    <summary>Travois Tweaks</summary>
+## What it does
 
-- **Decay Rate Customization:** Choose from various settings to control how quickly the travois deteriorates.
-- **Movement Restrictions:** Change whether movement is restricted or not.
-- **Slope Navigation Capability:** Set the maximum steepness the travois can handle.
-- **Turn Speed Adjustment:** Fine-tune the speed at which the travois can rotate.
-- **Unlimited Interaction:** Easily travel indoors anywhere with this setting on.
-</details>
+| Area | What you can change |
+| --- | --- |
+| Carry weight | Carry more, or a practically unlimited amount, without the extra weight making each kilogram burn fewer calories |
+| Containers | How much each kind of container holds, or a practically unlimited amount |
+| Flashlights | Use them outside auroras, keep them lit when dropped, change how long the battery lasts, how bright and far the beams reach and what colour they are, and stop the flicker |
+| Food and drink | Remove the headache from pies and porridge, change how long insulated flasks stay hot and how much fatigue stews take away, and make toilet water potable or not |
+| Rock caches | Build them indoors, and change how many you can build and how far apart |
+| Spray paint | Make decals glow in the dark, place them closer together, and mark the map whatever the visibility |
+| Travois | Change how fast it turns, how steep a slope it can take and how fast it decays, and take it anywhere |
+| Other | Hide your breath, a brown MRE, noisemaker fuse and throw, respirator canister duration, snow shelter decay, walking while aiming the revolver, random drop rotation, feat progress in custom games, an always-on crosshair, and hiding main menu adverts |
+| Fixes | Resetting a snare from the inspect menu after a rabbit is caught, spray paint greyed out in the radial menu without a can, and the fire sprite lined up on the feed fire panel |
 
-<details>
-    <summary>UI Tweaks</summary>
-
-- **Constant Crosshair Visibility:** Keep the crosshair permanently visible, regardless of the player's actions.
-- **Promotional Items Removal:** Opt to remove promotional menu items for WINTERMUTE and expansions from the main menu.
-</details>
-
-<details>
-    <summary>Weight Tweaks</summary>
-
-- **Choose Player Encumberment Amount:** Determine how much weight the player can hold, whether it's semi-infinite or just a couple KG.
-- **Choose Container Weight Amount:** Determine specific weights for each container, or give them all a semi-infinite weight.
-</details>
-
-<details>
-    <summary>Miscellaneous Tweaks</summary>
-
-- **Fire Sprite Fix:** Realigned the currently misaligned fire sprite within the feed fire ui panel.
-- **Improved Radial Menu:** Spray paint cans are now greyed out if no can is found within the inventory.
-- **Resetting Snares:** Easier to reset snares just from the inspect menu after a rabbit is captured.
-</details>
-
-## Showcase
+[How it all works](docs/features.md) has every setting and its default.
 
 https://github.com/user-attachments/assets/943ec975-7efd-465b-9b12-969956964a0c
 
-## Compatibility
+## Bugs and ideas
 
-### Required Dependencies
-For this mod to work, ensure you have the following mods below:
+Found a bug? Use the [bug report form](https://github.com/Deaadman/universal-tweaks/issues/new?template=bug_report.yml). It asks for `MelonLoader\Latest.log` from your game's folder, with every level turned on in Complex Logger's settings.
 
-- [**ModComponent**](https://github.com/dommrogers/ModComponent/releases)
-- [**ModSettings**](https://github.com/DigitalzombieTLD/ModSettings)
-- [**Complex Logger**](https://github.com/Arkhorse/Complex-Logger)
+Have an idea? Use the [feature request form](https://github.com/Deaadman/universal-tweaks/issues/new?template=feature_request.yml).
 
-### Incompatible Mods
+## Learn more
 
-Avoid using the following mods below as they are incompatible with this mod:
+- [How it works](docs/features.md): every setting, what it does and its default
+- [Building from source](docs/development.md)
+- [Changelog](CHANGELOG.md)
 
-- **[Carry Weight](https://github.com/Xpazeman/tld-carry-weight-mod)**
-- **[Container Tweaks](https://github.com/GruffCassquatch/ContainerTweaks)**
-- **[Disable Breath Effects](https://github.com/Thekillergreece/DisableBreathEffect)**
-- **[Enable Feat Progress In Custom Mode](https://github.com/RomainDeschampsFR/EnableFeatProgressInCustomModeLegacy)**
-- **[Limitless Container Space](https://github.com/Atlas-Lumi/LimitlessContainerSpace)**
-- **[TLD_NonPotableToiletWater](https://github.com/Ezinw/TLD_NonPotableToiletWater)**
-- **[Unlimited Rock Caches](https://github.com/dommrogers/UnlimitedRockCaches)**
+## Thanks
 
-## Installation
+- [Jods](https://github.com/Jods-Its) and [Kaiusername](https://github.com/Kaiusername), for the brown MRE's icon and texture.
+- [Elderly-Emre](https://github.com/Elderly-Emre), for the Turkish translations.
+- [Xpazeman](https://github.com/Xpazeman), [Cass](https://github.com/GruffCassquatch), [Emma](https://github.com/Atlas-Lumi), [Romain](https://github.com/RomainDeschampsFR), [Thekillergreece](https://github.com/Thekillergreece), [zeobviouslyfakeacc](https://github.com/zeobviouslyfakeacc) and [Ezinw](https://github.com/Ezinw), whose mods are part of Universal Tweaks.
 
-1. [**Download**](https://github.com/LavaGang/MelonLoader/releases/latest/download/MelonLoader.Installer.exe) MelonLoader and install it into your game.
-2. [**Download**](https://github.com/Deaadman/UniversalTweaks/releases/latest/download/UniversalTweaks.dll) the latest version of this mod.
-3. Navigate to where your game's directory.
-4. Cut the `UniversalTweaks.dll` you downloaded and paste it into the `mods` folder of your game's directory.
-5. Launch the game.
+## License
 
-## Contribution
+Universal Tweaks is licensed under [GPL-3.0](LICENSE).
 
-### 2D Assets
-- [**Jods**](https://github.com/Jods-Its) and [**Kaiusername**](https://github.com/Kaiusername) for the creation of the brown MRE icon and texture.
+## Disclaimers
 
-### Translations
-- [**Elderly-Emre**](https://github.com/Elderly-Emre) - For providing Turkish translations.
+**AI assistance.** Parts of this project, including some of its code, were written with the help of AI coding agents.
 
-> [!NOTE]
-> AI assistance has been used within this project.
+**Not affiliated with Hinterland.** Universal Tweaks is an unofficial fan-made mod. It isn't made, endorsed or supported by Hinterland Studio. The Long Dark and its assets are the property of Hinterland Studio. Please report problems with the mod here, not to Hinterland.

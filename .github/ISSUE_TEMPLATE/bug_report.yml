@@ -1,56 +1,95 @@
-name: Bug Report
-description: Report a bug for an issue this mod is causing.
-
+name: Bug report
+description: Something in Universal Tweaks is wrong, broken or crashed the game.
+labels: ["bug"]
 body:
   - type: markdown
     attributes:
       value: |
-        When reporting bugs, follow the guidelines in this template.
-        - Write a descriptive issue title above.
-        - The golden rule is to **always open *one* issue for *one* bug**. If you notice several bugs and want to report them, make sure to create one new issue for each of them.
-        - Search [open](https://github.com/Deaadman/UniversalTweaks/issues) and [closed](https://github.com/Deaadman/UniversalTweaks/issues?q=is%3Aissue%20state%3Aclosed) issues to ensure the bug has not already been reported.
-        - Verify that you are using the [latest mod version](https://github.com/Deaadman/UniversalTweaks/releases/latest), and the latest version of the game.
+        Thanks for reporting it. The more of this you fill in, the faster it can be fixed.
+        One bug per report, please. Check the [open issues](https://github.com/Deaadman/universal-tweaks/issues) first, in case it's already there.
 
   - type: textarea
+    id: what-happened
     attributes:
-      label: Tested Versions
-      description: |
-        To properly fix a bug, we need to identify if the bug was recently introduced in the mod, or if it was always present.
-        - Specify the version you found the issue in, including the **Git commit hash** if using a nightly build. The exact version (including the commit hash) can be copied from the terminal window that opens with the game.
-        - If you can, **test earlier versions** and, if applicable, newer versions (nightly build). Mention whether the bug is reproducible or not in the versions you tested. You can find all releases [here](https://github.com/Deaadman/UniversalTweaks/releases).
-        - The aim is to identify whether a bug is a **regression**, i.e. an issue that didn't exist in a previous version, but was introduced later on, breaking existing functionality.
+      label: What happened
+      description: What went wrong, and any error you saw.
+      placeholder: My flashlight stayed lit on the ground after its battery ran out.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+      placeholder: The flashlight turns off when its battery is empty.
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: How to make it happen
+      description: The steps from loading a save, and which settings you have on. How often it happens. A short video helps.
       placeholder: |
-        - Reproducible In: 1.5.0-nightly [d76c1d0e5], 1.4.6, 1.4.5 and later.
-        - Not Reproducible In: 1.4.4, 1.4.3 and earlier.
+        1. Turn on Extended Functionality in the mod's settings
+        2. Load a save with a flashlight outside an aurora
+        3. Turn it on, drop it and wait for the battery to run out
+
+  - type: dropdown
+    id: where
+    attributes:
+      label: Which part of the mod
+      multiple: true
+      options:
+        - Carry weight or containers
+        - Flashlights
+        - Food and drink
+        - Rock caches
+        - Spray paint
+        - Travois
+        - The HUD or menus
+        - Another tweak
+        - The game crashed or wouldn't load
+        - Something else
+    validations:
+      required: true
+
+  - type: input
+    id: mod-version
+    attributes:
+      label: Universal Tweaks version
+      description: The console window that opens with the game shows it when the mod loads, like 1.5.0 or 1.5.0-nightly.20261022+g1a2b3c4.
+      placeholder: 1.5.0
+    validations:
+      required: true
+
+  - type: input
+    id: game-version
+    attributes:
+      label: The Long Dark version
+      description: Shown at the bottom of the game's main menu.
+      placeholder: "2.55"
     validations:
       required: true
 
   - type: textarea
+    id: mods
     attributes:
-      label: Issue Description
+      label: Your other mods
+      description: Everything in your game's Mods folder. If you can, check whether it still happens with only Universal Tweaks and its dependencies.
+
+  - type: textarea
+    id: log
+    attributes:
+      label: MelonLoader log
       description: |
-        Describe your issue briefly. 
-        - What doesn't work, and how do you expect it to work instead?
-        - **Do not** post screenshots of the logs in your console, instead include the log file produced in the section below.
+        First turn on every logging level in Complex Logger's options, in the game's Mod Settings menu, then make the bug happen again.
+        Close the game, then drag `MelonLoader\Latest.log` from your game's folder into this box. Please attach the file rather than a screenshot of the console.
     validations:
       required: true
 
   - type: textarea
+    id: more
     attributes:
-      label: Log File
-      description: |
-        Upload the log file produced after closing the game. The log file is called `Latest.log` and is usually found underneath the `MelonLoader` folder within your game's directory.
-        - **Ensure** that **all levels** of logging are enabled before uploading the log file. Enable these through the settings [ComplexLogger](https://github.com/Arkhorse/Complex-Logger) provides in the in-game settings menu.
-    validations:
-      required: true
-
-  - type: textarea
-    attributes:
-      label: Steps to Reproduce
-      description: |
-        List the steps taken to reproduce the issue.
-          - Include how often it happens.
-          - What did you expect to happen, and what actually happened?
-          - If applicable, uploading a short video can help.
-    validations:
-      required: true
+      label: Anything else
+      description: Screenshots, a video, or anything else that might help.

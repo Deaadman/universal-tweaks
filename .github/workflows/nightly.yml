@@ -1,0 +1,122 @@
+# Publishes a nightly build on every push to develop. It replaces the
+# "nightly" pre-release and its tag each time, so there's only ever one. The
+# version is the project's VersionPrefix with a suffix for the day and the
+# commit, like 1.5.0-nightly.20261022+g1a2b3c4, which the game's console
+# shows when the mod loads. Its notes are CHANGELOG.md's Unreleased section,
+# then a link to every commit since the latest release.
+#
+# Inspired by:
+# 1. NeoVim's nightly release: https://github.com/neovim/neovim/blob/master/.github/workflows/release.yml
+# 2. SeasonedInterloping's release: https://github.com/ds5678/SeasonedInterloping/blob/main/.github/workflows/publish.yml
+
+name: Nightly
+
+on:
+  push:
+    branches: [develop]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# A newer push replaces a nightly that's still building.
+concurrency:
+  group: nightly
+  cancel-in-progress: true
+
+env:
+  PROJECT_NAME: UniversalTweaks
+  DOTNET_NOLOGO: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+
+jobs:
+  ci:
+    uses: ./.github/workflows/ci.yml
+
+  build:
+    name: Build
+    needs: ci
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Build
+        shell: bash
+        run: |
+          dotnet restore src --locked-mode
+          dotnet build src -c Release --no-restore --version-suffix "nightly.$(date -u +%Y%m%d)+g${GITHUB_SHA::7}"
+
+      - name: Collect files
+        shell: bash
+        run: |
+          mkdir -p out
+          cp "src/bin/Release/net6.0/${PROJECT_NAME}.dll" out/
+          cp src/obj/Version.txt out/
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: ${{ env.PROJECT_NAME }}
+          path: out/*
+          retention-days: 1
+          if-no-files-found: error
+
+  publish:
+    name: Publish
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      GH_REPO: ${{ github.repository }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      # For CHANGELOG.md and the script that reads it.
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - uses: actions/download-artifact@v8
+        with:
+          name: ${{ env.PROJECT_NAME }}
+          path: out
+
+      - name: Read the version
+        run: echo "VERSION=$(tr -d '\r' < out/Version.txt)" >> "$GITHUB_ENV"
+
+      # The changelog's Unreleased section, then a link to every commit since the latest release.
+      - name: Write the notes
+        shell: pwsh
+        run: |
+          ./scripts/release-notes.ps1 -Version Unreleased -OutDir notes -Repo "https://github.com/$env:GH_REPO"
+          $latest = gh api "repos/$env:GH_REPO/releases/latest" --jq .tag_name
+          $sha = $env:GITHUB_SHA.Substring(0, 7)
+          $changes = (Get-Content -Raw notes/release-notes.md).Trim()
+          if (-not $changes) { $changes = "_Nothing under Unreleased in the changelog yet._" }
+          $notes = @(
+            "A build of ``develop`` at $sha. It may be unstable, so back up your saves first."
+            ''
+            "## Since $latest"
+            ''
+            $changes
+            ''
+            "**Every commit**: https://github.com/$env:GH_REPO/compare/$latest...nightly"
+          ) -join "`n"
+          [IO.File]::WriteAllText("$PWD/notes/nightly.md", $notes + "`n")
+
+      - name: Remove the previous nightly
+        run: |
+          gh release delete nightly --yes --cleanup-tag || true
+
+      - name: Publish
+        run: |
+          gh release create nightly "out/${PROJECT_NAME}.dll" \
+            --prerelease \
+            --title "$VERSION" \
+            --target "$GITHUB_SHA" \
+            --notes-file notes/nightly.md
+          echo "Published nightly **$VERSION**" >> "$GITHUB_STEP_SUMMARY"

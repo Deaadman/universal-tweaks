@@ -1,0 +1,113 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <LangVersion>default</LangVersion>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <DebugType>embedded</DebugType>
+        <!-- Checks the XML comments: every public member needs one, and every cref must resolve. -->
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+        <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
+        <!-- packages.lock.json pins every package, including the ones these depend on. CI restores with locked mode. -->
+        <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+        <!-- Restore checks every package, including the ones these depend on, for security advisories. With warnings as errors, one fails the build. -->
+        <NuGetAuditMode>all</NuGetAuditMode>
+        <!-- A source that can't be reached for advisories is still only a warning; an advisory is an error. -->
+        <WarningsNotAsErrors>NU1900</WarningsNotAsErrors>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <Authors>Deadman</Authors>
+        <Copyright>Copyright (c) 2026 $(Authors)</Copyright>
+        <Product>Universal Tweaks</Product>
+        <!-- The release version. Nightly builds add a suffix: 1.5.0-nightly.20261022+g1a2b3c4. -->
+        <VersionPrefix>1.5.0</VersionPrefix>
+        <RepositoryUrl>https://github.com/Deaadman/universal-tweaks</RepositoryUrl>
+    </PropertyGroup>
+
+    <!-- The brown MRE textures and icon, and the translations. -->
+    <ItemGroup>
+        <EmbeddedResource Include="Resources\UniversalTweaksAssetBundle" />
+        <EmbeddedResource Include="Resources\Localization.json" />
+    </ItemGroup>
+
+    <!-- The game's assemblies. The first two numbers of the version are the game version they were made from. -->
+    <ItemGroup>
+        <PackageReference Include="STBlade.Modding.TLD.Il2CppAssemblies.Windows" Version="2.55.0" />
+    </ItemGroup>
+
+    <!-- ModSettings, for the mod's settings menu. Players install it themselves (Complex Logger needs it too), so it isn't copied to the output. -->
+    <ItemGroup>
+        <PackageReference Include="STBlade.Modding.TLD.ModSettings" Version="1.9.0" ExcludeAssets="runtime" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Using Include="HarmonyLib" />
+        <Using Include="Il2Cpp" />
+        <Using Include="MelonLoader" />
+        <Using Include="UnityEngine" />
+        <Using Include="System.Reflection" />
+        <Using Include="System.Diagnostics.CodeAnalysis" />
+        <Using Include="ComplexLogger.FlaggedLoggingLevel" Alias="FlaggedLoggingLevel" />
+    </ItemGroup>
+
+    <!--
+    Complex Logger and ModComponent (for its localization) aren't on NuGet, so their DLLs are committed: Complex Logger
+    from https://github.com/Arkhorse/Complex-Logger/releases and ModComponent from
+    https://github.com/dommrogers/ModComponent/releases. Players install them themselves, so they aren't copied to the
+    output.
+    -->
+    <ItemGroup>
+        <Reference Include="ComplexLogger">
+            <HintPath>Dependencies\ComplexLogger.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+        <Reference Include="ModComponent">
+            <HintPath>Dependencies\ModComponent.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+    </ItemGroup>
+
+    <!-- Copies the mod into the game after a Debug build, when TheLongDarkPath is set (for example in an environment variable). -->
+    <Target Name="CopyToModsFolder" AfterTargets="Build" Condition="'$(Configuration)' == 'Debug' And '$(TheLongDarkPath)' != ''">
+        <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(TheLongDarkPath)/Mods" />
+    </Target>
+
+    <!-- The full version, for the workflows to name the release with. -->
+    <Target Name="WriteVersion" AfterTargets="Build" Condition="'$(Configuration)' == 'Release'">
+        <WriteLinesToFile File="$(BaseIntermediateOutputPath)Version.txt" Lines="$(InformationalVersion)" Overwrite="true" />
+    </Target>
+
+    <!-- BuildInfo for AssemblyInfo.cs, written to obj. Set inside the target, where IntermediateOutputPath is known. -->
+    <Target Name="GenerateBuildInfo" BeforeTargets="CoreCompile">
+        <PropertyGroup>
+            <BuildInfoFile>$(IntermediateOutputPath)BuildInfo.g.cs</BuildInfoFile>
+        </PropertyGroup>
+
+        <WriteLinesToFile
+                File="$(BuildInfoFile)"
+                Overwrite="true"
+                WriteOnlyWhenDifferent="true"
+                Lines="
+namespace UniversalTweaks.Properties%3B
+
+internal static class BuildInfo
+{
+	public const string Name = &quot;$(Product)&quot;%3B
+	public const string Version = &quot;$(InformationalVersion)&quot;%3B
+	public const string Author = &quot;$(Authors)&quot;%3B
+	public const string DownloadLink = &quot;$(RepositoryUrl)/releases/latest/download/UniversalTweaks.dll&quot;%3B
+	public const int Priority = 0%3B
+	public const string MelonLoaderVersion = &quot;0.7.2-ci.2388&quot;%3B
+}
+" />
+
+        <ItemGroup>
+            <Compile Include="$(BuildInfoFile)" />
+            <FileWrites Include="$(BuildInfoFile)" />
+        </ItemGroup>
+    </Target>
+</Project>
