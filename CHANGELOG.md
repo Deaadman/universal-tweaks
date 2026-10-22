@@ -27,6 +27,8 @@ See docs/development.md, "Releasing". CI checks this file's format.
 - Settings for the brightness and range of the flashlight's low and high beams ([#28](https://github.com/Deaadman/universal-tweaks/issues/28)).
 - A **Vanilla** choice for **Toilet Water Potability**, which leaves it to the game. It's the default.
 - **Ignore Map Visibility**, so spray paint markings always reach the map, even at night or in fog ([#14](https://github.com/Deaadman/universal-tweaks/issues/14)).
+- **Drop Single Rounds**, so dropping one rifle or revolver round from a box drops a single round instead of a box.
+- **Safer Torch Lighting**, so lighting a torch always lets you pick a fire tool first, even if you only have one, and letting go before it lights no longer wastes a match or wears your flint and steel or fire striker.
 
 ### Changed
 

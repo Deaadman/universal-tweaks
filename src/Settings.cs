@@ -66,6 +66,11 @@ internal sealed class Settings : JsonModSettings
     [Description("Changes the old man's dressing weight to be the same as lichen.")]
     public bool ConsistantDressingWeight = false;
 
+    /// <summary>Whether one round dropped from a box drops as a single round: see <see cref="SingleRoundDrops"/>.</summary>
+    [Name("Drop Single Rounds")]
+    [Description("Dropping one rifle or revolver round from a box drops a single round instead of a box.")]
+    public bool DropSingleRounds = false;
+
     /// <summary>Whether feats progress in custom games.</summary>
     [Name("Feat Progress in Custom Mode")]
     [Description("Determine whether feat progress counts in custom difficulties.")]
@@ -108,6 +113,15 @@ internal sealed class Settings : JsonModSettings
     [Name("Revolver Handling Improvements")]
     [Description("Allows movement while aiming with the revolver.")]
     public bool RevolverImprovements = false;
+
+    /// <summary>
+    /// Whether lighting a torch always opens the menu to pick a fire tool, even with only one, and uses up the match, or
+    /// wears the flint and steel or fire striker, only once the torch lights: see <see cref="TorchLightMenu"/> and
+    /// <see cref="TorchToolUse"/>.
+    /// </summary>
+    [Name("Safer Torch Lighting")]
+    [Description("Lighting a torch always lets you pick a fire tool, even if you only have one, and only uses it up once the torch lights, so letting go early wastes nothing.")]
+    public bool SaferTorchLighting = false;
 
     /// <summary>How many hit points a snow shelter loses a day. Needs <see cref="CheatingTweaks"/>.</summary>
     [Name("Snow Shelter Decay Rate")]

@@ -28,6 +28,23 @@ internal static class GearItemPatches
         }
     }
 
+    /// <summary>Notes when the player is dropping an item, for <see cref="SingleRoundDrops.Dropping"/>.</summary>
+    [HarmonyPatch(typeof(GearItem), nameof(GearItem.Drop))]
+    private static class TrackDrop
+    {
+        private static void Prefix() => SingleRoundDrops.Dropping = true;
+
+        private static void Finalizer() => SingleRoundDrops.Dropping = false;
+    }
+
+    /// <summary>Drops one round split off a box as a single round: see <see cref="SingleRoundDrops"/>.</summary>
+    [HarmonyPatch(typeof(GearItem), nameof(GearItem.InstantiateStackable))]
+    private static class DropSingleRound
+    {
+        private static void Postfix(int numUnits, ref GearItem? __result) =>
+            __result = SingleRoundDrops.SwapForSingleRound(__result, numUnits);
+    }
+
     /// <summary>
     /// Applies <see cref="DressingWeight"/> as an old man's beard dressing loads, which also covers its data asset
     /// being reloaded after a scene change.
