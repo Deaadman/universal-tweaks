@@ -457,6 +457,7 @@ internal sealed class Settings : JsonModSettings
 
         MreTexture.Refresh();
         DressingWeight.Refresh();
+        StewFatigue.Refresh();
         Travois.Refresh();
         ContainerCapacities.Refresh();
     }

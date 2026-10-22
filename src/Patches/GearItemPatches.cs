@@ -48,4 +48,11 @@ internal static class GearItemPatches
     {
         private static void Postfix(GearItem __instance) => MreTexture.OnGearItemLoaded(__instance);
     }
+
+    /// <summary>Applies <see cref="StewFatigue"/> as items load.</summary>
+    [HarmonyPatch(typeof(GearItem), nameof(GearItem.Deserialize))]
+    private static class ApplyStewFatigue
+    {
+        private static void Postfix(GearItem __instance) => StewFatigue.OnGearItemLoaded(__instance);
+    }
 }
