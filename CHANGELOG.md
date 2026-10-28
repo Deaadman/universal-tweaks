@@ -30,6 +30,7 @@ See docs/development.md, "Releasing". CI checks this file's format.
 - **Ignore Map Visibility**, so spray paint markings always reach the map, even at night or in fog ([#14](https://github.com/Deaadman/universal-tweaks/issues/14)).
 - **Drop Single Rounds**, so dropping one rifle or revolver round from a box drops a single round instead of a box.
 - **Safer Torch Lighting**, so lighting a torch always lets you pick a fire tool first, even if you only have one, and letting go before it lights no longer wastes a match or wears your flint and steel or fire striker.
+- **Permanent Stamina Bar** and **Permanent Time of Day Dial** keep the sprint stamina bar and the sun and moon dial on screen at all times, like **Permanent Crosshair**.
 
 ### Changed
 

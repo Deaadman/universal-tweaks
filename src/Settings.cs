@@ -417,6 +417,16 @@ internal sealed class Settings : JsonModSettings
     [Description("Keeps the crosshair visible at all times.")]
     public bool PermanentCrosshair = false;
 
+    /// <summary>Whether the sprint stamina bar always shows.</summary>
+    [Name("Permanent Stamina Bar")]
+    [Description("Keeps the sprint stamina bar in the bottom right visible at all times.")]
+    public bool PermanentStaminaBar = false;
+
+    /// <summary>Whether the sun and moon dial always shows.</summary>
+    [Name("Permanent Time of Day Dial")]
+    [Description("Keeps the sun and moon dial in the top right visible at all times.")]
+    public bool PermanentTimeOfDayDial = false;
+
     /// <summary>Whether the game starts straight into the main menu: see <see cref="Patches.UtilsPatches"/>.</summary>
     [Name("Skip Intro")]
     [Description("Skips the disclaimers, the press any key prompt and the intro movie when the game starts. (Applies from the next launch).")]
