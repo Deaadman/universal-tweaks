@@ -22,7 +22,7 @@ internal static class DressingWeight
     /// <summary>Applies the setting to the dressing's prefab, and so to every dressing.</summary>
     internal static void Refresh()
     {
-        var prefab = GearItem.LoadGearItemPrefab(GearName);
+        var prefab = GearPrefabs.Load(GearName);
         if (prefab != null)
             Apply(prefab.m_GearItemData);
     }

@@ -23,4 +23,22 @@ internal static class UtilsPatches
             return false;
         }
     }
+
+    /// <summary>
+    /// Starts the game straight into the main menu when <see cref="Settings.SkipIntro"/> is on, by answering yes when
+    /// the boot screen asks whether the game was launched with <c>-skipintro</c>. The game then skips the disclaimers,
+    /// the prompt to press a key once loaded, and the intro movie itself.
+    /// </summary>
+    [HarmonyPatch(typeof(Utils), nameof(Utils.IsCommandLineArgumentPresent))]
+    private static class SkipIntro
+    {
+        private static void Postfix(string arg, ref bool __result)
+        {
+            if (__result || arg != EmptyScene.SKIP_INTRO_FLAG || !Settings.Instance.SkipIntro)
+                return;
+
+            __result = true;
+            Mod.Logger.Log("Skipping the intro.", FlaggedLoggingLevel.Debug);
+        }
+    }
 }

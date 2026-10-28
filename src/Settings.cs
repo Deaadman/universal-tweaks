@@ -417,6 +417,11 @@ internal sealed class Settings : JsonModSettings
     [Description("Keeps the crosshair visible at all times.")]
     public bool PermanentCrosshair = false;
 
+    /// <summary>Whether the game starts straight into the main menu: see <see cref="Patches.UtilsPatches"/>.</summary>
+    [Name("Skip Intro")]
+    [Description("Skips the disclaimers, the press any key prompt and the intro movie when the game starts. (Applies from the next launch).")]
+    public bool SkipIntro = false;
+
     #endregion
 
     #region Miscellaneous

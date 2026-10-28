@@ -89,6 +89,7 @@ The flashlight and the miner's flashlight each have their own colour, duration, 
 | --- | --- | --- |
 | Promotional Main Menu Items | Off | Removes the expansion's advert from the main menu, and WINTERMUTE's if you don't own it. Needs the main menu to reload. |
 | Permanent Crosshair | Off | The crosshair always shows. |
+| Skip Intro | Off | The game starts straight into the main menu, skipping the disclaimers, the press any key prompt and the intro movie. Applies from the next launch. |
 
 ## Containers
 

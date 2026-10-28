@@ -23,6 +23,7 @@ See docs/development.md, "Releasing". CI checks this file's format.
 
 - **Breaking:** The mod logs through [Complex Logger](https://github.com/Arkhorse/Complex-Logger), which it now needs. Turn on its debug levels when reporting a bug.
 - A capacity setting for the Rustic Storage Trunk.
+- **Skip Intro** starts the game straight into the main menu, skipping the disclaimers, the press any key prompt and the intro movie.
 - The container capacities have their own page in Mod Settings, and are hidden while **Infinite Container Weight** is on.
 - Settings for the brightness and range of the flashlight's low and high beams ([#28](https://github.com/Deaadman/universal-tweaks/issues/28)).
 - A **Vanilla** choice for **Toilet Water Potability**, which leaves it to the game. It's the default.
@@ -32,6 +33,7 @@ See docs/development.md, "Releasing". CI checks this file's format.
 
 ### Changed
 
+- The mod works with The Long Dark 2.58.
 - The insulated flask settings describe how long the heat lasts in hours instead of minutes.
 - **MRE Texture Variation** and **Consistent Old Man's Dressing Weight** apply and undo as soon as you confirm the settings.
 - **Remove Headache from Foods** works straight away, on every food that gives a headache.

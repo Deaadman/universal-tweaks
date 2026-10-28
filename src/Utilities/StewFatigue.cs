@@ -43,7 +43,7 @@ internal static class StewFatigue
     {
         foreach (var gearName in StewGearNames)
         {
-            var prefab = GearItem.LoadGearItemPrefab(gearName);
+            var prefab = GearPrefabs.Load(gearName);
             if (prefab != null)
                 Apply(prefab);
         }

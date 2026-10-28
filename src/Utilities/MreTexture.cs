@@ -29,7 +29,7 @@ internal static class MreTexture
 
         if (PrefabTextureUpdate.ShouldRun())
         {
-            var prefab = GearItem.LoadGearItemPrefab(InventoryIcons.MreGearName);
+            var prefab = GearPrefabs.Load(InventoryIcons.MreGearName);
             if (prefab != null)
                 Apply(prefab.gameObject);
         }
