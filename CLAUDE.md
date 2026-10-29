@@ -17,8 +17,9 @@ dotnet format whitespace UniversalTweaks.slnx
 
 ## Game code
 
-- `game-refs/` (git-ignored, never commit it or paste large parts of it: it's Hinterland's code) is the game decompiled with Cpp2IL and call analysis. Method bodies are mostly stubs listing the calls they make, not real logic. Use it for type, field and method names, signatures, and what calls what; infer behaviour carefully and say when you're guessing.
-- The compiled interop assemblies (`MonsieurMeh.Modding.TLD.Il2CppAssemblies.Windows`, in the NuGet cache) are what the mod builds against. If they and `game-refs` disagree, they win.
+- `refs/` is git-ignored local reference material, such as other mods and the game's files. Never commit it or paste large parts of it: none of it is ours.
+- `refs/game/` is the game decompiled with Cpp2IL and call analysis (Hinterland's code). Method bodies are mostly stubs listing the calls they make, not real logic. Use it for type, field and method names, signatures, and what calls what; infer behaviour carefully and say when you're guessing.
+- The compiled interop assemblies (`MonsieurMeh.Modding.TLD.Il2CppAssemblies.Windows`, in the NuGet cache) are what the mod builds against. If they and `refs/game` disagree, they win.
 - Game types are in the `Il2Cpp` namespace. Unity objects need `== null`, not `?.` or `is null`, to detect destroyed objects.
 
 ## Conventions
