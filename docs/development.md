@@ -26,7 +26,7 @@ dotnet build
 - `src/Dependencies`: DLLs that aren't on NuGet. [Complex Logger](https://github.com/Arkhorse/Complex-Logger), which the mod logs through with `Mod.Logger`, and [ModComponent](https://github.com/dommrogers/ModComponent), for its localization.
 - `src/Properties/AssemblyInfo.cs`: what MelonLoader reads about the mod, including the MelonLoader version it needs and the mods it won't load with.
 - `tests/UniversalTweaks.Tests`: unit tests for `src/Core`.
-- `docs`: the pages linked from the README. `assets` has the Photoshop files for the banner and thumbnail.
+- `docs`: the pages linked from the README. `assets` has the banner and thumbnail as layered SVGs, each with a layer for each strip colour (Stone, Black and Ice); hide the ones above the colour you want. Their exported WebPs, which the README and mod pages use, are in `assets/images`.
 
 Every type and member has an XML comment. Keep it that way: the build checks them (see [CI](#ci)).
 
