@@ -21,14 +21,14 @@ internal static class FlashlightItemPatches
 
     /// <summary>
     /// Turns the lights on and off outside auroras too, and keeps a dropped flashlight lit, when
-    /// <see cref="Settings.ExtendedFunctionality"/> is on: see <see cref="Flashlights.EnableLights"/>.
+    /// <see cref="Settings.ExtendedFunctionalityActive"/> is on: see <see cref="Flashlights.EnableLights"/>.
     /// </summary>
     [HarmonyPatch(typeof(FlashlightItem), nameof(FlashlightItem.EnableLights))]
     private static class FlashlightBeamDropped
     {
         private static bool Prefix(FlashlightItem __instance, FlashlightItem.State state)
         {
-            if (!Settings.Instance.ExtendedFunctionality)
+            if (!Settings.Instance.ExtendedFunctionalityActive)
                 return true;
 
             Flashlights.EnableLights(__instance, state);
@@ -37,7 +37,7 @@ internal static class FlashlightItemPatches
     }
 
     /// <summary>
-    /// Reports the battery's real charge outside auroras when <see cref="Settings.ExtendedFunctionality"/> is on, instead
+    /// Reports the battery's real charge outside auroras when <see cref="Settings.ExtendedFunctionalityActive"/> is on, instead
     /// of the game's empty one.
     /// </summary>
     [HarmonyPatch(typeof(FlashlightItem), nameof(FlashlightItem.GetNormalizedCharge))]
@@ -45,7 +45,7 @@ internal static class FlashlightItemPatches
     {
         private static bool Prefix(FlashlightItem __instance, ref float __result)
         {
-            if (!Settings.Instance.ExtendedFunctionality)
+            if (!Settings.Instance.ExtendedFunctionalityActive)
                 return true;
 
             __result = __instance.m_CurrentBatteryCharge;
@@ -54,7 +54,7 @@ internal static class FlashlightItemPatches
     }
 
     /// <summary>
-    /// Lets the flashlight light up outside auroras when <see cref="Settings.ExtendedFunctionality"/> is on, except the
+    /// Lets the flashlight light up outside auroras when <see cref="Settings.ExtendedFunctionalityActive"/> is on, except the
     /// high beam when <see cref="Settings.HighBeamRestrictions"/> is on too, which fails with the game's message.
     /// </summary>
     [HarmonyPatch(typeof(FlashlightItem), nameof(FlashlightItem.IsLit))]
@@ -68,7 +68,7 @@ internal static class FlashlightItemPatches
 
         private static bool Prefix(FlashlightItem __instance, ref bool __result)
         {
-            if (Settings.Instance.ExtendedFunctionality && Settings.Instance.HighBeamRestrictions &&
+            if (Settings.Instance.ExtendedFunctionalityActive && Settings.Instance.HighBeamRestrictions &&
                 __instance.m_State == FlashlightItem.State.High && !GameManager.GetAuroraManager().AuroraIsActive())
             {
                 if (HighBeamFailureAnnounced.TryAdd(__instance, true))

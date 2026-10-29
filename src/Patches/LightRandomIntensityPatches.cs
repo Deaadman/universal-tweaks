@@ -5,7 +5,7 @@ internal static class LightRandomIntensityPatches
 {
     /// <summary>
     /// Holds the flashlight's beam steady outside auroras when <see cref="Settings.AuroraFlickering"/> and
-    /// <see cref="Settings.ExtendedFunctionality"/> are on.
+    /// <see cref="Settings.ExtendedFunctionalityActive"/> are on.
     /// </summary>
     [HarmonyPatch(typeof(LightRandomIntensity), nameof(LightRandomIntensity.Update))]
     private static class FlashlightFlicker
@@ -13,7 +13,7 @@ internal static class LightRandomIntensityPatches
         private static bool Prefix(LightRandomIntensity __instance)
         {
             // Runs for every flickering light in the scene, so the name (a marshalled string) is read last.
-            if (!Settings.Instance.AuroraFlickering || !Settings.Instance.ExtendedFunctionality ||
+            if (!Settings.Instance.AuroraFlickering || !Settings.Instance.ExtendedFunctionalityActive ||
                 GameManager.GetAuroraManager().AuroraIsActive())
                 return true;
 

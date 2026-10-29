@@ -12,10 +12,12 @@ internal static class Encumbrance
     /// <summary>One kilogram as an <see cref="ItemWeight"/>, which stores whole internal units rather than kilograms.</summary>
     private static ItemWeight OneKilogram => ItemWeight.FromKilograms(1f);
 
-    /// <summary>The extra weight, in kilograms, the player can carry with the current settings.</summary>
+    /// <summary>The extra weight, in kilograms, the player can carry with the current settings: none without 'Cheat' Tweaks.</summary>
     internal static float AdditionalWeight =>
-        EncumberCalculator.ResolveAdditionalWeight(Settings.Instance.AdditionalEncumbermentWeight,
-            Settings.Instance.CheatingTweaks && Settings.Instance.InfiniteEncumberWeight);
+        Settings.Instance.CheatingTweaks
+            ? EncumberCalculator.ResolveAdditionalWeight(Settings.Instance.AdditionalEncumbermentWeight,
+                Settings.Instance.InfiniteEncumberWeight)
+            : 0f;
 
     /// <summary>Sets the player's carry thresholds with <see cref="AdditionalWeight"/> added to each.</summary>
     /// <param name="encumber">The player's encumbrance component.</param>

@@ -20,6 +20,8 @@ internal sealed class Settings : JsonModSettings
     /// <remarks>Declared before <see cref="Instance"/>, so it's set before the constructor could reach <see cref="RefreshFields"/>.</remarks>
     private static readonly string[] CheatingTweakFields =
     [
+        nameof(AdditionalEncumbermentWeight),
+        nameof(ExtendedFunctionality),
         nameof(SnowShelterDailyDecayRate),
         nameof(DecayBlizzardTravois),
         nameof(DecayHPPerHourTravois),
@@ -49,8 +51,16 @@ internal sealed class Settings : JsonModSettings
 
     #region General Tweaks
 
-    /// <summary>Extra weight, in kilograms, the player can carry: see <see cref="Encumbrance"/>.</summary>
+    /// <summary>
+    /// Whether the tweaks that could count as cheating are on. Off, their settings are hidden and the game's own values
+    /// are used.
+    /// </summary>
     [Section("General Tweaks")]
+    [Name("'Cheat' Tweaks")]
+    [Description("Enables tweaks which alters items in a way that can be seen as 'cheating'.")]
+    public bool CheatingTweaks = false;
+
+    /// <summary>Extra weight, in kilograms, the player can carry: see <see cref="Encumbrance"/>. Needs <see cref="CheatingTweaks"/>.</summary>
     [Name("Additional Carry Weight")]
     [Description("Adds an additional amount weight on top of the players existing weight.")]
     [Slider(0, 120, NumberFormat = "{0:0.##} KG")]
@@ -124,17 +134,11 @@ internal sealed class Settings : JsonModSettings
     [Slider(50, 100)]
     public int SnowShelterDailyDecayRate = 100;
 
-    /// <summary>Whether toilet water is potable (0), non-potable (1), or left to the game (2).</summary>
-    [Name("Toilet Water Potability")]
-    [Description("Sets whether water obtained from toilets is potable or non-potable. Vanilla leaves it to the game.")]
-    [Choice("Potable", "Non-Potable", "Vanilla")]
-    public int ToiletWaterQuality = 2;
-
     #endregion
 
     #region Flashlight Tweaks
 
-    /// <summary>Whether the flashlight only flickers during auroras. Needs <see cref="ExtendedFunctionality"/>.</summary>
+    /// <summary>Whether the flashlight only flickers during auroras. Needs <see cref="ExtendedFunctionalityActive"/>.</summary>
     [Section("Flashlight Tweaks")]
     [Name("Aurora Flickering")]
     [Description("Alters the flashlight's flickering behavior by only flickering during an aurora if enabled.")]
@@ -145,12 +149,15 @@ internal sealed class Settings : JsonModSettings
     [Description("Sets the flashlight to start with a random battery charge level.")]
     public bool BatteryRandomization = false;
 
-    /// <summary>Whether the flashlight works outside auroras: see <see cref="Flashlights"/>.</summary>
+    /// <summary>
+    /// Whether the flashlight works outside auroras: see <see cref="Flashlights"/>. Needs <see cref="CheatingTweaks"/>,
+    /// so read <see cref="ExtendedFunctionalityActive"/>.
+    /// </summary>
     [Name("Extended Functionality")]
     [Description("Allows the flashlight to function anytime, not just during auroras.")]
     public bool ExtendedFunctionality = false;
 
-    /// <summary>Whether the high beam only works during auroras. Shown with <see cref="ExtendedFunctionality"/> on.</summary>
+    /// <summary>Whether the high beam only works during auroras. Shown with <see cref="ExtendedFunctionalityActive"/>.</summary>
     [Name("High-Beam Restrictions")]
     [Description("Restricts high beam functionality to aurora events only.")]
     public bool HighBeamRestrictions = false;
@@ -172,42 +179,42 @@ internal sealed class Settings : JsonModSettings
     /// <summary>How long the flashlight's battery lasts on the low beam, in in-game hours. Needs <see cref="CheatingTweaks"/>.</summary>
     [Name("Flashlight Low Beam Duration")]
     [Description("Adjusts the flashlight's low beam duration. Default is 1.")]
-    [Slider(0.08333334f, 2f, 20)]
+    [Slider(1f, 2f, 11)]
     public float FlashlightLowBeamDuration = 1f;
 
     /// <summary>The flashlight's low beam brightness. Needs <see cref="CheatingTweaks"/>.</summary>
     [Name("Flashlight Low Beam Intensity")]
     [Description("Adjusts the brightness of the flashlight's low beam. Default is 1.")]
-    [Slider(0, 25)]
+    [Slider(1, 25)]
     public int FlashlightLowBeamIntensity = 1;
 
     /// <summary>The flashlight's low beam range, in metres. Needs <see cref="CheatingTweaks"/>.</summary>
     [Name("Flashlight Low Beam Range")]
     [Description("Adjusts the reach of the flashlight's low beam. Default is 40.")]
-    [Slider(0, 100)]
+    [Slider(40, 100)]
     public int FlashlightLowBeamRange = 40;
 
     /// <summary>How long the flashlight's battery lasts on the high beam, in in-game hours. Needs <see cref="CheatingTweaks"/>.</summary>
     [Name("Flashlight High Beam Duration")]
-    [Description("Adjusts the flashlight's high beam duration. Range: 0.1 (short) to 2 (long).")]
+    [Description("Adjusts the flashlight's high beam duration. Default is 0.08.")]
     [Slider(0.08333334f, 2f, 20)]
     public float FlashlightHighBeamDuration = 0.08333334f;
 
     /// <summary>The flashlight's high beam brightness. Needs <see cref="CheatingTweaks"/>.</summary>
     [Name("Flashlight High Beam Intensity")]
     [Description("Adjusts the brightness of the flashlight's high beam. Default is 7.86.")]
-    [Slider(0f, 25f, 2501, NumberFormat = "{0:0.##}")]
+    [Slider(7.86f, 25f, 1715, NumberFormat = "{0:0.##}")]
     public float FlashlightHighBeamIntensity = 7.86f;
 
     /// <summary>The flashlight's high beam range, in metres. Needs <see cref="CheatingTweaks"/>.</summary>
     [Name("Flashlight High Beam Range")]
     [Description("Adjusts the reach of the flashlight's high beam. Default is 80.")]
-    [Slider(0, 200)]
+    [Slider(80, 200)]
     public int FlashlightHighBeamRange = 80;
 
     /// <summary>How long the flashlight's battery takes to recharge, in in-game hours. Needs <see cref="CheatingTweaks"/>.</summary>
     [Name("Flashlight Recharge Time")]
-    [Description("Sets the recharge time for the flashlight's battery. Range: 0 (fast) to 2 (slow).")]
+    [Description("Sets the recharge time for the flashlight's battery. Default is 2.")]
     [Slider(0f, 2f, 20)]
     public float FlashlightRechargeTime = 2f;
 
@@ -232,44 +239,44 @@ internal sealed class Settings : JsonModSettings
 
     /// <summary>How long the miner's flashlight's battery lasts on the low beam, in in-game hours. Needs <see cref="CheatingTweaks"/>.</summary>
     [Name("Miner's Flashlight Low Beam Duration")]
-    [Description("Adjusts the miner's flashlight's low beam duration. Range: 0.1 (short) to 2 (long).")]
-    [Slider(0.08333334f, 2f, 20)]
+    [Description("Adjusts the miner's flashlight's low beam duration. Default is 1.5.")]
+    [Slider(1.5f, 2f, 6)]
     public float MinersFlashlightLowBeamDuration = 1.5f;
 
     /// <summary>The miner's flashlight's low beam brightness. Needs <see cref="CheatingTweaks"/>.</summary>
     [Name("Miner's Flashlight Low Beam Intensity")]
     [Description("Adjusts the brightness of the miner's flashlight's low beam. Default is 1.")]
-    [Slider(0, 25)]
+    [Slider(1, 25)]
     public int MinersFlashlightLowBeamIntensity = 1;
 
     /// <summary>The miner's flashlight's low beam range, in metres. Needs <see cref="CheatingTweaks"/>.</summary>
     [Name("Miner's Flashlight Low Beam Range")]
     [Description("Adjusts the reach of the miner's flashlight's low beam. Default is 40.")]
-    [Slider(0, 100)]
+    [Slider(40, 100)]
     public int MinersFlashlightLowBeamRange = 40;
 
     /// <summary>How long the miner's flashlight's battery lasts on the high beam, in in-game hours. Needs <see cref="CheatingTweaks"/>.</summary>
     [Name("Miner's Flashlight High Beam Duration")]
-    [Description("Adjusts the miner's flashlight's high beam duration. Range: 0.1 (short) to 2 (long).")]
+    [Description("Adjusts the miner's flashlight's high beam duration. Default is 0.08.")]
     [Slider(0.08333334f, 2f, 20)]
     public float MinersFlashlightHighBeamDuration = 0.08333334f;
 
     /// <summary>The miner's flashlight's high beam brightness. Needs <see cref="CheatingTweaks"/>.</summary>
     [Name("Miner's Flashlight High Beam Intensity")]
     [Description("Adjusts the brightness of the miner's flashlight's high beam. Default is 7.86.")]
-    [Slider(0f, 25f, 2501, NumberFormat = "{0:0.##}")]
+    [Slider(7.86f, 25f, 1715, NumberFormat = "{0:0.##}")]
     public float MinersFlashlightHighBeamIntensity = 7.86f;
 
     /// <summary>The miner's flashlight's high beam range, in metres. Needs <see cref="CheatingTweaks"/>.</summary>
     [Name("Miner's Flashlight High Beam Range")]
     [Description("Adjusts the reach of the miner's flashlight's high beam. Default is 80.")]
-    [Slider(0, 200)]
+    [Slider(80, 200)]
     public int MinersFlashlightHighBeamRange = 80;
 
     /// <summary>How long the miner's flashlight's battery takes to recharge, in in-game hours. Needs <see cref="CheatingTweaks"/>.</summary>
     [Name("Miner's Flashlight Recharge Time")]
-    [Description("Sets the recharge time for the miner's flashlight's battery. Range: 0 (fast) to 2 (slow).")]
-    [Slider(0f, 2f, 20)]
+    [Description("Sets the recharge time for the miner's flashlight's battery. Default is 1.75.")]
+    [Slider(0f, 1.75f, 8)]
     public float MinersFlashlightRechargeTime = 1.75f;
 
     #endregion
@@ -301,6 +308,12 @@ internal sealed class Settings : JsonModSettings
     [Description("Reduces the amount of fatigue lost after consuming. Default is 15.")]
     [Slider(0, 15, 15)]
     public int ReduceStewFatigueLossAmount = 15;
+
+    /// <summary>Whether toilet water is potable (0), non-potable (1), or left to the game (2).</summary>
+    [Name("Toilet Water Potability")]
+    [Description("Sets whether water obtained from toilets is potable or non-potable. Vanilla leaves it to the game.")]
+    [Choice("Potable", "Non-Potable", "Vanilla")]
+    public int ToiletWaterQuality = 2;
 
     #endregion
 
@@ -417,25 +430,20 @@ internal sealed class Settings : JsonModSettings
     [Description("Keeps the sun and moon dial in the top right visible at all times.")]
     public bool PermanentTimeOfDayDial = false;
 
+    #endregion
+
+    #region Miscellaneous
+
     /// <summary>Whether the game starts straight into the main menu: see <see cref="Patches.UtilsPatches"/>.</summary>
+    [Section("Miscellaneous")]
     [Name("Skip Intro")]
     [Description("Skips the disclaimers, the press any key prompt and the intro movie when the game starts. (Applies from the next launch).")]
     public bool SkipIntro = false;
 
     #endregion
 
-    #region Miscellaneous
-
-    /// <summary>
-    /// Whether the tweaks that could count as cheating are on. Off, their settings are hidden and the game's own values
-    /// are used.
-    /// </summary>
-    [Section("Miscellaneous")]
-    [Name("'Cheat' Tweaks")]
-    [Description("Enables tweaks which alters items in a way that can be seen as 'cheating'.")]
-    public bool CheatingTweaks = false;
-
-    #endregion
+    /// <summary>Whether the flashlight works outside auroras: <see cref="ExtendedFunctionality"/> with <see cref="CheatingTweaks"/> on.</summary>
+    internal bool ExtendedFunctionalityActive => CheatingTweaks && ExtendedFunctionality;
 
     /// <summary><see cref="GlowingDecals"/> as last confirmed, which is what decals use.</summary>
     internal bool ConfirmedGlowingDecals { get; private set; }
@@ -489,7 +497,7 @@ internal sealed class Settings : JsonModSettings
     private void RefreshFields()
     {
         // TODO: Move this into its own class in Utilities, and split the fields into groups that can be shown or hidden.
-        SetFieldVisible(nameof(HighBeamRestrictions), ExtendedFunctionality);
+        SetFieldVisible(nameof(HighBeamRestrictions), ExtendedFunctionalityActive);
 
         var showFlashlightCustomColor = FlashlightBeamColor == FlashlightBeamColor.Custom;
         SetFieldVisible(nameof(FlashlightRedValue), showFlashlightCustomColor);

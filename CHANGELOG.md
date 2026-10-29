@@ -43,6 +43,9 @@ See docs/development.md, "Releasing". CI checks this file's format.
 - **Snow Shelter Decay Rate** works straight away, on every snow shelter.
 - **Reduce Stew Fatigue Loss** works straight away.
 - The noisemaker settings work straight away.
+- **Breaking:** **Additional Carry Weight** and the flashlight's **Extended Functionality** are 'Cheat' Tweaks now, so turn on **'Cheat' Tweaks** to keep using them.
+- The flashlight's battery, brightness and range sliders start at the game's own values, so they can only make a flashlight better.
+- **'Cheat' Tweaks** is at the top of the settings, **Skip Intro** is under Miscellaneous, and **Toilet Water Potability** is under Food Tweaks.
 - **Respirator Canister Duration** works straight away, including on a canister that's already attached.
 - The container capacities apply as soon as you confirm the settings.
 

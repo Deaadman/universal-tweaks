@@ -8,13 +8,13 @@ Most settings take effect straight away. A few say in their description that the
 
 ## 'Cheat' Tweaks
 
-Some tweaks could count as cheating, so they're hidden until you turn on **'Cheat' Tweaks**, under **Miscellaneous**. They're marked _cheat_ below. Turning it off again puts the game's own values back.
+Some tweaks could count as cheating, so they're hidden until you turn on **'Cheat' Tweaks**, at the top of the settings. They're marked _cheat_ below. Turning it off again puts the game's own values back.
 
 ## General
 
 | Setting | Default | What it does |
 | --- | --- | --- |
-| Additional Carry Weight | 0 KG | Adds up to 120 kg to how much you can carry before being slowed down. The extra weight doesn't change how many calories each kilogram burns. |
+| Additional Carry Weight | 0 KG | _Cheat._ Adds up to 120 kg to how much you can carry before being slowed down. The extra weight doesn't change how many calories each kilogram burns. |
 | Breath Visibility | On | Off, your breath no longer shows in the cold. |
 | Consistent Old Man's Dressing Weight | Off | The old man's beard dressing weighs the same as lichen, 0.03 kg. |
 | Drop Single Rounds | Off | Dropping one rifle or revolver round from a box drops a single round instead of a box. |
@@ -27,16 +27,15 @@ Some tweaks could count as cheating, so they're hidden until you turn on **'Chea
 | Respirator Canister Duration | 45 s | How long, in real seconds, a respirator canister lasts. |
 | Safer Torch Lighting | Off | Lighting a torch always lets you pick a fire tool, even if you only have one. The match is used up, or the flint and steel or fire striker worn, only once the torch lights, so letting go early wastes nothing. |
 | Snow Shelter Decay Rate | 100 | _Cheat._ How many hit points a snow shelter loses a day. |
-| Toilet Water Potability | Vanilla | Makes toilet water potable or non-potable. Vanilla leaves it to the game. |
 
 ## Flashlights
 
 | Setting | Default | What it does |
 | --- | --- | --- |
-| Aurora Flickering | Off | With Extended Functionality on, flashlights only flicker during auroras. |
+| Aurora Flickering | Off | With 'Cheat' Tweaks and Extended Functionality on, flashlights only flicker during auroras. |
 | Battery Randomization | Off | Flashlights start with a random battery charge instead of a full one. |
-| Extended Functionality | Off | Flashlights work outside auroras, and stay lit when dropped. The battery drains outside auroras and only recharges during them. |
-| High-Beam Restrictions | Off | Shown with Extended Functionality on. The high beam only works during auroras, and fails with the game's message outside them. |
+| Extended Functionality | Off | _Cheat._ Flashlights work outside auroras, and stay lit when dropped. The battery drains outside auroras and only recharges during them. |
+| High-Beam Restrictions | Off | Shown with 'Cheat' Tweaks and Extended Functionality on. The high beam only works during auroras, and fails with the game's message outside them. |
 | Flashlight Beam Color, Miner's Flashlight Beam Color | Default | The beam's colour. **Custom** shows sliders for its red, green and blue. |
 | Low and High Beam Duration | 1 and 0.08 hours (miner's: 1.5 and 0.08) | _Cheat._ How long, in in-game hours, a full battery lasts on each beam. |
 | Low and High Beam Intensity | 1 and 7.86 | _Cheat._ How bright each beam is. |
@@ -44,7 +43,7 @@ Some tweaks could count as cheating, so they're hidden until you turn on **'Chea
 | Recharge Time | 2 hours (miner's: 1.75) | _Cheat._ How long, in in-game hours, an empty battery takes to recharge during an aurora. |
 | Infinite Battery | Off | _Cheat._ Flashlight batteries never run out. |
 
-The flashlight and the miner's flashlight each have their own colour, duration, intensity, range and recharge settings.
+The flashlight and the miner's flashlight each have their own colour, duration, intensity, range and recharge settings. Their duration, intensity, range and recharge sliders start at the game's own values, so they can only make a flashlight better.
 
 ## Food
 
@@ -54,6 +53,7 @@ The flashlight and the miner's flashlight each have their own colour, duration, 
 | Insulated Flask Duration Outdoors | 0.5 | The same outdoors. 0.5 keeps it hot for about 3.3 hours. |
 | Remove Headache from Foods | Off | No food gives a headache, including pies, porridge and lily pancakes. |
 | Reduce Stew Fatigue Loss | 15 | How much fatigue the meat and vegetable stews take away. |
+| Toilet Water Potability | Vanilla | Makes toilet water potable or non-potable. Vanilla leaves it to the game. |
 
 ## Rock caches
 
@@ -91,6 +91,11 @@ The flashlight and the miner's flashlight each have their own colour, duration, 
 | Permanent Crosshair | Off | The crosshair always shows. |
 | Permanent Stamina Bar | Off | The sprint stamina bar in the bottom right always shows, even before you first sprint. |
 | Permanent Time of Day Dial | Off | The sun and moon dial always shows in the top right. Menus that use it, like the radial menu and Rest, still borrow it while they're open. |
+
+## Miscellaneous
+
+| Setting | Default | What it does |
+| --- | --- | --- |
 | Skip Intro | Off | The game starts straight into the main menu, skipping the disclaimers, the press any key prompt and the intro movie. Applies from the next launch. |
 
 ## Containers

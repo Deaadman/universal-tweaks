@@ -75,9 +75,9 @@ The test project compiles the files in `src/Core` itself rather than referencing
 
 Before a release, and after a game update, load a save and check, with each setting on and then off again:
 
-- **Additional Carry Weight** raises the weight you can carry, shown in the inventory, without lowering the calorie burn from what you carry. **Infinite Carry Weight** only shows and works with 'Cheat' Tweaks on.
+- **Additional Carry Weight** raises the weight you can carry, shown in the inventory, without lowering the calorie burn from what you carry. It and **Infinite Carry Weight** only show and work with 'Cheat' Tweaks on.
 - Container capacities change in the next container you open, without reloading, and **Infinite Container Weight** hides them.
-- With **Extended Functionality**, a flashlight works outside an aurora, stays lit on the ground, drains and turns off when empty. **High-Beam Restrictions** blocks the high beam outside auroras with one message. Beam colour, brightness and range change in your hands and on the ground.
+- With 'Cheat' Tweaks and **Extended Functionality** on, a flashlight works outside an aurora, stays lit on the ground, drains and turns off when empty. **High-Beam Restrictions** blocks the high beam outside auroras with one message. Beam colour, brightness and range change in your hands and on the ground.
 - **Remove Headache from Foods**, the insulated flask and stew settings, **Toilet Water Potability**, the noisemaker, respirator and snow shelter settings work on items that already exist.
 - Rock caches can be placed indoors with **Allowed Indoors**.
 - Spray paint decals glow after confirming **Glowing Decals** and stop glowing when it's turned off. With **Ignore Map Visibility**, a marking sprayed at night shows on the map.

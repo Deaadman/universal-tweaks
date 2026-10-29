@@ -1,4 +1,4 @@
-﻿using UniversalTweaks.Core;
+using UniversalTweaks.Core;
 
 namespace UniversalTweaks.Utilities;
 
@@ -76,7 +76,7 @@ internal static class Flashlights
             {
                 flashlight.m_CurrentBatteryCharge -= todHours / flashlight.m_LowBeamDuration;
             }
-            else if (!(Settings.Instance.ExtendedFunctionality && Settings.Instance.HighBeamRestrictions) &&
+            else if (!(Settings.Instance.ExtendedFunctionalityActive && Settings.Instance.HighBeamRestrictions) &&
                      flashlight.m_State == FlashlightItem.State.High)
             {
                 flashlight.m_CurrentBatteryCharge -= todHours / flashlight.m_HighBeamDuration;
