@@ -100,7 +100,7 @@ The flashlight and the miner's flashlight each have their own colour, duration, 
 
 ## Containers
 
-On their own page, **Universal Tweaks - Containers**. Each kind of container has a setting for how much it holds, in kilograms, from the backpack to the workbench drawer. Their defaults are the game's own.
+On their own page, **Universal Tweaks - Containers**. Each kind of container has a setting for how much it holds, in kilograms, from the backpack to the workbench drawer. Left at its default, a setting keeps each container's own capacity, since some containers that share a setting, like dresser drawers or fridges, hold different amounts in the game. Changed, every container it covers holds the same.
 
 | Setting | Default | What it does |
 | --- | --- | --- |

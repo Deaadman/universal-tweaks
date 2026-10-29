@@ -23,6 +23,8 @@ See docs/development.md, "Releasing". CI checks this file's format.
 
 - **Breaking:** The mod logs through [Complex Logger](https://github.com/Arkhorse/Complex-Logger), which it now needs. Turn on its debug levels when reporting a bug.
 - A capacity setting for the Rustic Storage Trunk.
+- Capacity settings for the potato sack, rustic storage box, train cabin storage, helicopter storage, snowmobile compartment and fishing boat storage.
+- The existing capacity settings cover more containers, including the rustic furniture, mini fridges, medical lockers, home and wood desks, and the ammo workbench's drawers.
 - **Skip Intro** starts the game straight into the main menu, skipping the disclaimers, the press any key prompt and the intro movie.
 - The container capacities have their own page in Mod Settings, and are hidden while **Infinite Container Weight** is on.
 - Settings for the brightness and range of the flashlight's low and high beams ([#28](https://github.com/Deaadman/universal-tweaks/issues/28)).
@@ -66,6 +68,7 @@ See docs/development.md, "Releasing". CI checks this file's format.
 - Calorie burn counts the weight you carry again, and is left to the game with **Additional Carry Weight** off.
 - You can reset a snare from the inspect menu after a rabbit is caught again.
 - Flashlights turn off when their battery runs out, instead of staying lit.
+- Containers hold what they do in the game while their capacity setting is at its default, instead of steamer trunks, cargo crate top doors, some dresser drawers, some fridges and some warden desk drawers holding more or less.
 
 ## [1.4.8] - 2026-01-06
 

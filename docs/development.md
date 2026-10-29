@@ -26,6 +26,7 @@ dotnet build
 - `src/Dependencies`: DLLs that aren't on NuGet, or not in the version the mod needs. [Complex Logger](https://github.com/Arkhorse/Complex-Logger), which the mod logs through with `Mod.Logger`, [ModComponent](https://github.com/dommrogers/ModComponent), for its localization, and [ModSettings](https://github.com/DigitalzombieTLD/ModSettings), for its settings menu.
 - `src/Properties/AssemblyInfo.cs`: what MelonLoader reads about the mod, including the MelonLoader version it needs and the mods it won't load with.
 - `tests/UniversalTweaks.Tests`: unit tests for `src/Core`.
+- `tools/UnityEditor`: Unity editor scripts that list the game's containers from an exported copy of the game. See [Finding containers in the exported game](#finding-containers-in-the-exported-game). Neither project compiles them.
 - `docs`: the pages linked from the README. `assets` has the banner and thumbnail as layered SVGs, each with a layer for each strip colour (Stone, Black and Ice); hide the ones above the colour you want. Their exported WebPs, which the README and mod pages use, are in `assets/images`.
 
 Every type and member has an XML comment. Keep it that way: the build checks them (see [CI](#ci)).
@@ -90,6 +91,12 @@ Before a release, and after a game update, load a save and check, with each sett
 - A snare with a rabbit shows **Set** in the inspect menu, and pressing it resets the snare.
 - Settings changed in Mod Settings are still there after restarting the game.
 - The console shows the mod's version when the game starts, with no errors in `MelonLoader\Latest.log`.
+
+### Finding containers in the exported game
+
+With the game exported as a Unity project, the scripts in [`tools/UnityEditor`](../tools/UnityEditor) check every prefab in it for containers, including the drawers and doors inside furniture and buildings. Copy them into the project's `Assets/Editor` folder, then use **Tools > Universal Tweaks > Find Containers**. The first time, it asks for this repository's folder.
+
+It lists each kind of container once in `Containers.csv`, in the Unity project's folder, with the setting the mod gives it from the list in `src/Utilities/ContainerCapacities.cs`, matched by name the same way. The ones with no setting are logged, and have an empty Setting column. The capacity is the game's own, in kilograms, with every value found when copies of a container differ.
 
 Once a week, [Dependabot](../.github/dependabot.yml) opens a pull request against `develop` for NuGet packages and actions with a newer version, with the minor and patch updates together. Merge it when CI passes.
 
