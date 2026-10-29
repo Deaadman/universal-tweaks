@@ -18,9 +18,9 @@ dotnet build
 
 ## How it's laid out
 
-- `src/Core`: the parts with numbers and rules but nothing from Unity, the game or MelonLoader: the carry weight thresholds, the game's own values that 'Cheat' Tweaks puts back, the flashlight tuning, and which items get the mod's icons. It can be [tested](#testing) without the game.
+- `src/Core`: the parts with numbers and rules but nothing from Unity, the game or MelonLoader: the carry weight thresholds, the game's own values that 'Cheat' Tweaks puts back, the flashlight tuning, which items get the mod's icons, and which single round each ammo box drops. It can be [tested](#testing) without the game.
 - `src/Patches`: the [Harmony](https://harmony.pardeike.net) patches on the game, one file for each game type, like `FlashlightItemPatches.cs` for `FlashlightItem`. Each patch is a private nested class named for what it does.
-- `src/Utilities`: the tweaks with more to them than a patch, which the patches call: `Flashlights`, `Encumbrance`, `ContainerCapacities`, `SprayPaint`, `Travois`, `MreTexture` and `DressingWeight`. Also the helpers they share: `ObjectStateCache` keeps the game's own values per object so they can be put back, and `TextureSwapper` and `AssetBundleLoader` load the mod's textures.
+- `src/Utilities`: the tweaks with more to them than a patch, which the patches call: `Flashlights`, `Encumbrance`, `ContainerCapacities`, `SprayPaint`, `Travois`, `MreTexture`, `DressingWeight`, `StewFatigue`, `SingleRoundDrops`, `TorchLightMenu`, `TorchToolUse` and `TimeOfDayDial`. Also the helpers they share: `ObjectStateCache` keeps the game's own values per object so they can be put back, `GearPrefabs` loads the game's gear prefabs by name, `OncePerFrame` stops work repeating within a frame, and `TextureSwapper` and `AssetBundleLoader` load the mod's textures.
 - `src/Settings.cs` and `src/ContainerSettings.cs`: the mod's two pages in the game's Mod Settings menu, from the [ModSettings](https://github.com/DigitalzombieTLD/ModSettings) NuGet package. Most settings are read where they're used, so they take effect straight away. `OnConfirm` pushes the rest into the objects that already exist.
 - `src/Resources`: the asset bundle with the brown MRE's texture and icon, and `Localization.json` with the mod's translations. Both are embedded in the DLL.
 - `src/Dependencies`: DLLs that aren't on NuGet. [Complex Logger](https://github.com/Arkhorse/Complex-Logger), which the mod logs through with `Mod.Logger`, and [ModComponent](https://github.com/dommrogers/ModComponent), for its localization.
@@ -84,6 +84,10 @@ Before a release, and after a game update, load a save and check, with each sett
 - Spray paint decals glow after confirming **Glowing Decals** and stop glowing when it's turned off. With **Ignore Map Visibility**, a marking sprayed at night shows on the map.
 - The travois settings change a travois that's already placed.
 - **MRE Texture Variation** turns MREs and their icon brown after confirming, and blue again when it's off.
+- **Drop Single Rounds** drops one rifle or revolver round from a box as a single round, and dropping more still drops a box.
+- With **Safer Torch Lighting**, lighting a torch with only matches still asks which tool to use, and letting go before it lights keeps the match.
+- **Permanent Crosshair**, **Permanent Stamina Bar** and **Permanent Time of Day Dial** keep them on screen, including straight after loading a save. The dial goes back to the HUD after the radial menu or Rest closes.
+- **Skip Intro** starts the next launch straight in the main menu.
 - A snare with a rabbit shows **Set** in the inspect menu, and pressing it resets the snare.
 - Settings changed in Mod Settings are still there after restarting the game.
 - The console shows the mod's version when the game starts, with no errors in `MelonLoader\Latest.log`.

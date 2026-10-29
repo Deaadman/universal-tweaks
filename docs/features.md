@@ -17,6 +17,7 @@ Some tweaks could count as cheating, so they're hidden until you turn on **'Chea
 | Additional Carry Weight | 0 KG | Adds up to 120 kg to how much you can carry before being slowed down. The extra weight doesn't change how many calories each kilogram burns. |
 | Breath Visibility | On | Off, your breath no longer shows in the cold. |
 | Consistent Old Man's Dressing Weight | Off | The old man's beard dressing weighs the same as lichen, 0.03 kg. |
+| Drop Single Rounds | Off | Dropping one rifle or revolver round from a box drops a single round instead of a box. |
 | Feat Progress in Custom Mode | Off | Feats progress in custom games too. |
 | Infinite Carry Weight | Off | _Cheat._ You can carry a practically unlimited weight. |
 | MRE Texture Variation | Off | MREs are brown instead of blue. |
@@ -24,6 +25,7 @@ Some tweaks could count as cheating, so they're hidden until you turn on **'Chea
 | Noisemaker Throw Force | 9 | How hard you throw the noisemaker. |
 | Randomized Item Rotation Drops | Off | Dropped items face a random direction instead of all the same way. Rifles stay on their side. |
 | Respirator Canister Duration | 45 s | How long, in real seconds, a respirator canister lasts. |
+| Safer Torch Lighting | Off | Lighting a torch always lets you pick a fire tool, even if you only have one. The match is used up, or the flint and steel or fire striker worn, only once the torch lights, so letting go early wastes nothing. |
 | Snow Shelter Decay Rate | 100 | _Cheat._ How many hit points a snow shelter loses a day. |
 | Toilet Water Potability | Vanilla | Makes toilet water potable or non-potable. Vanilla leaves it to the game. |
 
@@ -87,6 +89,8 @@ The flashlight and the miner's flashlight each have their own colour, duration, 
 | Setting | Default | What it does |
 | --- | --- | --- |
 | Permanent Crosshair | Off | The crosshair always shows. |
+| Permanent Stamina Bar | Off | The sprint stamina bar in the bottom right always shows, even before you first sprint. |
+| Permanent Time of Day Dial | Off | The sun and moon dial always shows in the top right. Menus that use it, like the radial menu and Rest, still borrow it while they're open. |
 | Skip Intro | Off | The game starts straight into the main menu, skipping the disclaimers, the press any key prompt and the intro movie. Applies from the next launch. |
 
 ## Containers

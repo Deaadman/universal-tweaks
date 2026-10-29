@@ -49,7 +49,7 @@ Every change is built straight away and published as the [nightly release](https
 | Rock caches | Build them indoors, and change how many you can build and how far apart |
 | Spray paint | Make decals glow in the dark, place them closer together, and mark the map whatever the visibility |
 | Travois | Change how fast it turns, how steep a slope it can take and how fast it decays, and take it anywhere |
-| Other | Hide your breath, a brown MRE, noisemaker fuse and throw, respirator canister duration, snow shelter decay, random drop rotation, feat progress in custom games, an always-on crosshair, and skipping the intro |
+| Other | Hide your breath, a brown MRE, noisemaker fuse and throw, respirator canister duration, snow shelter decay, random drop rotation, dropping single rounds from a box, lighting torches without wasting a match, feat progress in custom games, an always-on crosshair, stamina bar and time of day dial, and skipping the intro |
 | Fixes | Resetting a snare from the inspect menu after a rabbit is caught, spray paint greyed out in the radial menu without a can, and the fire sprite lined up on the feed fire panel |
 
 [How it all works](docs/features.md) has every setting and its default.
