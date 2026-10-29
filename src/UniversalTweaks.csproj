@@ -100,7 +100,7 @@ internal static class BuildInfo
 	public const string Author = &quot;$(Authors)&quot;%3B
 	public const string DownloadLink = &quot;$(RepositoryUrl)/releases/latest/download/UniversalTweaks.dll&quot;%3B
 	public const int Priority = 0%3B
-	public const string MelonLoaderVersion = &quot;0.7.2-ci.2388&quot;%3B
+	public const string MelonLoaderVersion = &quot;0.7.2&quot;%3B
 }
 " />
 
