@@ -54,8 +54,6 @@ Every change is built straight away and published as the [nightly release](https
 
 [How it all works](docs/features.md) has every setting and its default.
 
-https://github.com/user-attachments/assets/943ec975-7efd-465b-9b12-969956964a0c
-
 ## Bugs and ideas
 
 Found a bug? Use the [bug report form](https://github.com/Deaadman/universal-tweaks/issues/new?template=bug_report.yml). It asks for `MelonLoader\Latest.log` from your game's folder, with every level turned on in Complex Logger's settings.
