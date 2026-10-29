@@ -17,6 +17,10 @@ updates:
     groups:
       packages:
         update-types: [minor, patch]
+    # Referenced only to keep it out of the build (see the csproj), so its
+    # version doesn't matter.
+    ignore:
+      - dependency-name: STBlade.Modding.TLD.Il2CppAssemblies.Windows
 
   - package-ecosystem: github-actions
     directory: /

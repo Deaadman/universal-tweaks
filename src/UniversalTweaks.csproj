@@ -16,8 +16,7 @@
         <!-- Restore checks every package, including the ones these depend on, for security advisories. With warnings as errors, one fails the build. -->
         <NuGetAuditMode>all</NuGetAuditMode>
         <!-- A source that can't be reached for advisories is still only a warning; an advisory is an error. -->
-        <WarningsNotAsErrors>NU1900</WarningsNotAsErrors>
-    </PropertyGroup>
+        <WarningsNotAsErrors>NU1900</WarningsNotAsErrors>    </PropertyGroup>
 
     <PropertyGroup>
         <Authors>Deadman</Authors>
@@ -36,12 +35,17 @@
 
     <!-- The game's assemblies. The first two numbers of the version are the game version they were made from. -->
     <ItemGroup>
-        <PackageReference Include="STBlade.Modding.TLD.Il2CppAssemblies.Windows" Version="2.55.0" />
+        <PackageReference Include="MonsieurMeh.Modding.TLD.Il2CppAssemblies.Windows" Version="2.58.0" />
     </ItemGroup>
 
-    <!-- ModSettings, for the mod's settings menu. Players install it themselves (Complex Logger needs it too), so it isn't copied to the output. -->
+    <!--
+    ModSettings, for the mod's settings menu. Players install it themselves (Complex Logger needs it too), so it isn't
+    copied to the output. It depends on STBlade's older game assemblies, which would clash with the ones above, so they're
+    referenced here with nothing used.
+    -->
     <ItemGroup>
         <PackageReference Include="STBlade.Modding.TLD.ModSettings" Version="1.9.0" ExcludeAssets="runtime" />
+        <PackageReference Include="STBlade.Modding.TLD.Il2CppAssemblies.Windows" Version="2.10.0" ExcludeAssets="all" />
     </ItemGroup>
 
     <ItemGroup>

@@ -2,19 +2,34 @@
   "version": 1,
   "dependencies": {
     "net6.0": {
-      "STBlade.Modding.TLD.Il2CppAssemblies.Windows": {
+      "MonsieurMeh.Modding.TLD.Il2CppAssemblies.Windows": {
         "type": "Direct",
-        "requested": "[2.55.0, )",
-        "resolved": "2.55.0",
-        "contentHash": "npvPR2ON/2wDZtA6IxlnIE0Ow0tccJCnQfq5YbFcT+Wc5a2NoV51IwDDhwqJuPRYb8iKCKRG9+/SYgKh5joI/g==",
+        "requested": "[2.58.0, )",
+        "resolved": "2.58.0",
+        "contentHash": "J2Q6lEcXJTmvdc/+LTtVbORz+z5qyeEBGVjh5xY4TV0jGTk0ceSwCsI2qgApkGBceiHWYQwOikhvStXkNTH/BQ==",
         "dependencies": {
           "AsmResolver.DotNet": "6.0.0-beta.3",
-          "AssetRipper.Primitives": "3.1.4",
-          "AssetsTools.NET": "3.0.0-preview3",
+          "AssetRipper.Primitives": "3.2.0",
+          "AssetsTools.NET": "3.0.4",
           "HarmonyX": "2.10.2",
           "Il2CppInterop.Runtime": "1.5.1",
-          "LavaGang.MelonLoader": "0.7.1",
+          "LavaGang.MelonLoader": "0.7.2",
           "Newtonsoft.Json": "13.0.4"
+        }
+      },
+      "STBlade.Modding.TLD.Il2CppAssemblies.Windows": {
+        "type": "Direct",
+        "requested": "[2.10.0, )",
+        "resolved": "2.10.0",
+        "contentHash": "N7xxX8oMG43RWwA0GqohfvOP5VnhjUDJJ62k3SvFePH87glIf23e6EOq2Wj8H4SYsRebtORP6BcczcAeKbyUow==",
+        "dependencies": {
+          "AsmResolver.DotNet": "5.0.0",
+          "AssetRipper.VersionUtilities": "1.2.1",
+          "AssetsTools.NET": "3.0.0-preview1",
+          "HarmonyX": "2.10.1",
+          "Il2CppInterop.Common": "1.4.3",
+          "Il2CppInterop.Runtime": "1.4.3",
+          "LavaGang.MelonLoader": "0.6.0"
         }
       },
       "STBlade.Modding.TLD.ModSettings": {
@@ -57,13 +72,18 @@
       },
       "AssetRipper.Primitives": {
         "type": "Transitive",
-        "resolved": "3.1.4",
-        "contentHash": "WFPXPetkArrF8HIgAi+vnRrAgsxdhcjCljIUKAdzxbJ/8G3LaEY2YaNZhPrn5cMzzI34kJgv0zVBAp4u3/5k+Q=="
+        "resolved": "3.2.0",
+        "contentHash": "UtDpl72yG5/KUj3BsNP7k2sF13nqqeaJ4sTANZZd/gb+t9YULYYzcyNfxuvdptenlsQIUBmMwTVHUn6TZ61Jqg=="
+      },
+      "AssetRipper.VersionUtilities": {
+        "type": "Transitive",
+        "resolved": "1.2.1",
+        "contentHash": "knQ/W1YwTZS2AbdaZh+nhyyBEZQPQDcahhSOnh88i+cdg4/FEoFJiCwaavgFvCMNuUeHTbcZc4qttF8WQ8xLIA=="
       },
       "AssetsTools.NET": {
         "type": "Transitive",
-        "resolved": "3.0.0-preview3",
-        "contentHash": "qfQy5PTYdbB8A2Ks5ciQoe5D4fTYbloz2vrmMq933PIWmAVMdXdYREYzTeNpvEk9mDrfybhr3OWE5cV8gVew5Q=="
+        "resolved": "3.0.4",
+        "contentHash": "NqYy5UIucwKwdkpamFTi8lr53hD+V8qQmbHzztQj1v4Pq1G4TjNlpkUWOhktTLBqBm4aPRaAkpFgB+3TDEuomw=="
       },
       "HarmonyX": {
         "type": "Transitive",
@@ -100,8 +120,8 @@
       },
       "LavaGang.MelonLoader": {
         "type": "Transitive",
-        "resolved": "0.7.1",
-        "contentHash": "pCKxMzK04DdzUguvd4yzssqsBqh9X73qmbpWsNjzXYtt9ncGI/NiMqGxohQ5OOkhUgZtCH9ohInILnNv4MqtGA=="
+        "resolved": "0.7.2",
+        "contentHash": "s/4Mk1mv0qYnNRS+i2KS72HwkPIgyE6D/GgUpyBNjrxhfZDyxtlBexUaerhMFpkwmN5leGnDYSiInQwKKZU1HA=="
       },
       "Microsoft.Extensions.Logging.Abstractions": {
         "type": "Transitive",
