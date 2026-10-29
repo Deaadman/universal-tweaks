@@ -49,23 +49,23 @@
     </ItemGroup>
 
     <!--
-    ModSettings (for the settings menu), Complex Logger and ModComponent (for its localization) are referenced as committed
-    DLLs: ModSettings from https://github.com/DigitalzombieTLD/ModSettings/releases, Complex Logger from
-    https://github.com/Arkhorse/Complex-Logger/releases and ModComponent from
-    https://github.com/dommrogers/ModComponent/releases. Players install them themselves, so they aren't copied to the
-    output.
+    The other mods this one needs, committed as DLLs because they aren't on NuGet, or not in the version it needs.
+    Players install them themselves, so they aren't copied to the output.
+    - Complex Logger 1.0.8, from https://github.com/Arkhorse/Complex-Logger/releases, which the mod logs through.
+    - ModComponent 7.0.0, from https://github.com/dommrogers/ModComponent/releases, for the mod's localisation.
+    - ModSettings 2.2.5, from https://github.com/DigitalzombieTLD/ModSettings/releases, to customise settings.
     -->
     <ItemGroup>
-        <Reference Include="ModSettings">
-            <HintPath>Dependencies\ModSettings.dll</HintPath>
-            <Private>false</Private>
-        </Reference>
         <Reference Include="ComplexLogger">
             <HintPath>Dependencies\ComplexLogger.dll</HintPath>
             <Private>false</Private>
         </Reference>
         <Reference Include="ModComponent">
             <HintPath>Dependencies\ModComponent.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+        <Reference Include="ModSettings">
+            <HintPath>Dependencies\ModSettings.dll</HintPath>
             <Private>false</Private>
         </Reference>
     </ItemGroup>
