@@ -109,11 +109,6 @@ internal sealed class Settings : JsonModSettings
     [Slider(45, 90, 4, NumberFormat = "{0:0.##} SEC")]
     public int RespiratorCanisterDuration = 45;
 
-    /// <summary>Whether the player can walk while aiming a revolver.</summary>
-    [Name("Revolver Handling Improvements")]
-    [Description("Allows movement while aiming with the revolver.")]
-    public bool RevolverImprovements = false;
-
     /// <summary>
     /// Whether lighting a torch always opens the menu to pick a fire tool, even with only one, and uses up the match, or
     /// wears the flint and steel or fire striker, only once the torch lights: see <see cref="TorchLightMenu"/> and

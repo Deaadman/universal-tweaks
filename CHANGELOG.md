@@ -46,6 +46,10 @@ See docs/development.md, "Releasing". CI checks this file's format.
 - **Respirator Canister Duration** works straight away, including on a canister that's already attached.
 - The container capacities apply as soon as you confirm the settings.
 
+### Removed
+
+- **Revolver Handling Improvements**, since moving while aiming the revolver is now part of [Adaptive Arsenal](https://github.com/Deaadman/adaptive-arsenal).
+
 ### Fixed
 
 - Spray paint decals no longer stay glowing after **Glowing Decals** is turned off ([#49](https://github.com/Deaadman/universal-tweaks/issues/49)).

@@ -24,7 +24,6 @@ Some tweaks could count as cheating, so they're hidden until you turn on **'Chea
 | Noisemaker Throw Force | 9 | How hard you throw the noisemaker. |
 | Randomized Item Rotation Drops | Off | Dropped items face a random direction instead of all the same way. Rifles stay on their side. |
 | Respirator Canister Duration | 45 s | How long, in real seconds, a respirator canister lasts. |
-| Revolver Handling Improvements | Off | You can walk while aiming the revolver, and the limited-movement icon is hidden for it. |
 | Snow Shelter Decay Rate | 100 | _Cheat._ How many hit points a snow shelter loses a day. |
 | Toilet Water Potability | Vanilla | Makes toilet water potable or non-potable. Vanilla leaves it to the game. |
 
