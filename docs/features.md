@@ -4,7 +4,7 @@ Every tweak is a setting. To change them, open **Options**, then **Mod Settings*
 
 The defaults are the game's own values, so with every setting at its default the game plays as it does without the mod. The fixes at the bottom are always on.
 
-Most settings take effect straight away. A few say in their description that they apply once you confirm the settings, and hiding the main menu adverts needs the main menu to reload.
+Most settings take effect straight away. A few say in their description that they apply once you confirm the settings, and **Skip Intro** applies from the next launch.
 
 ## 'Cheat' Tweaks
 
@@ -86,7 +86,6 @@ The flashlight and the miner's flashlight each have their own colour, duration, 
 
 | Setting | Default | What it does |
 | --- | --- | --- |
-| Promotional Main Menu Items | Off | Removes the expansion's advert from the main menu, and WINTERMUTE's if you don't own it. Needs the main menu to reload. |
 | Permanent Crosshair | Off | The crosshair always shows. |
 | Skip Intro | Off | The game starts straight into the main menu, skipping the disclaimers, the press any key prompt and the intro movie. Applies from the next launch. |
 

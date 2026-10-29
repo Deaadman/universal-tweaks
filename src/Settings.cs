@@ -401,13 +401,8 @@ internal sealed class Settings : JsonModSettings
 
     #region UI Tweaks
 
-    /// <summary>Whether the main menu's adverts for content the player doesn't own are removed.</summary>
-    [Section("UI Tweaks")]
-    [Name("Promotional Main Menu Items")]
-    [Description("Removes the promotional WINTERMUTE and Expansion menu items. (Requires main menu reload).")]
-    public bool RemoveMainMenuItems = false;
-
     /// <summary>Whether the crosshair always shows.</summary>
+    [Section("UI Tweaks")]
     [Name("Permanent Crosshair")]
     [Description("Keeps the crosshair visible at all times.")]
     public bool PermanentCrosshair = false;

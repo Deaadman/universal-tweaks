@@ -49,6 +49,7 @@ See docs/development.md, "Releasing". CI checks this file's format.
 ### Removed
 
 - **Revolver Handling Improvements**, since moving while aiming the revolver is now part of [Adaptive Arsenal](https://github.com/Deaadman/adaptive-arsenal).
+- **Promotional Main Menu Items**, so the main menu always shows the expansion and WINTERMUTE.
 
 ### Fixed
 
