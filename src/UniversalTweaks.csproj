@@ -38,16 +38,6 @@
         <PackageReference Include="MonsieurMeh.Modding.TLD.Il2CppAssemblies.Windows" Version="2.58.0" />
     </ItemGroup>
 
-    <!--
-    ModSettings, for the mod's settings menu. Players install it themselves (Complex Logger needs it too), so it isn't
-    copied to the output. It depends on STBlade's older game assemblies, which would clash with the ones above, so they're
-    referenced here with nothing used.
-    -->
-    <ItemGroup>
-        <PackageReference Include="STBlade.Modding.TLD.ModSettings" Version="1.9.0" ExcludeAssets="runtime" />
-        <PackageReference Include="STBlade.Modding.TLD.Il2CppAssemblies.Windows" Version="2.10.0" ExcludeAssets="all" />
-    </ItemGroup>
-
     <ItemGroup>
         <Using Include="HarmonyLib" />
         <Using Include="Il2Cpp" />
@@ -59,12 +49,17 @@
     </ItemGroup>
 
     <!--
-    Complex Logger and ModComponent (for its localization) aren't on NuGet, so their DLLs are committed: Complex Logger
-    from https://github.com/Arkhorse/Complex-Logger/releases and ModComponent from
+    ModSettings (for the settings menu), Complex Logger and ModComponent (for its localization) are referenced as committed
+    DLLs: ModSettings from https://github.com/DigitalzombieTLD/ModSettings/releases, Complex Logger from
+    https://github.com/Arkhorse/Complex-Logger/releases and ModComponent from
     https://github.com/dommrogers/ModComponent/releases. Players install them themselves, so they aren't copied to the
     output.
     -->
     <ItemGroup>
+        <Reference Include="ModSettings">
+            <HintPath>Dependencies\ModSettings.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
         <Reference Include="ComplexLogger">
             <HintPath>Dependencies\ComplexLogger.dll</HintPath>
             <Private>false</Private>

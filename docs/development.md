@@ -21,7 +21,7 @@ dotnet build
 - `src/Core`: the parts with numbers and rules but nothing from Unity, the game or MelonLoader: the carry weight thresholds, the game's own values that 'Cheat' Tweaks puts back, the flashlight tuning, which items get the mod's icons, and which single round each ammo box drops. It can be [tested](#testing) without the game.
 - `src/Patches`: the [Harmony](https://harmony.pardeike.net) patches on the game, one file for each game type, like `FlashlightItemPatches.cs` for `FlashlightItem`. Each patch is a private nested class named for what it does.
 - `src/Utilities`: the tweaks with more to them than a patch, which the patches call: `Flashlights`, `Encumbrance`, `ContainerCapacities`, `SprayPaint`, `Travois`, `MreTexture`, `DressingWeight`, `StewFatigue`, `SingleRoundDrops`, `TorchLightMenu`, `TorchToolUse` and `TimeOfDayDial`. Also the helpers they share: `ObjectStateCache` keeps the game's own values per object so they can be put back, `GearPrefabs` loads the game's gear prefabs by name, `OncePerFrame` stops work repeating within a frame, and `TextureSwapper` and `AssetBundleLoader` load the mod's textures.
-- `src/Settings.cs` and `src/ContainerSettings.cs`: the mod's two pages in the game's Mod Settings menu, from the [ModSettings](https://github.com/DigitalzombieTLD/ModSettings) NuGet package. Most settings are read where they're used, so they take effect straight away. `OnConfirm` pushes the rest into the objects that already exist.
+- `src/Settings.cs` and `src/ContainerSettings.cs`: the mod's two pages in the game's Mod Settings menu, from [ModSettings](https://github.com/DigitalzombieTLD/ModSettings) (its DLL is committed in `src/Dependencies`). Most settings are read where they're used, so they take effect straight away. `OnConfirm` pushes the rest into the objects that already exist.
 - `src/Resources`: the asset bundle with the brown MRE's texture and icon, and `Localization.json` with the mod's translations. Both are embedded in the DLL.
 - `src/Dependencies`: DLLs that aren't on NuGet. [Complex Logger](https://github.com/Arkhorse/Complex-Logger), which the mod logs through with `Mod.Logger`, and [ModComponent](https://github.com/dommrogers/ModComponent), for its localization.
 - `src/Properties/AssemblyInfo.cs`: what MelonLoader reads about the mod, including the MelonLoader version it needs and the mods it won't load with.
@@ -42,8 +42,7 @@ Nightly builds add a suffix with the date and commit, like `1.5.0-nightly.202610
 
 [`src/packages.lock.json`](../src/packages.lock.json) and the test project's lock file pin every NuGet package, including the ones they depend on. After changing a package version, run `dotnet restore UniversalTweaks.slnx` and commit the lock file with it.
 
-The first two numbers of the `MonsieurMeh.Modding.TLD.Il2CppAssemblies.Windows` version are the game version its assemblies come from. So a new version of it usually means a game update: build against it, then check the mod in the game. ModSettings still depends on STBlade's older game assemblies, so the csproj references them with nothing used, to keep them out of the build.
-
+The first two numbers of the `MonsieurMeh.Modding.TLD.Il2CppAssemblies.Windows` version are the game version its assemblies come from. So a new version of it usually means a game update: build against it, then check the mod in the game.
 ## Branches
 
 - `develop` is where work happens. Every push to it publishes a [nightly build](#nightly-builds).
