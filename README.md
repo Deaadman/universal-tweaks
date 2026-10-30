@@ -1,6 +1,6 @@
 <div align="center">
 
-![Universal Tweaks](assets/images/banner.webp)
+![Universal Tweaks](assets/images/banner-animated.webp)
 
 [![Latest release](https://img.shields.io/github/v/release/Deaadman/universal-tweaks?style=flat-square&label=release)](https://github.com/Deaadman/universal-tweaks/releases/latest) [![Downloads](https://img.shields.io/github/downloads/Deaadman/universal-tweaks/total?style=flat-square)](https://github.com/Deaadman/universal-tweaks/releases) [![Latest downloads](https://img.shields.io/github/downloads/Deaadman/universal-tweaks/latest/total?style=flat-square&label=latest%20downloads)](https://github.com/Deaadman/universal-tweaks/releases/latest) [![Nightly downloads](https://img.shields.io/github/downloads/Deaadman/universal-tweaks/nightly/total?style=flat-square&label=nightly%20downloads)](https://github.com/Deaadman/universal-tweaks/releases/tag/nightly) [![Nightly](https://img.shields.io/github/actions/workflow/status/Deaadman/universal-tweaks/nightly.yml?branch=develop&style=flat-square&label=nightly)](https://github.com/Deaadman/universal-tweaks/releases/tag/nightly) [![License](https://img.shields.io/badge/license-GPL--3.0-blue?style=flat-square)](LICENSE)
 
