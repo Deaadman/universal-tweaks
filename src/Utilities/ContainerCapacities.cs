@@ -118,8 +118,6 @@ internal static class ContainerCapacities
     {
         OriginalCapacities.Set(container, container.m_Capacity);
         Apply(container);
-
-        Mod.Logger.Log($"Container '{container.name}' capacity set to {container.m_Capacity}.", FlaggedLoggingLevel.Trace);
     }
 
     /// <summary>Sets the capacity of every registered container from the settings again.</summary>
@@ -154,16 +152,13 @@ internal static class ContainerCapacities
             return;
         }
 
-        var hasSetting = TryGetSetting(container.name, out var setting);
-        if (hasSetting && settings.TryGetChangedCapacity(setting, out var capacity))
+        if (TryGetSetting(container.name, out var setting) && settings.TryGetChangedCapacity(setting, out var capacity))
         {
             container.m_Capacity = ItemWeight.FromKilograms(capacity);
         }
         else if (OriginalCapacities.TryGet(container, out var originalCapacity))
         {
             container.m_Capacity = originalCapacity;
-            if (!hasSetting)
-                Mod.Logger.Log($"Found container '{container.name}' that is missing from the known containers list.", FlaggedLoggingLevel.Debug);
         }
     }
 
