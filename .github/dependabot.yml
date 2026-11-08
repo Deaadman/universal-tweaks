@@ -1,18 +1,28 @@
-# To get started with Dependabot version updates, you'll need to specify which
-# package ecosystems to update and where the package manifests are located.
-# Please see the documentation for all configuration options:
-# https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+# Once a week, opens a pull request against develop for NuGet packages and
+# actions with a newer version. Minor and patch updates come together in one
+# pull request per ecosystem; a new major version gets its own, since it may
+# break the code. CI runs on each one, so merge it when it passes.
+#
+# A new Il2CppAssemblies version usually means a game update: check the mod
+# in-game before releasing with it.
 
 version: 2
-updates:
-  - package-ecosystem: "nuget"
-    directory: "/Source"
-    target-branch: "develop"
-    schedule:
-      interval: "weekly"
 
-  - package-ecosystem: "github-actions"
-    directory: "/"
-    target-branch: "develop"
+updates:
+  - package-ecosystem: nuget
+    directories: [/src, /tests/UniversalTweaks.Tests]
+    target-branch: develop
     schedule:
-      interval: "monthly"
+      interval: weekly
+    groups:
+      packages:
+        update-types: [minor, patch]
+
+  - package-ecosystem: github-actions
+    directory: /
+    target-branch: develop
+    schedule:
+      interval: weekly
+    groups:
+      actions:
+        update-types: [minor, patch]

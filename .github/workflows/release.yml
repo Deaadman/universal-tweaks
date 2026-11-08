@@ -1,0 +1,67 @@
+# Publishes a release: push a tag like 1.5.0 (no v prefix) that matches the
+# VersionPrefix in src/UniversalTweaks.csproj. The release carries
+# UniversalTweaks.dll, which the README's download link and the mod's
+# MelonInfo point at. The version's section of CHANGELOG.md is the release's
+# description; the release stops if it has none.
+#
+# A manual run checks but never publishes: the job below only publishes from
+# a tag.
+
+name: Release
+
+on:
+  push:
+    tags: ["[0-9]+.[0-9]+.[0-9]+*"]
+  workflow_dispatch:
+
+# Read-only by default; only the job that publishes can write.
+permissions:
+  contents: read
+
+env:
+  DOTNET_NOLOGO: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+
+jobs:
+  # Nothing ships unless CI passes.
+  ci:
+    uses: ./.github/workflows/ci.yml
+
+  release:
+    needs: ci
+    # Only from a tag: a manual run from a branch checks but never publishes.
+    if: startsWith(github.ref, 'refs/tags/')
+    runs-on: windows-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Build
+        run: |
+          dotnet restore src --locked-mode
+          dotnet build src -c Release --no-restore
+
+      - name: Check the tag matches the version
+        shell: pwsh
+        run: |
+          $version = (Get-Content src/obj/Version.txt -Raw).Trim()
+          if ($version -ne $env:GITHUB_REF_NAME) {
+            throw "tag $env:GITHUB_REF_NAME does not match the version in src/UniversalTweaks.csproj, $version"
+          }
+
+      - name: Read the release notes from CHANGELOG.md
+        shell: pwsh
+        run: ./scripts/release-notes.ps1 -Version $env:GITHUB_REF_NAME -OutDir notes
+
+      - name: Publish
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        # The changelog section first, then GitHub's generated notes (merged PRs and the full changelog link).
+        run: gh release create $env:GITHUB_REF_NAME src/bin/Release/net6.0/UniversalTweaks.dll --title $env:GITHUB_REF_NAME --notes-file notes/release-notes.md --generate-notes --verify-tag

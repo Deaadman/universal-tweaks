@@ -1,0 +1,82 @@
+# Checks every push to main and every pull request: the changelog's format,
+# formatting, a Release build with warnings as errors, and the unit tests.
+# Restoring checks every NuGet package for security advisories, and each
+# packages.lock.json must match its project. The nightly and release
+# workflows run this first and only publish when it passes.
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_call:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}-${{ github.workflow }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+env:
+  DOTNET_NOLOGO: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+
+jobs:
+  lint:
+    name: Changelog and format
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: 10.0.x
+      - name: Changelog
+        shell: pwsh
+        run: ./scripts/release-notes.ps1 -Check
+      - name: Restore
+        run: dotnet restore UniversalTweaks.slnx --locked-mode
+      # Fails if any file differs from what .editorconfig asks for.
+      - name: Format
+        run: dotnet format whitespace UniversalTweaks.slnx --verify-no-changes
+
+  build:
+    name: Build
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: 10.0.x
+      # Locked mode fails if packages.lock.json is out of date; the audit fails on an advisory.
+      - name: Restore
+        run: dotnet restore src --locked-mode
+      - name: Build
+        run: dotnet build src -c Release --no-restore
+      - name: Report the version and size
+        shell: pwsh
+        run: |
+          $kb = (Get-Item src/bin/Release/net6.0/UniversalTweaks.dll).Length / 1KB
+          "UniversalTweaks.dll **$(Get-Content src/obj/Version.txt)**: {0:N0} KB" -f $kb >> $env:GITHUB_STEP_SUMMARY
+
+  test:
+    name: Tests
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: 10.0.x
+      - name: Restore
+        run: dotnet restore tests/UniversalTweaks.Tests --locked-mode
+      # The game-free code in src/Core. The rest of the mod needs the game: see docs/development.md, "Testing".
+      - name: Test
+        run: dotnet test --project tests/UniversalTweaks.Tests --no-restore
