@@ -51,7 +51,5 @@ internal static class SprayPaint
         s_GlowMaterialInstance.SetFloat("_GlowMult", Settings.Instance.ConfirmedGlowingDecalMultiplier);
 
         manager.m_AnimatedRevealMaterial = s_GlowMaterialInstance;
-
-        Mod.Logger.Log("Applied glowing decal material.", FlaggedLoggingLevel.Trace);
     }
 }

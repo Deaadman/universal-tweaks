@@ -39,7 +39,5 @@ internal static class DressingWeight
         data.m_BaseWeight = Settings.Instance.ConsistantDressingWeight
             ? ItemWeight.FromKilograms(ConsistentWeightKG)
             : s_OriginalWeight.Value;
-
-        Mod.Logger.Log($"Set Old Man's Dressing base weight to {data.m_BaseWeight}.", FlaggedLoggingLevel.Trace);
     }
 }

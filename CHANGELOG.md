@@ -19,6 +19,8 @@ See docs/development.md, "Releasing". CI checks this file's format.
 
 ## [Unreleased]
 
+## [1.5.0] - 2026-11-08
+
 ### Added
 
 - **Breaking:** The mod logs through [Complex Logger](https://github.com/Arkhorse/Complex-Logger), which it now needs. Turn on its debug levels when reporting a bug.
@@ -67,6 +69,7 @@ See docs/development.md, "Releasing". CI checks this file's format.
 - **Respirator Canister Duration** works right after loading or attaching a canister.
 - Calorie burn counts the weight you carry again, and is left to the game with **Additional Carry Weight** off.
 - You can reset a snare from the inspect menu after a rabbit is caught again.
+- Loading a save with **Remove Headache from Foods** on no longer logs an error for each food that gives a headache.
 - Flashlights turn off when their battery runs out, instead of staying lit.
 - Containers hold what they do in the game while their capacity setting is at its default, instead of steamer trunks, cargo crate top doors, some dresser drawers, some fridges and some warden desk drawers holding more or less.
 
@@ -269,7 +272,8 @@ See docs/development.md, "Releasing". CI checks this file's format.
 
 - The first release.
 
-[Unreleased]: https://github.com/Deaadman/universal-tweaks/compare/1.4.8...HEAD
+[Unreleased]: https://github.com/Deaadman/universal-tweaks/compare/1.5.0...HEAD
+[1.5.0]: https://github.com/Deaadman/universal-tweaks/compare/1.4.8...1.5.0
 [1.4.8]: https://github.com/Deaadman/universal-tweaks/compare/1.4.7...1.4.8
 [1.4.7]: https://github.com/Deaadman/universal-tweaks/compare/1.4.6...1.4.7
 [1.4.6]: https://github.com/Deaadman/universal-tweaks/compare/1.4.5...1.4.6

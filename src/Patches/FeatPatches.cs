@@ -9,11 +9,8 @@ internal static class FeatPatches
     {
         private static void Postfix(ref bool __result)
         {
-            if (!Settings.Instance.FeatProgressInCustomMode)
-                return;
-
-            __result = false;
-            Mod.Logger.Log("Allowing feat progress in custom mode.", FlaggedLoggingLevel.Trace);
+            if (Settings.Instance.FeatProgressInCustomMode)
+                __result = false;
         }
     }
 }
